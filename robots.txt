@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://viraltestlab.com/sitemap.xml
+Sitemap: https://dark-node-labs.github.io/sitemap.xml

@@ -6,8 +6,14 @@
     return "en";
   };
 
+  const zhTypeSlug = (path) => {
+    const match = path.match(/^\/zh\/sbti-types\/([^/]+)\/?$/);
+    return match ? match[1] : "";
+  };
+
   const routeKey = (path) => {
     if (path === "/" || path === "/zh/" || path === "/fr/" || path === "/vi/") return "home";
+    if (zhTypeSlug(path)) return "sbti-type";
     if (path.includes("/sbti-types/")) return "sbti-types";
     if (path.includes("/sbti-test/")) return "sbti-test";
     if (path.includes("/rice-purity-test-score-meaning/")) return "rice-score";
@@ -17,7 +23,7 @@
     return "home";
   };
 
-  const localizedPath = (lang, key, hash = "") => {
+  const localizedPath = (lang, key, hash = "", slug = "") => {
     const routes = {
       en: {
         home: "/",
@@ -56,15 +62,19 @@
         terms: "/terms/"
       }
     };
+    if (key === "sbti-type") {
+      return (lang === "zh" && slug ? `/zh/sbti-types/${slug}/` : routes[lang]["sbti-types"]) + hash;
+    }
     return (routes[lang][key] || routes[lang].home) + hash;
   };
 
   const currentLang = langFromPath(window.location.pathname);
   const storedLang = localStorage.getItem("siteLang");
   const key = routeKey(window.location.pathname);
+  const currentTypeSlug = zhTypeSlug(window.location.pathname);
 
   if (storedLang && storedLang !== currentLang && ["en", "zh", "fr", "vi"].includes(storedLang)) {
-    const next = localizedPath(storedLang, key, window.location.hash);
+    const next = localizedPath(storedLang, key, window.location.hash, currentTypeSlug);
     if (next !== window.location.pathname + window.location.hash) {
       window.location.replace(next);
       return;
@@ -78,7 +88,7 @@
   document.querySelectorAll("a[href^='/']").forEach((link) => {
     if (link.closest(".language-popover")) return;
     const url = new URL(link.getAttribute("href"), window.location.origin);
-    const mapped = localizedPath(lang, routeKey(url.pathname), url.hash);
+    const mapped = localizedPath(lang, routeKey(url.pathname), url.hash, zhTypeSlug(url.pathname));
     link.setAttribute("href", mapped);
   });
 
@@ -94,7 +104,7 @@
     switcher.setAttribute("aria-label", "Language");
     Object.entries(labels).forEach(([targetLang, label]) => {
       const item = document.createElement("a");
-      item.href = localizedPath(targetLang, key, window.location.hash);
+      item.href = localizedPath(targetLang, key, window.location.hash, currentTypeSlug);
       item.textContent = label;
       item.dataset.lang = targetLang;
       if (targetLang === lang) item.setAttribute("aria-current", "true");
@@ -106,7 +116,7 @@
 
   document.querySelectorAll(".language-popover a").forEach((link) => {
     const targetLang = link.dataset.lang || (link.textContent.includes("中文") ? "zh" : link.textContent.includes("Français") ? "fr" : link.textContent.includes("Tiếng") ? "vi" : "en");
-    link.setAttribute("href", localizedPath(targetLang, key, window.location.hash));
+    link.setAttribute("href", localizedPath(targetLang, key, window.location.hash, currentTypeSlug));
     link.toggleAttribute("aria-current", targetLang === lang);
     link.addEventListener("click", () => localStorage.setItem("siteLang", targetLang));
   });
