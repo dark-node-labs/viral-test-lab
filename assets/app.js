@@ -312,76 +312,100 @@ function showSbtiResult(root, picks, lang = "en") {
 }
 
 function typeAvatar(type) {
-  const skin = type.code.length % 2 === 0 ? "#f1c19b" : "#e8b58f";
-  const shirtMap = {
-    "CTRL": "#d9b48f",
-    "ATM-er": "#87b866",
-    "Dior-S": "#111827",
-    "BOSS": "#d6c06a",
-    "THAN-K": "#6b7280",
-    "OH-NO!": "#5b6472",
-    "GOGO": "#e4a582",
-    "SEXY": "#d6b45f",
-    "LOVE-R": "#d9344a",
-    "MUM": "#6ec7a8",
-    "FAKE": "#2f8b57",
-    "OJBK": "#e7c1a5",
-    "MALO": "#9b6b2f",
-    "JOKE-R": "#d9eee9",
-    "WOC!": "#9f8f75",
-    "THIN-K": "#d1b394",
-	    "SHIT": "#d8b58f",
-	    "ZZZZ": "#b7d889",
-	    "POOR": "#3f7f59",
-	    "MONK": "#c9832d",
-	    "IMSB": "#b7c38b",
-	    "SOLO": "#2d3748",
-	    "FUCK": "#93c572",
-	    "DEAD": "#111827",
-	    "IMFW": "#68a36f",
-	    "HHHH": "#efb184",
-	    "DRUNK": "#4b5563"
-	  };
-	  const shirt = shirtMap[type.code] || "#8aa0b8";
-	  const mood = type.code.includes("OH") || type.code === "IMSB" ? "worried" : type.code.includes("ZZ") || type.code === "DEAD" ? "sleepy" : type.code.includes("JOKE") || type.code === "HHHH" ? "happy" : "calm";
-	  const mouth = mood === "happy" ? "M43 67 Q50 74 57 67" : mood === "worried" ? "M43 70 Q50 64 57 70" : mood === "sleepy" ? "M44 68 H56" : "M43 68 Q50 70 57 68";
-	  const extra = {
-	    "ATM-er": '<rect x="18" y="88" width="19" height="11" rx="2" fill="#7fc96b"/><text x="27" y="97" text-anchor="middle" font-size="8" font-weight="900" fill="#fff">$</text>',
-	    "BOSS": '<path d="M42 43 L48 31 L56 43 L64 31 L70 43 Z" fill="#ffc857"/>',
-	    "LOVE-R": '<path d="M86 86 C78 78 93 70 96 80 C99 70 113 78 105 86 L96 96 Z" fill="#ff4d6d"/>',
-	    "MALO": '<path d="M28 105 C12 104 16 83 30 88" fill="none" stroke="#9b6b2f" stroke-width="6" stroke-linecap="round"/>',
-	    "JOKE-R": '<circle cx="56" cy="70" r="5" fill="#d9344a"/>',
-	    "WOC!": '<text x="88" y="53" font-size="18" font-weight="900" fill="#ff4d6d">!</text>',
-	    "THIN-K": '<path d="M20 52 L42 39 L44 60 L31 80 Z" fill="#2f343d" opacity="0.9"/>',
-	    "ZZZZ": '<rect x="9" y="91" width="46" height="28" rx="8" fill="#a9cf79"/><text x="86" y="57" font-size="13" font-weight="900" fill="#6c63ff">Z</text>',
-	    "POOR": '<path d="M22 92 L12 116" stroke="#3f7f59" stroke-width="7" stroke-linecap="round"/>',
-	    "MONK": '<circle cx="56" cy="50" r="18" fill="#f4c7a3"/><path d="M40 53 Q56 66 72 53" fill="none" stroke="#c9832d" stroke-width="5"/>',
-	    "SOLO": '<path d="M22 104 L10 119" stroke="#2d3748" stroke-width="8" stroke-linecap="round"/>',
-	    "FUCK": '<path d="M38 39 L45 25 L51 39 L57 24 L63 39 L70 26 L73 43 Z" fill="#5d8f36"/>',
-	    "DEAD": '<rect x="19" y="95" width="74" height="23" rx="4" fill="#1f2937"/><path d="M28 95 L78 70" stroke="#d1d5db" stroke-width="8" stroke-linecap="round"/>',
-	    "DRUNK": '<path d="M82 91 L98 73" stroke="#ffc857" stroke-width="6" stroke-linecap="round"/><circle cx="101" cy="70" r="5" fill="#ffc857"/>'
-	  }[type.code] || "";
-	  return `
+  const avatars = {
+    "CTRL": ["#5b6cff", "#111827", "#ffc857", "visor"],
+    "ATM-er": ["#29c184", "#1c7c54", "#f7d154", "cash"],
+    "Dior-S": ["#111827", "#3c4454", "#e7d7ff", "shade"],
+    "BOSS": ["#f2b84b", "#7a4f12", "#ffe08a", "crown"],
+    "THAN-K": ["#7c8da6", "#3f4b5f", "#c8f7d4", "spark"],
+    "OH-NO!": ["#7b6cff", "#34304f", "#ff8a80", "alert"],
+    "GOGO": ["#ff7a59", "#8a3b28", "#ffd166", "bolt"],
+    "SEXY": ["#ff4f8b", "#7d2445", "#ffe0ee", "star"],
+    "LOVE-R": ["#ef476f", "#8c1f3f", "#ffd1dc", "heart"],
+    "MUM": ["#2ec4b6", "#10645e", "#d5fff9", "leaf"],
+    "FAKE": ["#18a058", "#174b35", "#d8fbe7", "mask"],
+    "OJBK": ["#b993ff", "#4a347c", "#eee5ff", "shrug"],
+    "MALO": ["#b9782f", "#59320f", "#ffe0ad", "banana"],
+    "JOKE-R": ["#45c6ff", "#123c58", "#f8f7a1", "smile"],
+    "WOC!": ["#ff5f57", "#7c1f1a", "#ffe1de", "bang"],
+    "THIN-K": ["#6c63ff", "#252047", "#d8d5ff", "thought"],
+    "SHIT": ["#8b6f47", "#4b3920", "#f3dfb6", "slash"],
+    "ZZZZ": ["#88c76f", "#345b2b", "#e5ffd7", "sleep"],
+    "POOR": ["#3aa66f", "#1d5439", "#c9f4d8", "patch"],
+    "MONK": ["#d9913d", "#6f3b12", "#ffe5c7", "halo"],
+    "IMSB": ["#9aa66e", "#46502c", "#edf2c6", "crack"],
+    "SOLO": ["#374151", "#111827", "#d1d5db", "moon"],
+    "FUCK": ["#80b84a", "#345c1e", "#e4ffd0", "spike"],
+    "DEAD": ["#1f2937", "#05070b", "#d8dee9", "flat"],
+    "IMFW": ["#6abf69", "#285328", "#ddf7d9", "bandage"],
+    "HHHH": ["#ffb36b", "#86451f", "#ffe3bd", "laugh"],
+    "DRUNK": ["#6366f1", "#262a72", "#e0e7ff", "bubble"]
+  };
+  const [primary, dark, light, prop] = avatars[type.code] || ["#6c63ff", "#24263a", "#ebe9ff", "spark"];
+  const id = `avatar-${type.code.replace(/[^a-z0-9]/gi, "")}`;
+  const skin = type.code.length % 2 === 0 ? "#f4bd92" : "#eaa97d";
+  const hair = ["#1f2430", "#2f343d", "#4b3527", "#121621"][type.code.length % 4];
+  const mood = ["JOKE-R", "HHHH"].includes(type.code) ? "happy" : ["OH-NO!", "IMSB", "FUCK", "WOC!"].includes(type.code) ? "tense" : ["ZZZZ", "DEAD"].includes(type.code) ? "flat" : "calm";
+  const mouth = mood === "happy" ? "M53 82 Q64 92 75 82" : mood === "tense" ? "M54 87 Q64 80 74 87" : mood === "flat" ? "M55 84 H73" : "M54 84 Q64 88 74 84";
+  const eyes = mood === "flat"
+    ? '<path d="M50 72 H57 M71 72 H78" stroke="#1c2230" stroke-width="4" stroke-linecap="round"/>'
+    : '<circle cx="53" cy="72" r="3.8" fill="#1c2230"/><circle cx="75" cy="72" r="3.8" fill="#1c2230"/>';
+  const propSvg = {
+    visor: '<rect x="45" y="65" width="38" height="13" rx="6" fill="#111827"/><path d="M48 71 H80" stroke="#6ee7ff" stroke-width="2" opacity=".9"/>',
+    cash: '<rect x="20" y="102" width="24" height="15" rx="3" fill="#71d77d"/><text x="32" y="113" text-anchor="middle" font-size="10" font-weight="900" fill="#fff">$</text>',
+    shade: '<path d="M43 67 H58 L56 78 H44 Z M70 67 H85 L82 78 H72 Z M58 71 H70" fill="#111827"/>',
+    crown: '<path d="M46 45 L53 31 L64 45 L75 31 L82 45 Z" fill="#ffd166"/><circle cx="53" cy="33" r="3" fill="#fff3b0"/><circle cx="75" cy="33" r="3" fill="#fff3b0"/>',
+    spark: '<path d="M88 54 L92 64 L102 68 L92 72 L88 82 L84 72 L74 68 L84 64 Z" fill="#fff176"/>',
+    alert: '<path d="M90 46 L106 76 H74 Z" fill="#ff6b6b"/><text x="90" y="70" text-anchor="middle" font-size="18" font-weight="900" fill="#fff">!</text>',
+    bolt: '<path d="M90 45 L76 77 H90 L83 104 L107 64 H92 Z" fill="#ffd166"/>',
+    star: '<path d="M93 47 L98 61 L113 61 L101 70 L106 84 L93 75 L80 84 L85 70 L73 61 L88 61 Z" fill="#fff0a8"/>',
+    heart: '<path d="M92 82 C78 70 91 55 101 65 C111 55 124 70 110 82 L101 91 Z" fill="#ff7aa2"/>',
+    leaf: '<path d="M91 66 C106 48 118 65 96 84 C91 77 89 71 91 66 Z" fill="#90f0c0"/><path d="M94 80 C100 72 106 66 114 61" stroke="#1f8a5b" stroke-width="3" fill="none"/>',
+    mask: '<path d="M36 68 Q64 55 92 68 L86 86 Q64 76 42 86 Z" fill="#d9ffe6" opacity=".82"/><circle cx="53" cy="74" r="3" fill="#174b35"/><circle cx="75" cy="74" r="3" fill="#174b35"/>',
+    shrug: '<path d="M29 105 Q40 94 50 109 M99 105 Q88 94 78 109" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none"/>',
+    banana: '<path d="M88 84 C111 88 116 63 103 51 C107 69 100 81 88 84 Z" fill="#ffd166"/><path d="M103 51 L108 49" stroke="#5b3514" stroke-width="3" stroke-linecap="round"/>',
+    smile: '<circle cx="91" cy="77" r="17" fill="#fff176"/><path d="M83 75 H88 M94 75 H99 M84 83 Q91 91 99 83" stroke="#123c58" stroke-width="3" fill="none" stroke-linecap="round"/>',
+    bang: '<text x="94" y="78" text-anchor="middle" font-size="32" font-weight="950" fill="#fff">!</text>',
+    thought: '<circle cx="93" cy="65" r="12" fill="#fff"/><circle cx="79" cy="83" r="5" fill="#fff"/><circle cx="71" cy="94" r="3" fill="#fff"/>',
+    slash: '<path d="M27 42 L103 116" stroke="#fff" stroke-width="9" opacity=".75" stroke-linecap="round"/>',
+    sleep: '<text x="91" y="64" text-anchor="middle" font-size="16" font-weight="900" fill="#fff">Z</text><text x="104" y="49" text-anchor="middle" font-size="12" font-weight="900" fill="#fff">Z</text>',
+    patch: '<rect x="78" y="93" width="21" height="15" rx="3" fill="#f5d46b"/><path d="M82 96 L96 105 M96 96 L82 105" stroke="#8a6a1f" stroke-width="2"/>',
+    halo: '<ellipse cx="64" cy="37" rx="25" ry="7" fill="none" stroke="#ffe08a" stroke-width="5"/>',
+    crack: '<path d="M65 47 L58 63 L68 72 L61 92" stroke="#46502c" stroke-width="4" fill="none" stroke-linecap="round"/>',
+    moon: '<path d="M94 54 C81 60 83 78 98 84 C78 89 66 66 82 51 C86 48 90 48 94 54 Z" fill="#e5e7eb"/>',
+    spike: '<path d="M38 45 L45 25 L52 45 L61 24 L68 45 L77 27 L84 50 Z" fill="#5e8f30"/>',
+    flat: '<rect x="24" y="103" width="80" height="19" rx="5" fill="#111827"/><path d="M36 103 L92 82" stroke="#e5e7eb" stroke-width="7" stroke-linecap="round"/>',
+    bandage: '<rect x="49" y="61" width="31" height="12" rx="4" fill="#fff0ce" transform="rotate(-12 64 67)"/><path d="M58 65 L70 69 M68 63 L60 71" stroke="#c18b42" stroke-width="2"/>',
+    laugh: '<path d="M43 83 Q64 102 85 83" stroke="#1c2230" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M45 68 Q51 63 57 68 M71 68 Q77 63 83 68" stroke="#1c2230" stroke-width="4" fill="none" stroke-linecap="round"/>',
+    bubble: '<circle cx="93" cy="60" r="13" fill="#ffffff" opacity=".92"/><circle cx="108" cy="48" r="6" fill="#ffffff" opacity=".8"/>'
+  }[prop] || "";
+
+  return `
     <div class="type-avatar" aria-hidden="true">
-      <svg class="avatar-card" viewBox="0 0 112 138" role="img">
-        <rect x="3" y="3" width="106" height="132" rx="22" fill="#fff" stroke="#e4e7f0" stroke-width="2"/>
-        <text x="56" y="19" text-anchor="middle" class="avatar-kicker">SBTI</text>
-        <text x="56" y="33" text-anchor="middle" class="avatar-code">${type.code}</text>
-        <path d="M31 54 L20 88 L39 83 Z" fill="#2f343d"/>
-        <path d="M81 54 L92 88 L73 83 Z" fill="#2f343d"/>
-        <path d="M32 48 Q56 25 80 48 L77 76 Q56 96 35 76 Z" fill="#2f343d"/>
-        <path d="M34 58 Q56 43 78 58 L73 89 Q56 105 39 89 Z" fill="${skin}"/>
-        <path d="M33 58 L50 42 L46 62 Z" fill="#3a404b"/>
-        <path d="M79 58 L62 42 L66 62 Z" fill="#3a404b"/>
-        <circle cx="45" cy="66" r="3" fill="#2b2f38"/>
-        <circle cx="67" cy="66" r="3" fill="#2b2f38"/>
-        <path d="${mouth}" fill="none" stroke="#8f5a48" stroke-width="3" stroke-linecap="round"/>
-        <path d="M39 96 L73 96 L82 123 L30 123 Z" fill="${shirt}"/>
-	        <path d="M39 96 Q56 110 73 96" fill="none" stroke="#ffffff" stroke-width="5" opacity="0.7"/>
-	        <path d="M33 105 L20 118" stroke="${shirt}" stroke-width="9" stroke-linecap="round"/>
-	        <path d="M79 105 L92 118" stroke="${shirt}" stroke-width="9" stroke-linecap="round"/>
-	        ${extra}
-	      </svg>
+      <svg class="avatar-card" viewBox="0 0 128 156" role="img">
+        <defs>
+          <linearGradient id="${id}" x1="18" y1="9" x2="110" y2="143" gradientUnits="userSpaceOnUse">
+            <stop stop-color="${primary}"/>
+            <stop offset="1" stop-color="${dark}"/>
+          </linearGradient>
+        </defs>
+        <rect x="4" y="4" width="120" height="148" rx="26" fill="#fff" stroke="#e4e7f0" stroke-width="2"/>
+        <path d="M20 29 Q64 5 108 29 V111 Q92 140 64 144 Q36 140 20 111 Z" fill="url(#${id})"/>
+        <circle cx="101" cy="29" r="13" fill="${light}" opacity=".55"/>
+        <circle cx="24" cy="109" r="18" fill="#fff" opacity=".16"/>
+        <text x="64" y="22" text-anchor="middle" class="avatar-kicker">VIRAL TEST LAB</text>
+        <text x="64" y="39" text-anchor="middle" class="avatar-code" fill="${light}">${type.code}</text>
+        <path d="M35 105 Q64 83 93 105 L105 135 H23 Z" fill="${dark}"/>
+        <path d="M41 105 Q64 121 87 105 L96 135 H32 Z" fill="${primary}"/>
+        <path d="M37 63 Q42 38 64 39 Q86 38 91 63 L85 86 Q64 105 43 86 Z" fill="${hair}"/>
+        <path d="M40 66 Q64 46 88 66 L82 91 Q64 108 46 91 Z" fill="${skin}"/>
+        <path d="M41 65 L57 49 L54 68 Z" fill="${hair}"/>
+        <path d="M87 65 L71 49 L74 68 Z" fill="${hair}"/>
+        ${eyes}
+        <path d="${mouth}" fill="none" stroke="#8a5a45" stroke-width="4" stroke-linecap="round"/>
+        <path d="M48 98 Q64 108 80 98" stroke="#fff" stroke-width="5" opacity=".48" fill="none"/>
+        ${propSvg}
+      </svg>
     </div>
   `;
 }
