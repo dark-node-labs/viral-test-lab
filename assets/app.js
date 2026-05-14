@@ -651,7 +651,7 @@ function showRiceResult(root, answers) {
 
 function attachShare(button, text) {
   button.addEventListener("click", async () => {
-    const shareData = { title: "Viral Test Lab", text, url: window.location.href };
+    const shareData = { title: "Quick Test Hub", text, url: window.location.href };
     if (navigator.share) {
       await navigator.share(shareData);
     } else {
