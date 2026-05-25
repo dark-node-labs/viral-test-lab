@@ -6,18 +6,26 @@
     return "en";
   };
 
-  const zhTypeSlug = (path) => {
-    const match = path.match(/^\/zh\/sbti-types\/([^/]+)\/?$/);
+  const sbtiTypeSlug = (path) => {
+    const match = path.match(/^\/(?:zh\/)?sbti-types\/([^/]+)\/?$/);
     return match ? match[1] : "";
   };
 
   const routeKey = (path) => {
     if (path === "/" || path === "/zh/" || path === "/fr/" || path === "/vi/") return "home";
-    if (zhTypeSlug(path)) return "sbti-type";
+    if (sbtiTypeSlug(path)) return "sbti-type";
     if (path.includes("/sbti-types/")) return "sbti-types";
     if (path.includes("/sbti-test/")) return "sbti-test";
+    if (path.includes("/reaction-time-test/")) return "reaction-test";
+    if (path.includes("/typing-speed-test/")) return "typing-test";
+    if (path.includes("/cps-test/")) return "cps-test";
+    if (path.includes("/keyboard-test/")) return "keyboard-test";
+    if (path.includes("/mouse-test/")) return "mouse-test";
+    if (path.includes("/iq-test")) return "iq-test";
     if (path.includes("/rice-purity-test-score-meaning/")) return "rice-score";
     if (path.includes("/rice-purity-test/") || path.includes("/test-de-purete/")) return "rice-test";
+    if (path.includes("/best-fun-personality-tests/")) return "fun-tests";
+    if (path.includes("/link-to-us/")) return "link-to-us";
     if (path.includes("/privacy/")) return "privacy";
     if (path.includes("/terms/")) return "terms";
     return "home";
@@ -27,43 +35,78 @@
     const routes = {
       en: {
         home: "/",
+        "iq-test": "/iq-test/",
+        "reaction-test": "/reaction-time-test/",
+        "typing-test": "/typing-speed-test/",
+        "cps-test": "/cps-test/",
+        "keyboard-test": "/keyboard-test/",
+        "mouse-test": "/mouse-test/",
         "sbti-test": "/sbti-test/",
         "sbti-types": "/sbti-types/",
         "rice-test": "/rice-purity-test/",
         "rice-score": "/rice-purity-test-score-meaning/",
+        "fun-tests": "/best-fun-personality-tests/",
+        "link-to-us": "/link-to-us/",
         privacy: "/privacy/",
         terms: "/terms/"
       },
       zh: {
         home: "/zh/",
+        "iq-test": "/zh/iq-test/",
+        "reaction-test": "/reaction-time-test/",
+        "typing-test": "/typing-speed-test/",
+        "cps-test": "/cps-test/",
+        "keyboard-test": "/keyboard-test/",
+        "mouse-test": "/mouse-test/",
         "sbti-test": "/zh/sbti-test/",
         "sbti-types": "/zh/sbti-types/",
         "rice-test": "/zh/rice-purity-test/",
         "rice-score": "/zh/rice-purity-test-score-meaning/",
+        "fun-tests": "/best-fun-personality-tests/",
+        "link-to-us": "/link-to-us/",
         privacy: "/privacy/",
         terms: "/terms/"
       },
       fr: {
         home: "/fr/",
+        "iq-test": "/iq-test/",
+        "reaction-test": "/reaction-time-test/",
+        "typing-test": "/typing-speed-test/",
+        "cps-test": "/cps-test/",
+        "keyboard-test": "/keyboard-test/",
+        "mouse-test": "/mouse-test/",
         "sbti-test": "/fr/sbti-test/",
         "sbti-types": "/fr/sbti-types/",
         "rice-test": "/fr/test-de-purete/",
         "rice-score": "/fr/rice-purity-test-score-meaning/",
+        "fun-tests": "/best-fun-personality-tests/",
+        "link-to-us": "/link-to-us/",
         privacy: "/privacy/",
         terms: "/terms/"
       },
       vi: {
         home: "/vi/",
+        "iq-test": "/iq-test/",
+        "reaction-test": "/reaction-time-test/",
+        "typing-test": "/typing-speed-test/",
+        "cps-test": "/cps-test/",
+        "keyboard-test": "/keyboard-test/",
+        "mouse-test": "/mouse-test/",
         "sbti-test": "/vi/sbti-test/",
         "sbti-types": "/vi/sbti-types/",
         "rice-test": "/vi/rice-purity-test/",
         "rice-score": "/vi/rice-purity-test-score-meaning/",
+        "fun-tests": "/best-fun-personality-tests/",
+        "link-to-us": "/link-to-us/",
         privacy: "/privacy/",
         terms: "/terms/"
       }
     };
     if (key === "sbti-type") {
-      return (lang === "zh" && slug ? `/zh/sbti-types/${slug}/` : routes[lang]["sbti-types"]) + hash;
+      if (slug && lang === "en") return `/sbti-types/${slug}/` + hash;
+      if (slug && lang === "zh") return `/zh/sbti-types/${slug}/` + hash;
+      if (slug) return `/sbti-types/${slug}/` + hash;
+      return routes[lang]["sbti-types"] + hash;
     }
     return (routes[lang][key] || routes[lang].home) + hash;
   };
@@ -71,7 +114,7 @@
   const currentLang = langFromPath(window.location.pathname);
   const storedLang = localStorage.getItem("siteLang");
   const key = routeKey(window.location.pathname);
-  const currentTypeSlug = zhTypeSlug(window.location.pathname);
+  const currentTypeSlug = sbtiTypeSlug(window.location.pathname);
 
   if (storedLang && storedLang !== currentLang && ["en", "zh", "fr", "vi"].includes(storedLang)) {
     const next = localizedPath(storedLang, key, window.location.hash, currentTypeSlug);
@@ -88,7 +131,7 @@
   document.querySelectorAll("a[href^='/']").forEach((link) => {
     if (link.closest(".language-popover")) return;
     const url = new URL(link.getAttribute("href"), window.location.origin);
-    const mapped = localizedPath(lang, routeKey(url.pathname), url.hash, zhTypeSlug(url.pathname));
+    const mapped = localizedPath(lang, routeKey(url.pathname), url.hash, sbtiTypeSlug(url.pathname));
     link.setAttribute("href", mapped);
   });
 

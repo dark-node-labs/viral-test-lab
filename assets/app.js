@@ -196,6 +196,54 @@ const riceBands = [
   { min: 0, label: "Low score", text: "You checked many items. Treat the score as a conversation starter, not a judgment." }
 ];
 
+const iqQuestions = [
+  { c: "visual", d: 1, q: { en: "Which item completes the pattern: circle, square, triangle, circle, square, ?", zh: "哪一项能补全规律：圆形、正方形、三角形、圆形、正方形、？" }, o: { en: ["Circle", "Square", "Triangle", "Star"], zh: ["圆形", "正方形", "三角形", "星形"] }, a: 2, e: { en: "The three shapes repeat in the same order.", zh: "三个图形按固定顺序循环出现。" } },
+  { c: "number", d: 1, q: { en: "What comes next: 2, 4, 8, 16, ?", zh: "下一个数字是：2, 4, 8, 16, ?" }, o: { en: ["20", "24", "30", "32"], zh: ["20", "24", "30", "32"] }, a: 3, e: { en: "Each number is doubled.", zh: "每一项都是前一项的 2 倍。" } },
+  { c: "logic", d: 1, q: { en: "All zims are lums. Some lums are naks. What must be true?", zh: "所有 Zim 都是 Lum。一些 Lum 是 Nak。以下哪项一定为真？" }, o: { en: ["All zims are naks", "Some naks are zims", "All zims are lums", "No lums are zims"], zh: ["所有 Zim 都是 Nak", "一些 Nak 是 Zim", "所有 Zim 都是 Lum", "没有 Lum 是 Zim"] }, a: 2, e: { en: "Only the first statement is guaranteed.", zh: "只有题干中的第一条关系必然成立。" } },
+  { c: "spatial", d: 1, q: { en: "If a clock hand points east and turns 90 degrees clockwise, where does it point?", zh: "如果钟表指针指向东方，顺时针转 90 度后指向哪里？" }, o: { en: ["North", "South", "West", "East"], zh: ["北", "南", "西", "东"] }, a: 1, e: { en: "East rotated clockwise becomes south.", zh: "从东方顺时针旋转 90 度会指向南方。" } },
+  { c: "verbal", d: 1, q: { en: "Book is to reading as fork is to:", zh: "书本之于阅读，如叉子之于：" }, o: { en: ["Cooking", "Eating", "Writing", "Drawing"], zh: ["烹饪", "进食", "写作", "绘画"] }, a: 1, e: { en: "A fork is a tool used for eating.", zh: "叉子是用于进食的工具。" } },
+  { c: "visual", d: 1.3, q: { en: "In a row, the colors repeat red, blue, blue. Position 8 is:", zh: "颜色按红、蓝、蓝重复排列。第 8 个颜色是：" }, o: { en: ["Red", "Blue", "Green", "Cannot tell"], zh: ["红", "蓝", "绿", "无法判断"] }, a: 1, e: { en: "Positions 2, 3, 5, 6, and 8 are blue.", zh: "第 2、3、5、6、8 位都是蓝色。" } },
+  { c: "number", d: 1.3, q: { en: "What comes next: 3, 6, 11, 18, 27, ?", zh: "下一个数字是：3, 6, 11, 18, 27, ?" }, o: { en: ["36", "38", "40", "42"], zh: ["36", "38", "40", "42"] }, a: 1, e: { en: "The increases are +3, +5, +7, +9, so next is +11.", zh: "差值为 +3、+5、+7、+9，下一步是 +11。" } },
+  { c: "logic", d: 1.3, q: { en: "Mia is older than Leo. Leo is older than Noor. Who is the youngest?", zh: "Mia 比 Leo 年长，Leo 比 Noor 年长。谁最年轻？" }, o: { en: ["Mia", "Leo", "Noor", "Cannot tell"], zh: ["Mia", "Leo", "Noor", "无法判断"] }, a: 2, e: { en: "The order is Mia, Leo, Noor from oldest to youngest.", zh: "从年长到年轻依次是 Mia、Leo、Noor。" } },
+  { c: "spatial", d: 1.3, q: { en: "A cube has one red face opposite one blue face. If red faces up, blue is:", zh: "一个立方体的红色面与蓝色面相对。如果红色面朝上，蓝色面在哪里？" }, o: { en: ["Front", "Back", "Bottom", "Right"], zh: ["前面", "后面", "底面", "右面"] }, a: 2, e: { en: "Opposite the top face is the bottom face.", zh: "与上面相对的是底面。" } },
+  { c: "verbal", d: 1.3, q: { en: "Find the closest analogy: seed is to tree as spark is to:", zh: "选择最接近的类比：种子之于树，如火花之于：" }, o: { en: ["Fire", "Rain", "Stone", "Smoke"], zh: ["火", "雨", "石头", "烟"] }, a: 0, e: { en: "A seed can grow into a tree; a spark can grow into a fire.", zh: "种子可以发展成树，火花可以发展成火。" } },
+  { c: "visual", d: 1.3, q: { en: "A pattern alternates small-large-large-small-large-large. The next size is:", zh: "大小规律为小、大、大、小、大、大。下一项是：" }, o: { en: ["Small", "Large", "Medium", "Unknown"], zh: ["小", "大", "中", "未知"] }, a: 0, e: { en: "The cycle is small, large, large.", zh: "循环单元是小、大、大。" } },
+  { c: "number", d: 1.7, q: { en: "What comes next: 1, 1, 2, 3, 5, 8, ?", zh: "下一个数字是：1, 1, 2, 3, 5, 8, ?" }, o: { en: ["11", "12", "13", "15"], zh: ["11", "12", "13", "15"] }, a: 2, e: { en: "Each term is the sum of the previous two.", zh: "每一项等于前两项之和。" } },
+  { c: "logic", d: 1.7, q: { en: "If no painters are singers and all singers are dancers, which is possible?", zh: "如果没有画家是歌手，且所有歌手都是舞者，以下哪项可能成立？" }, o: { en: ["A painter is a singer", "A singer is not a dancer", "A painter is a dancer", "No dancer is a singer"], zh: ["某个画家是歌手", "某个歌手不是舞者", "某个画家是舞者", "没有舞者是歌手"] }, a: 2, e: { en: "Painters cannot be singers, but they may still be dancers.", zh: "画家不能是歌手，但仍可能是舞者。" } },
+  { c: "spatial", d: 1.7, q: { en: "A shape points north. Rotate it 180 degrees, then 90 degrees counterclockwise. It points:", zh: "一个箭头指向北。先旋转 180 度，再逆时针旋转 90 度。它指向：" }, o: { en: ["North", "East", "South", "West"], zh: ["北", "东", "南", "西"] }, a: 1, e: { en: "North becomes south after 180 degrees; south rotated counterclockwise becomes east.", zh: "北转 180 度为南，南再逆时针 90 度为东。" } },
+  { c: "verbal", d: 1.7, q: { en: "Choose the odd one out.", zh: "选出不同类的一项。" }, o: { en: ["Whisper", "Shout", "Murmur", "Silent"], zh: ["低语", "喊叫", "喃喃说", "沉默"] }, a: 3, e: { en: "The first three are ways of using voice; silent means no voice.", zh: "前三项都是发声方式，沉默表示不发声。" } },
+  { c: "visual", d: 1.7, q: { en: "In each pair, the second symbol is the first mirrored left-right. Which pair breaks the rule?", zh: "每一组中，第二个符号都是第一个的左右镜像。哪一组不符合规律？" }, o: { en: ["b / d", "p / q", "E / Ǝ", "N / Z"], zh: ["b / d", "p / q", "E / Ǝ", "N / Z"] }, a: 3, e: { en: "N mirrored left-right is still a reversed N-like form, not Z.", zh: "N 的左右镜像不是 Z。" } },
+  { c: "number", d: 1.7, q: { en: "What number is missing: 4, 9, 19, 39, ?", zh: "缺失数字是：4, 9, 19, 39, ?" }, o: { en: ["59", "69", "79", "89"], zh: ["59", "69", "79", "89"] }, a: 2, e: { en: "Each term doubles and adds 1.", zh: "每一项都是前一项乘 2 再加 1。" } },
+  { c: "logic", d: 1.7, q: { en: "Four people sit in a row. Ana is left of Bo. Cy is right of Bo. Dee is left of Ana. Who is farthest left?", zh: "四个人排成一排。Ana 在 Bo 左边，Cy 在 Bo 右边，Dee 在 Ana 左边。最左边是谁？" }, o: { en: ["Ana", "Bo", "Cy", "Dee"], zh: ["Ana", "Bo", "Cy", "Dee"] }, a: 3, e: { en: "Dee is left of Ana, and Ana is left of Bo.", zh: "Dee 在 Ana 左边，而 Ana 在 Bo 左边。" } },
+  { c: "spatial", d: 1.7, q: { en: "Fold a square paper in half vertically, punch a hole near the left folded edge, then unfold. How many holes appear?", zh: "把正方形纸竖向对折，在靠近左侧折边的位置打一个孔，展开后有几个孔？" }, o: { en: ["1", "2", "3", "4"], zh: ["1", "2", "3", "4"] }, a: 1, e: { en: "One punch through folded paper creates two mirrored holes.", zh: "折叠后打一个孔，展开会出现两个镜像孔。" } },
+  { c: "verbal", d: 1.7, q: { en: "Fragile is to sturdy as scarce is to:", zh: "脆弱之于坚固，如稀缺之于：" }, o: { en: ["Rare", "Plentiful", "Useful", "Hidden"], zh: ["罕见", "充足", "有用", "隐藏"] }, a: 1, e: { en: "The relationship is opposite meaning.", zh: "这组关系是反义关系。" } },
+  { c: "visual", d: 2.2, q: { en: "A 3-step pattern changes by adding one line, then rotating 90 degrees. After add, rotate, add, rotate, the next action is:", zh: "一个三步图形规律为：加一条线，然后旋转 90 度。若已经经历加、转、加、转，下一步是：" }, o: { en: ["Add a line", "Rotate 90 degrees", "Remove a line", "Mirror"], zh: ["加一条线", "旋转 90 度", "去掉一条线", "镜像"] }, a: 0, e: { en: "The operations alternate add, rotate.", zh: "操作按加、转交替进行。" } },
+  { c: "number", d: 2.2, q: { en: "What comes next: 2, 6, 12, 20, 30, ?", zh: "下一个数字是：2, 6, 12, 20, 30, ?" }, o: { en: ["40", "42", "44", "46"], zh: ["40", "42", "44", "46"] }, a: 1, e: { en: "The sequence is n × (n + 1): 1×2, 2×3, 3×4, so next is 6×7.", zh: "这是 n × (n + 1)：1×2、2×3、3×4，所以下一项是 6×7。" } },
+  { c: "logic", d: 2.2, q: { en: "Exactly one statement is true: A says 'B is true.' B says 'C is true.' C says 'A is false.' Which statement is true?", zh: "恰好只有一句话为真：A 说“B 为真”。B 说“C 为真”。C 说“A 为假”。哪一句为真？" }, o: { en: ["A", "B", "C", "None"], zh: ["A", "B", "C", "都不真"] }, a: 2, e: { en: "If C is true, A is false and B is false, making exactly one true statement.", zh: "若 C 为真，则 A 假、B 假，正好只有一句真话。" } },
+  { c: "spatial", d: 2.2, q: { en: "A cube is painted on all outside faces and cut into 27 equal cubes. How many small cubes have exactly two painted faces?", zh: "一个立方体外表面全部涂色，再切成 27 个相同小立方体。有多少个小立方体恰好有两个面被涂色？" }, o: { en: ["6", "8", "12", "18"], zh: ["6", "8", "12", "18"] }, a: 2, e: { en: "A 3×3×3 cube has one edge-center cube on each of 12 edges.", zh: "3×3×3 立方体每条边有 1 个边中小块，共 12 条边。" } },
+  { c: "verbal", d: 2.2, q: { en: "If 'opaque' means not letting light through, the best opposite is:", zh: "如果 opaque 表示不透光，最合适的反义词是：" }, o: { en: ["Bright", "Transparent", "Heavy", "Polished"], zh: ["明亮", "透明", "沉重", "光滑"] }, a: 1, e: { en: "Transparent means light can pass through.", zh: "transparent 表示光可以透过。" } },
+  { c: "visual", d: 2.2, q: { en: "A row uses this rule: the third symbol combines the first two. If □ + / becomes a square with a diagonal, then ○ + | becomes:", zh: "一排图形规则为：第三个图形合并前两个。若 □ + / 变成带斜线的正方形，则 ○ + | 变成：" }, o: { en: ["Circle with vertical line", "Circle with diagonal line", "Square with vertical line", "Plain circle"], zh: ["带竖线的圆", "带斜线的圆", "带竖线的方形", "普通圆"] }, a: 0, e: { en: "The two symbols are overlaid.", zh: "两个图形被叠加在一起。" } },
+  { c: "number", d: 2.2, q: { en: "What comes next: 81, 27, 9, 3, ?", zh: "下一个数字是：81, 27, 9, 3, ?" }, o: { en: ["0", "1", "2", "6"], zh: ["0", "1", "2", "6"] }, a: 1, e: { en: "Each term is divided by 3.", zh: "每一项除以 3。" } },
+  { c: "logic", d: 2.2, q: { en: "If the code for CAT is DBU, what is the same code rule for MIND?", zh: "如果 CAT 按同一规则编码为 DBU，那么 MIND 编码为：" }, o: { en: ["NJOF", "LJMC", "NJOE", "MJNE"], zh: ["NJOF", "LJMC", "NJOE", "MJNE"] }, a: 0, e: { en: "Each letter moves one step forward in the alphabet.", zh: "每个字母都向后移动一位。" } },
+  { c: "spatial", d: 2.2, q: { en: "Facing north, you turn right, then right, then left. Which way are you facing?", zh: "面朝北，先右转，再右转，再左转。最后面朝哪里？" }, o: { en: ["North", "East", "South", "West"], zh: ["北", "东", "南", "西"] }, a: 1, e: { en: "North to east, east to south, south left to east.", zh: "北右转为东，东右转为南，南左转为东。" } },
+  { c: "verbal", d: 2.2, q: { en: "Complete the analogy: editor is to manuscript as sculptor is to:", zh: "完成类比：编辑之于稿件，如雕塑家之于：" }, o: { en: ["Clay", "Gallery", "Paint", "Frame"], zh: ["黏土", "画廊", "颜料", "相框"] }, a: 0, e: { en: "Both transform raw material into a refined work.", zh: "两者都加工原材料，使其成为作品。" } },
+  { c: "number", d: 1.3, q: { en: "If 5 machines make 5 parts in 5 minutes, how long do 10 machines need to make 10 parts?", zh: "如果 5 台机器 5 分钟做 5 个零件，那么 10 台机器做 10 个零件需要多久？" }, o: { en: ["5 minutes", "10 minutes", "15 minutes", "20 minutes"], zh: ["5 分钟", "10 分钟", "15 分钟", "20 分钟"] }, a: 0, e: { en: "Each machine makes one part in 5 minutes.", zh: "每台机器 5 分钟做 1 个零件。" } },
+  { c: "logic", d: 1.3, q: { en: "If today is Wednesday, what day is 10 days from now?", zh: "如果今天是星期三，10 天后是星期几？" }, o: { en: ["Friday", "Saturday", "Sunday", "Monday"], zh: ["星期五", "星期六", "星期日", "星期一"] }, a: 1, e: { en: "10 days is one week plus 3 days; Wednesday plus 3 is Saturday.", zh: "10 天是一周加 3 天，星期三后 3 天是星期六。" } },
+  { c: "spatial", d: 1.3, q: { en: "Which flat shape can fold into a closed cube most directly?", zh: "哪种展开图最可能直接折成立方体？" }, o: { en: ["Six equal squares connected edge to edge", "Four triangles in a line", "One circle and five squares", "Six circles"], zh: ["六个等大的正方形边对边相连", "四个三角形排成一行", "一个圆和五个正方形", "六个圆"] }, a: 0, e: { en: "A cube is made of six square faces.", zh: "立方体由六个正方形面组成。" } },
+  { c: "verbal", d: 1.3, q: { en: "Choose the word closest to 'brief'.", zh: "选择与 brief 最接近的词。" }, o: { en: ["Short", "Heavy", "Ancient", "Loud"], zh: ["短暂的", "沉重的", "古老的", "响亮的"] }, a: 0, e: { en: "Brief means short in time or length.", zh: "brief 表示时间或篇幅短。" } },
+  { c: "visual", d: 1.7, q: { en: "A tile pattern repeats black, white, white, black. The 11th tile is:", zh: "瓷砖颜色按黑、白、白、黑重复。第 11 块是：" }, o: { en: ["Black", "White", "Gray", "Cannot tell"], zh: ["黑", "白", "灰", "无法判断"] }, a: 1, e: { en: "The 4-tile cycle places white at positions 2, 3, 6, 7, 10, and 11.", zh: "四项循环中第 11 位对应白色。" } },
+  { c: "number", d: 1.7, q: { en: "What is 15% of 80?", zh: "80 的 15% 是多少？" }, o: { en: ["8", "10", "12", "15"], zh: ["8", "10", "12", "15"] }, a: 2, e: { en: "10% is 8 and 5% is 4, so 15% is 12.", zh: "10% 是 8，5% 是 4，所以 15% 是 12。" } },
+  { c: "logic", d: 2.2, q: { en: "A box contains red and blue balls. Every red ball is large. Some blue balls are large. Which is certain?", zh: "盒子里有红球和蓝球。每个红球都是大的。一些蓝球是大的。以下哪项一定成立？" }, o: { en: ["All large balls are red", "Some large balls are blue", "No blue balls are red", "All blue balls are large"], zh: ["所有大球都是红球", "一些大球是蓝球", "没有蓝球是红球", "所有蓝球都是大的"] }, a: 1, e: { en: "If some blue balls are large, then some large balls are blue.", zh: "既然一些蓝球是大的，就必然存在一些大球是蓝球。" } },
+  { c: "spatial", d: 2.2, q: { en: "A map scale says 1 cm equals 5 km. Two towns are 7 cm apart on the map. Real distance is:", zh: "地图比例尺为 1 厘米代表 5 公里。地图上两地相距 7 厘米，实际距离是：" }, o: { en: ["12 km", "25 km", "35 km", "50 km"], zh: ["12 公里", "25 公里", "35 公里", "50 公里"] }, a: 2, e: { en: "7 × 5 km = 35 km.", zh: "7 × 5 公里 = 35 公里。" } },
+  { c: "verbal", d: 2.2, q: { en: "Choose the best completion: cautious is to reckless as generous is to:", zh: "选择最佳补全：谨慎之于鲁莽，如慷慨之于：" }, o: { en: ["Kind", "Selfish", "Careful", "Wealthy"], zh: ["善良", "自私", "小心", "富有"] }, a: 1, e: { en: "The relationship is opposites.", zh: "这组关系是反义关系。" } },
+  { c: "visual", d: 2.2, q: { en: "A sequence shows one dot, then two dots connected, then three dots connected in a triangle. The next likely figure is:", zh: "图形序列为一个点、两个点相连、三个点连成三角形。下一项最可能是：" }, o: { en: ["Four dots forming a square", "Three dots in a line", "One larger dot", "Five dots in a star"], zh: ["四个点连成正方形", "三个点排成直线", "一个更大的点", "五个点连成星形"] }, a: 0, e: { en: "The pattern increases points and forms the simplest closed figure.", zh: "规律是点数增加，并形成最简单的封闭图形。" } }
+];
+
+const iqCategoryLabels = {
+  en: { visual: "Visual Patterns", number: "Number Rules", logic: "Logic", spatial: "Spatial Thinking", verbal: "Verbal Analogy" },
+  zh: { visual: "图形推理", number: "数字规律", logic: "逻辑判断", spatial: "空间想象", verbal: "语言类推" }
+};
+
 function byId(id) {
   return document.getElementById(id);
 }
@@ -429,6 +477,7 @@ function initSbtiTypes() {
       </button>
       <div class="type-detail" ${index === 0 ? "" : "hidden"}>
         <p ${isZh ? 'lang="zh-CN"' : ""}>${isZh ? type.zhText : englishLongText(type)}</p>
+        <p><a href="${isZh ? `/zh/sbti-types/${slugForType(type)}/` : `/sbti-types/${slugForType(type)}/`}">${isZh ? "查看完整类型解释" : "Read the full type guide"}</a></p>
       </div>
     </article>
   `).join("");
@@ -440,6 +489,10 @@ function initSbtiTypes() {
       detail.hidden = expanded;
     });
   });
+}
+
+function slugForType(type) {
+  return type.code.toLowerCase().replace(/!/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
 function englishLongText(type) {
@@ -662,6 +715,707 @@ function attachShare(button, text) {
   });
 }
 
+function initReactionTimeTest() {
+  const root = byId("reaction-test");
+  if (!root) return;
+
+  const state = {
+    phase: "idle",
+    timeoutId: null,
+    readyAt: 0,
+    rounds: [],
+    round: 0
+  };
+  const totalRounds = 5;
+
+  function average(values) {
+    return Math.round(values.reduce((sum, value) => sum + value, 0) / values.length);
+  }
+
+  function bestLabel(ms) {
+    if (ms <= 190) return "Elite reflex range";
+    if (ms <= 240) return "Fast reaction range";
+    if (ms <= 310) return "Typical reaction range";
+    return "Steady but improvable";
+  }
+
+  function renderStart() {
+    state.phase = "idle";
+    root.innerHTML = `
+      <div class="tool-card reaction-idle" data-reaction-pad>
+        <p class="eyebrow">Reaction Time Test</p>
+        <h2>Click when the screen turns green.</h2>
+        <p>Run five rounds to measure your average visual reaction time. Wait for the green signal, then click or tap as quickly as you can.</p>
+        <div class="tool-stats">
+          <span><strong>5</strong> rounds</span>
+          <span><strong>ms</strong> result</span>
+          <span><strong>Tap</strong> friendly</span>
+        </div>
+        <button class="button primary" data-reaction-start>Start Test</button>
+      </div>
+    `;
+    root.querySelector("[data-reaction-start]").addEventListener("click", startRound);
+  }
+
+  function startRound() {
+    window.clearTimeout(state.timeoutId);
+    state.phase = "waiting";
+    state.round += 1;
+    const delay = 1400 + Math.random() * 3200;
+    root.innerHTML = `
+      <button class="tool-card reaction-pad reaction-waiting" data-reaction-pad>
+        <span>Round ${state.round} / ${totalRounds}</span>
+        <strong>Wait for green...</strong>
+        <em>Do not click yet</em>
+      </button>
+    `;
+    root.querySelector("[data-reaction-pad]").addEventListener("click", tooSoon);
+    state.timeoutId = window.setTimeout(() => {
+      state.phase = "ready";
+      state.readyAt = performance.now();
+      root.innerHTML = `
+        <button class="tool-card reaction-pad reaction-ready" data-reaction-pad>
+          <span>Round ${state.round} / ${totalRounds}</span>
+          <strong>Click now</strong>
+          <em>Fast and clean</em>
+        </button>
+      `;
+      root.querySelector("[data-reaction-pad]").addEventListener("click", captureReaction);
+    }, delay);
+  }
+
+  function tooSoon() {
+    if (state.phase !== "waiting") return;
+    window.clearTimeout(state.timeoutId);
+    state.phase = "early";
+    root.innerHTML = `
+      <div class="tool-card reaction-early">
+        <p class="eyebrow">Too Soon</p>
+        <h2>Wait for the green signal.</h2>
+        <p>This round does not count. Try again and keep your cursor or finger relaxed until the color changes.</p>
+        <button class="button primary" data-retry-round>Retry Round</button>
+      </div>
+    `;
+    state.round -= 1;
+    root.querySelector("[data-retry-round]").addEventListener("click", startRound);
+  }
+
+  function captureReaction() {
+    if (state.phase !== "ready") return;
+    const ms = Math.round(performance.now() - state.readyAt);
+    state.rounds.push(ms);
+    if (state.rounds.length >= totalRounds) {
+      renderResult();
+      return;
+    }
+    root.innerHTML = `
+      <div class="tool-card">
+        <p class="eyebrow">Round ${state.round} Result</p>
+        <div class="tool-number">${ms}<small>ms</small></div>
+        <p>${totalRounds - state.rounds.length} rounds left. Keep the same hand position for a fair average.</p>
+        <button class="button primary" data-next-round>Next Round</button>
+      </div>
+    `;
+    root.querySelector("[data-next-round]").addEventListener("click", startRound);
+  }
+
+  function renderResult() {
+    const avg = average(state.rounds);
+    const best = Math.min(...state.rounds);
+    const worst = Math.max(...state.rounds);
+    root.innerHTML = `
+      <div class="result-card tool-result">
+        <p class="eyebrow">Your Reaction Time</p>
+        <div class="tool-number">${avg}<small>ms</small></div>
+        <h2>${bestLabel(avg)}</h2>
+        <p>Your best round was ${best}ms and your slowest round was ${worst}ms. For a cleaner comparison, retake the test on the same device and avoid background distractions.</p>
+        <div class="result-metrics">
+          <div><span>Average</span><strong>${avg}ms</strong></div>
+          <div><span>Best</span><strong>${best}ms</strong></div>
+          <div><span>Rounds</span><strong>${totalRounds}</strong></div>
+          <div><span>Range</span><strong>${worst - best}ms</strong></div>
+        </div>
+        <div class="actions">
+          <button class="button primary" data-share-reaction>Share Result</button>
+          <button class="button ghost" data-restart-reaction>Try Again</button>
+        </div>
+      </div>
+    `;
+    attachShare(root.querySelector("[data-share-reaction]"), `My reaction time average is ${avg}ms`);
+    root.querySelector("[data-restart-reaction]").addEventListener("click", () => {
+      state.rounds = [];
+      state.round = 0;
+      renderStart();
+    });
+  }
+
+  renderStart();
+}
+
+function initCpsTest() {
+  const root = byId("cps-test");
+  if (!root) return;
+
+  let clicks = 0;
+  let seconds = 5;
+  let timerId = null;
+  let running = false;
+
+  function render() {
+    root.innerHTML = `
+      <div class="tool-card cps-card">
+        <p class="eyebrow">CPS Test</p>
+        <h2>Click as fast as you can for 5 seconds.</h2>
+        <button class="click-zone" data-click-zone>
+          <strong>${clicks}</strong>
+          <span>${running ? `${seconds.toFixed(1)}s left` : "Start clicking"}</span>
+        </button>
+        <div class="tool-stats">
+          <span><strong>${(clicks / 5).toFixed(1)}</strong> CPS</span>
+          <span><strong>${clicks}</strong> clicks</span>
+          <span><strong>5s</strong> test</span>
+        </div>
+        <div class="actions">
+          <button class="button ghost" data-reset-cps>Reset</button>
+        </div>
+      </div>
+    `;
+    root.querySelector("[data-click-zone]").addEventListener("click", click);
+    root.querySelector("[data-reset-cps]").addEventListener("click", reset);
+  }
+
+  function click() {
+    if (!running && seconds > 0) start();
+    if (!running) return;
+    clicks += 1;
+    const number = root.querySelector(".click-zone strong");
+    const cps = root.querySelector(".tool-stats span strong");
+    if (number) number.textContent = clicks;
+    if (cps) cps.textContent = (clicks / 5).toFixed(1);
+  }
+
+  function start() {
+    running = true;
+    const startedAt = performance.now();
+    timerId = window.setInterval(() => {
+      seconds = Math.max(0, 5 - (performance.now() - startedAt) / 1000);
+      const label = root.querySelector(".click-zone span");
+      if (label) label.textContent = `${seconds.toFixed(1)}s left`;
+      if (seconds <= 0) finish();
+    }, 80);
+  }
+
+  function finish() {
+    window.clearInterval(timerId);
+    running = false;
+    const cps = (clicks / 5).toFixed(1);
+    root.innerHTML = `
+      <div class="result-card tool-result">
+        <p class="eyebrow">Your CPS Result</p>
+        <div class="tool-number">${cps}<small>CPS</small></div>
+        <h2>${Number(cps) >= 9 ? "Very fast clicking" : Number(cps) >= 6 ? "Solid clicking speed" : "Casual clicking speed"}</h2>
+        <p>You made ${clicks} clicks in 5 seconds. Use the same mouse or touch device when comparing attempts.</p>
+        <div class="actions">
+          <button class="button primary" data-share-cps>Share Result</button>
+          <button class="button ghost" data-reset-cps>Try Again</button>
+        </div>
+      </div>
+    `;
+    attachShare(root.querySelector("[data-share-cps]"), `My CPS test result is ${cps} clicks per second`);
+    root.querySelector("[data-reset-cps]").addEventListener("click", reset);
+  }
+
+  function reset() {
+    window.clearInterval(timerId);
+    clicks = 0;
+    seconds = 5;
+    running = false;
+    render();
+  }
+
+  render();
+}
+
+function initTypingSpeedTest() {
+  const root = byId("typing-test");
+  if (!root) return;
+
+  const samples = [
+    "Quick tests work best when the task is simple, the result is instant, and the page explains what the score means.",
+    "A steady typing rhythm usually beats a rushed start, especially when accuracy matters as much as raw speed.",
+    "Online tools can be useful when they give people a clear answer without asking for personal information."
+  ];
+  const text = samples[Math.floor(Math.random() * samples.length)];
+  let startedAt = 0;
+  let done = false;
+  let lastValue = "";
+
+  function render() {
+    root.innerHTML = `
+      <div class="tool-card typing-card">
+        <p class="eyebrow">Typing Speed Test</p>
+        <h2>Type the sample text exactly.</h2>
+        <div class="typing-sample" data-typing-sample>${text}</div>
+        <textarea class="typing-input" data-typing-input rows="5" placeholder="Start typing here..."></textarea>
+        <div class="tool-stats">
+          <span><strong data-wpm>0</strong> WPM</span>
+          <span><strong data-accuracy>100%</strong> accuracy</span>
+          <span><strong data-errors>0</strong> errors</span>
+        </div>
+        <div class="actions">
+          <button class="button ghost" data-reset-typing>Reset</button>
+        </div>
+      </div>
+    `;
+    root.querySelector("[data-typing-input]").addEventListener("input", update);
+    root.querySelector("[data-reset-typing]").addEventListener("click", () => window.location.reload());
+  }
+
+  function update(event) {
+    if (done) return;
+    const value = event.target.value;
+    if (value.length - lastValue.length > 8) {
+      event.target.value = lastValue;
+      const sample = root.querySelector("[data-typing-sample]");
+      if (sample) sample.dataset.warning = "Type the passage manually instead of pasting it.";
+      return;
+    }
+    if (!startedAt && value.length) startedAt = performance.now();
+    let errors = 0;
+    for (let index = 0; index < value.length; index += 1) {
+      if (value[index] !== text[index]) errors += 1;
+    }
+    const minutes = Math.max((performance.now() - startedAt) / 60000, 1 / 60000);
+    const correctChars = Math.max(0, value.length - errors);
+    const wpm = Math.round((correctChars / 5) / minutes);
+    const accuracy = value.length ? Math.max(0, Math.round((correctChars / value.length) * 100)) : 100;
+    root.querySelector("[data-wpm]").textContent = wpm;
+    root.querySelector("[data-accuracy]").textContent = `${accuracy}%`;
+    root.querySelector("[data-errors]").textContent = errors;
+    paintSample(value);
+    lastValue = value;
+    if (value === text) finish(wpm, accuracy, errors);
+  }
+
+  function paintSample(value) {
+    const html = text.split("").map((char, index) => {
+      const typed = value[index];
+      const className = typed == null ? "" : typed === char ? "ok" : "bad";
+      return `<span class="${className}">${char === " " ? "&nbsp;" : char}</span>`;
+    }).join("");
+    root.querySelector("[data-typing-sample]").innerHTML = html;
+  }
+
+  function finish(wpm, accuracy, errors) {
+    done = true;
+    const seconds = Math.round((performance.now() - startedAt) / 1000);
+    root.innerHTML = `
+      <div class="result-card tool-result">
+        <p class="eyebrow">Your Typing Speed</p>
+        <div class="tool-number">${wpm}<small>WPM</small></div>
+        <h2>${wpm >= 70 ? "Fast typing speed" : wpm >= 40 ? "Comfortable typing speed" : "Practice typing speed"}</h2>
+        <p>You finished in ${seconds} seconds with ${accuracy}% accuracy and ${errors} errors.</p>
+        <div class="result-metrics">
+          <div><span>Speed</span><strong>${wpm} WPM</strong></div>
+          <div><span>Accuracy</span><strong>${accuracy}%</strong></div>
+          <div><span>Time</span><strong>${seconds}s</strong></div>
+          <div><span>Errors</span><strong>${errors}</strong></div>
+        </div>
+        <div class="actions">
+          <button class="button primary" data-share-typing>Share Result</button>
+          <button class="button ghost" data-reset-typing>Try Again</button>
+        </div>
+      </div>
+    `;
+    attachShare(root.querySelector("[data-share-typing]"), `My typing speed is ${wpm} WPM with ${accuracy}% accuracy`);
+    root.querySelector("[data-reset-typing]").addEventListener("click", () => window.location.reload());
+  }
+
+  render();
+}
+
+function initKeyboardTest() {
+  const root = byId("keyboard-test");
+  if (!root) return;
+
+  const tested = new Map();
+  const keys = [
+    ["Escape", "Esc"], ["Digit1", "1"], ["Digit2", "2"], ["Digit3", "3"], ["Digit4", "4"], ["Digit5", "5"], ["Digit6", "6"], ["Digit7", "7"], ["Digit8", "8"], ["Digit9", "9"], ["Digit0", "0"], ["Backspace", "Back"],
+    ["Tab", "Tab"], ["KeyQ", "Q"], ["KeyW", "W"], ["KeyE", "E"], ["KeyR", "R"], ["KeyT", "T"], ["KeyY", "Y"], ["KeyU", "U"], ["KeyI", "I"], ["KeyO", "O"], ["KeyP", "P"], ["Enter", "Enter"],
+    ["CapsLock", "Caps"], ["KeyA", "A"], ["KeyS", "S"], ["KeyD", "D"], ["KeyF", "F"], ["KeyG", "G"], ["KeyH", "H"], ["KeyJ", "J"], ["KeyK", "K"], ["KeyL", "L"],
+    ["ShiftLeft", "Shift"], ["KeyZ", "Z"], ["KeyX", "X"], ["KeyC", "C"], ["KeyV", "V"], ["KeyB", "B"], ["KeyN", "N"], ["KeyM", "M"], ["ShiftRight", "Shift"],
+    ["ControlLeft", "Ctrl"], ["AltLeft", "Alt"], ["Space", "Space"], ["AltRight", "Alt"], ["ControlRight", "Ctrl"]
+  ];
+
+  function render(last = null) {
+    const testedCount = tested.size;
+    root.innerHTML = `
+      <div class="tool-card keyboard-card" tabindex="0" data-keyboard-area>
+        <p class="eyebrow">Keyboard Test</p>
+        <h2>Press keys to test your keyboard.</h2>
+        <p>Click inside this panel, then press keys. Working keys light up and the latest key appears below.</p>
+        <div class="keyboard-status">
+          <div><span>Last key</span><strong>${last?.key || "None yet"}</strong></div>
+          <div><span>Code</span><strong>${last?.code || "Waiting"}</strong></div>
+          <div><span>Keys tested</span><strong>${testedCount}</strong></div>
+        </div>
+        <div class="keyboard-grid">
+          ${keys.map(([code, label]) => `<span class="${tested.has(code) ? "tested" : ""}" data-key-code="${code}">${label}</span>`).join("")}
+        </div>
+        <div class="actions">
+          <button class="button primary" data-focus-keyboard>Focus Test</button>
+          <button class="button ghost" data-reset-keyboard>Reset</button>
+        </div>
+      </div>
+    `;
+    const area = root.querySelector("[data-keyboard-area]");
+    area.addEventListener("keydown", keydown);
+    root.querySelector("[data-focus-keyboard]").addEventListener("click", () => area.focus());
+    root.querySelector("[data-reset-keyboard]").addEventListener("click", () => {
+      tested.clear();
+      render();
+    });
+    if (last) area.focus();
+  }
+
+  function keydown(event) {
+    event.preventDefault();
+    tested.set(event.code, event.key);
+    render({ key: event.key === " " ? "Space" : event.key, code: event.code });
+  }
+
+  render();
+}
+
+function initMouseTest() {
+  const root = byId("mouse-test");
+  if (!root) return;
+
+  const state = {
+    left: false,
+    middle: false,
+    right: false,
+    double: false,
+    wheel: 0,
+    x: 0,
+    y: 0
+  };
+
+  function render() {
+    root.innerHTML = `
+      <div class="tool-card mouse-card">
+        <p class="eyebrow">Mouse Test</p>
+        <h2>Click, scroll, and move inside the test area.</h2>
+        <div class="mouse-zone" data-mouse-zone>
+          <div class="mouse-shape">
+            <span class="${state.left ? "active" : ""}">Left</span>
+            <span class="${state.middle ? "active" : ""}">Wheel</span>
+            <span class="${state.right ? "active" : ""}">Right</span>
+          </div>
+          <p>Move pointer here, click each button, double-click, and scroll.</p>
+        </div>
+        <div class="result-metrics">
+          <div><span>Left</span><strong>${state.left ? "OK" : "Wait"}</strong></div>
+          <div><span>Middle</span><strong>${state.middle ? "OK" : "Wait"}</strong></div>
+          <div><span>Right</span><strong>${state.right ? "OK" : "Wait"}</strong></div>
+          <div><span>Double</span><strong>${state.double ? "OK" : "Wait"}</strong></div>
+        </div>
+        <div class="tool-stats">
+          <span><strong>${state.wheel}</strong> wheel</span>
+          <span><strong>${state.x}</strong> x</span>
+          <span><strong>${state.y}</strong> y</span>
+        </div>
+        <div class="actions">
+          <button class="button ghost" data-reset-mouse>Reset</button>
+        </div>
+      </div>
+    `;
+    const zone = root.querySelector("[data-mouse-zone]");
+    zone.addEventListener("contextmenu", (event) => event.preventDefault());
+    zone.addEventListener("mousedown", updateButton);
+    zone.addEventListener("dblclick", () => {
+      state.double = true;
+      render();
+    });
+    zone.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      state.wheel += event.deltaY > 0 ? 1 : -1;
+      render();
+    });
+    zone.addEventListener("mousemove", (event) => {
+      const rect = zone.getBoundingClientRect();
+      state.x = Math.round(event.clientX - rect.left);
+      state.y = Math.round(event.clientY - rect.top);
+      const x = root.querySelector(".tool-stats span:nth-child(2) strong");
+      const y = root.querySelector(".tool-stats span:nth-child(3) strong");
+      if (x) x.textContent = state.x;
+      if (y) y.textContent = state.y;
+    });
+    root.querySelector("[data-reset-mouse]").addEventListener("click", () => {
+      Object.assign(state, { left: false, middle: false, right: false, double: false, wheel: 0, x: 0, y: 0 });
+      render();
+    });
+  }
+
+  function updateButton(event) {
+    if (event.button === 0) state.left = true;
+    if (event.button === 1) state.middle = true;
+    if (event.button === 2) state.right = true;
+    render();
+  }
+
+  render();
+}
+
+function initIqQuiz() {
+  const root = byId("iq-quiz");
+  if (!root) return;
+
+  const lang = root.dataset.lang || ((document.documentElement.lang || "en").startsWith("zh") ? "zh" : "en");
+  const labels = {
+    en: {
+      eyebrow: "Ready when you are",
+      title: "40-question cognitive ability test",
+      intro: "You will have 30 minutes. Choose the best answer for each item. Unanswered questions count as incorrect.",
+      start: "Start Test",
+      question: "Question",
+      back: "Back",
+      next: "Skip",
+      finish: "Finish Test",
+      timer: "Time left",
+      answered: "answered",
+      resultEyebrow: "Your Cognitive Ability Result",
+      range: "Estimated range",
+      percentile: "Estimated percentile",
+      speed: "Pacing",
+      share: "Share Result",
+      retake: "Retake",
+      review: "Review missed questions",
+      notice: "This result is for entertainment and self-reflection only. It is not a clinical IQ score or diagnostic assessment.",
+      copied: "Copied"
+    },
+    zh: {
+      eyebrow: "准备好即可开始",
+      title: "40 题认知能力测试",
+      intro: "测试限时 30 分钟。每题选择一个最佳答案，未作答题目按错误计算。",
+      start: "开始测试",
+      question: "题目",
+      back: "上一题",
+      next: "跳过",
+      finish: "提交测试",
+      timer: "剩余时间",
+      answered: "已答",
+      resultEyebrow: "你的认知能力结果",
+      range: "估算区间",
+      percentile: "估算百分位",
+      speed: "答题节奏",
+      share: "分享结果",
+      retake: "重新测试",
+      review: "查看错题解析",
+      notice: "本结果仅供娱乐和自我认知参考，不是临床 IQ 分数或诊断评估。",
+      copied: "已复制"
+    }
+  }[lang];
+
+  let index = 0;
+  let startedAt = 0;
+  let timerId = null;
+  let remaining = 30 * 60;
+  const answers = new Array(iqQuestions.length).fill(null);
+  const timeSpent = new Array(iqQuestions.length).fill(0);
+  const enteredAt = { value: 0 };
+
+  function text(value) {
+    return value[lang] || value.en;
+  }
+
+  function formatTime(totalSeconds) {
+    const minutes = Math.floor(Math.max(0, totalSeconds) / 60);
+    const seconds = Math.max(0, totalSeconds) % 60;
+    return `${minutes}:${String(seconds).padStart(2, "0")}`;
+  }
+
+  function startScreen() {
+    root.innerHTML = `
+      <p class="eyebrow">${labels.eyebrow}</p>
+      <h2>${labels.title}</h2>
+      <p>${labels.intro}</p>
+      <div class="iq-test-stats">
+        <span>40</span>
+        <span>30 min</span>
+        <span>5 areas</span>
+      </div>
+      <div class="notice"><p>${labels.notice}</p></div>
+      <div class="actions"><button class="button primary" data-start-iq>${labels.start}</button></div>
+    `;
+    root.querySelector("[data-start-iq]").addEventListener("click", () => {
+      startedAt = Date.now();
+      enteredAt.value = Date.now();
+      timerId = window.setInterval(tick, 1000);
+      renderQuestion();
+    });
+  }
+
+  function tick() {
+    remaining -= 1;
+    const timer = root.querySelector("[data-iq-timer]");
+    if (timer) timer.textContent = formatTime(remaining);
+    if (remaining <= 0) showIqResult();
+  }
+
+  function storeTime() {
+    if (!enteredAt.value) return;
+    timeSpent[index] += Math.round((Date.now() - enteredAt.value) / 1000);
+    enteredAt.value = Date.now();
+  }
+
+  function renderQuestion() {
+    const item = iqQuestions[index];
+    const answered = answers.filter((answer) => answer !== null).length;
+    root.innerHTML = `
+      <div class="iq-topline">
+        <span>${labels.question} ${index + 1} / ${iqQuestions.length}</span>
+        <strong>${labels.timer}: <span data-iq-timer>${formatTime(remaining)}</span></strong>
+      </div>
+      <div class="progress"><span style="width:${(answered / iqQuestions.length) * 100}%"></span></div>
+      <div class="question-count">${iqCategoryLabels[lang][item.c]} · ${answered}/${iqQuestions.length} ${labels.answered}</div>
+      <h2 class="question-title">${text(item.q)}</h2>
+      <div class="options">
+        ${text(item.o).map((option, optionIndex) => `<button class="option ${answers[index] === optionIndex ? "selected" : ""}" data-iq-answer="${optionIndex}">${option}</button>`).join("")}
+      </div>
+      <div class="quiz-footer">
+        <button class="button secondary" data-iq-back ${index === 0 ? "disabled" : ""}>${labels.back}</button>
+        <button class="button ghost" data-iq-next>${index === iqQuestions.length - 1 ? labels.finish : labels.next}</button>
+      </div>
+    `;
+
+    root.querySelectorAll("[data-iq-answer]").forEach((button) => {
+      button.addEventListener("click", () => {
+        storeTime();
+        answers[index] = Number(button.dataset.iqAnswer);
+        if (index >= iqQuestions.length - 1) showIqResult();
+        else {
+          index += 1;
+          renderQuestion();
+        }
+      });
+    });
+    root.querySelector("[data-iq-back]").addEventListener("click", () => {
+      storeTime();
+      index = Math.max(0, index - 1);
+      renderQuestion();
+    });
+    root.querySelector("[data-iq-next]").addEventListener("click", () => {
+      storeTime();
+      if (index >= iqQuestions.length - 1) showIqResult();
+      else {
+        index += 1;
+        renderQuestion();
+      }
+    });
+  }
+
+  function showIqResult() {
+    if (timerId) window.clearInterval(timerId);
+    storeTime();
+
+    const categoryScores = {};
+    const categoryMax = {};
+    let raw = 0;
+    let maxRaw = 0;
+    let correct = 0;
+
+    iqQuestions.forEach((item, questionIndex) => {
+      const base = 10 * item.d;
+      const isCorrect = answers[questionIndex] === item.a;
+      const pace = isCorrect && timeSpent[questionIndex] > 0 && timeSpent[questionIndex] <= 25 ? 1.08 : isCorrect && timeSpent[questionIndex] >= 75 ? 0.92 : 1;
+      const score = isCorrect ? base * pace : 0;
+      raw += score;
+      maxRaw += base * 1.08;
+      correct += isCorrect ? 1 : 0;
+      categoryScores[item.c] = (categoryScores[item.c] || 0) + score;
+      categoryMax[item.c] = (categoryMax[item.c] || 0) + base * 1.08;
+    });
+
+    const ratio = raw / maxRaw;
+    const estimate = Math.round(72 + ratio * 66);
+    const percentile = Math.max(3, Math.min(99, Math.round(4 + ratio * 94)));
+    const minutesUsed = Math.max(1, Math.round((Date.now() - startedAt) / 60000));
+    const band = getIqBand(estimate, lang);
+    const categoryRows = Object.keys(iqCategoryLabels[lang]).map((category) => {
+      const pct = Math.round(((categoryScores[category] || 0) / (categoryMax[category] || 1)) * 100);
+      return `
+        <div class="ability-row">
+          <span>${iqCategoryLabels[lang][category]}</span>
+          <div class="ability-bar"><i style="width:${Math.max(4, pct)}%"></i></div>
+          <strong>${pct}%</strong>
+        </div>
+      `;
+    }).join("");
+    const missed = iqQuestions.map((item, questionIndex) => ({ item, questionIndex })).filter(({ item, questionIndex }) => answers[questionIndex] !== item.a).slice(0, 8);
+    const missedHtml = missed.length ? missed.map(({ item, questionIndex }) => `
+      <details class="review-item">
+        <summary>${labels.question} ${questionIndex + 1}: ${text(item.q)}</summary>
+        <p><strong>${lang === "zh" ? "正确答案" : "Correct answer"}:</strong> ${text(item.o)[item.a]}</p>
+        <p>${text(item.e)}</p>
+      </details>
+    `).join("") : `<p>${lang === "zh" ? "你没有错题，表现非常稳定。" : "No missed questions. Very steady performance."}</p>`;
+
+    root.innerHTML = `
+      <div class="result-card iq-result">
+        <p class="eyebrow">${labels.resultEyebrow}</p>
+        <div class="score-number">${estimate}</div>
+        <h2>${band.title}</h2>
+        <p>${band.text}</p>
+        <div class="result-metrics">
+          <div><span>${labels.range}</span><strong>${Math.max(70, estimate - 7)}-${estimate + 7}</strong></div>
+          <div><span>${labels.percentile}</span><strong>${percentile}%</strong></div>
+          <div><span>${labels.speed}</span><strong>${minutesUsed} min</strong></div>
+          <div><span>${lang === "zh" ? "正确题数" : "Correct"}</span><strong>${correct}/${iqQuestions.length}</strong></div>
+        </div>
+        <div class="ability-panel">${categoryRows}</div>
+        <div class="notice"><p>${labels.notice}</p></div>
+        <div class="actions">
+          <button class="button primary" data-share="IQ test result: ${estimate}">${labels.share}</button>
+          <button class="button ghost" data-restart>${labels.retake}</button>
+        </div>
+        <h3>${labels.review}</h3>
+        <div class="review-list">${missedHtml}</div>
+      </div>
+    `;
+    root.querySelector("[data-restart]").addEventListener("click", () => window.location.reload());
+    attachShare(root.querySelector("[data-share]"), lang === "zh" ? `我的认知能力测试估算结果是 ${estimate}` : `My cognitive ability test estimate is ${estimate}`);
+  }
+
+  startScreen();
+}
+
+function getIqBand(score, lang) {
+  const bands = {
+    en: [
+      { min: 131, title: "High-level reasoning performance", text: "Your answers suggest very strong pattern recognition and reasoning performance in this online test." },
+      { min: 116, title: "Excellent reasoning range", text: "You performed especially well across several cognitive areas, with solid accuracy under time pressure." },
+      { min: 101, title: "Good reasoning range", text: "Your result shows above-average performance for this test, with clear strengths to build on." },
+      { min: 86, title: "Typical reasoning range", text: "Your result sits in the common range for this entertainment test. Category scores can show where to practice." },
+      { min: 0, title: "Foundational reasoning range", text: "This result may reflect pacing, focus, or unfamiliar item types. Try again when rested for a cleaner snapshot." }
+    ],
+    zh: [
+      { min: 131, title: "高水平推理表现", text: "你的答案显示出很强的模式识别和推理表现，尤其适合继续挑战高难度题型。" },
+      { min: 116, title: "优秀推理区间", text: "你在多个认知维度上表现稳定，在限时环境下仍保持了不错的准确率。" },
+      { min: 101, title: "良好推理区间", text: "本次结果高于常见区间，建议结合分类表现继续加强短板题型。" },
+      { min: 86, title: "普通推理区间", text: "本次表现处于常见范围。你可以查看五维画像，找到更适合练习的方向。" },
+      { min: 0, title: "基础推理区间", text: "这个结果可能受到节奏、专注度或题型熟悉度影响。休息后重测会更接近真实状态。" }
+    ]
+  }[lang];
+  return bands.find((band) => score >= band.min);
+}
+
 initSbtiQuiz();
 initRiceQuiz();
 initSbtiTypes();
+initIqQuiz();
+initReactionTimeTest();
+initCpsTest();
+initTypingSpeedTest();
+initKeyboardTest();
+initMouseTest();
