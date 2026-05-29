@@ -1318,7 +1318,8 @@ button.button {
   gap: 10px;
 }
 
-.link-cloud a {
+.link-cloud a,
+.link-cloud span {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 8px 11px;

@@ -464,6 +464,11 @@ function initSbtiTypes() {
   const docLang = document.documentElement.lang || "en";
   const lang = root.dataset.lang || (docLang.startsWith("zh") ? "zh" : docLang.startsWith("fr") ? "fr" : docLang.startsWith("vi") ? "vi" : "en");
   const isZh = lang === "zh";
+  const guideLink = (type) => {
+    if (lang === "zh") return `<p><a href="/zh/sbti-types/${slugForType(type)}/">查看完整类型解释</a></p>`;
+    if (lang === "en") return `<p><a href="/sbti-types/${slugForType(type)}/">Read the full type guide</a></p>`;
+    return "";
+  };
   root.innerHTML = sbtiTypes.map((type, index) => `
     <article class="type-card">
       <button class="type-summary" type="button" aria-expanded="${index === 0 ? "true" : "false"}">
@@ -477,7 +482,7 @@ function initSbtiTypes() {
       </button>
       <div class="type-detail" ${index === 0 ? "" : "hidden"}>
         <p ${isZh ? 'lang="zh-CN"' : ""}>${isZh ? type.zhText : englishLongText(type)}</p>
-        <p><a href="${isZh ? `/zh/sbti-types/${slugForType(type)}/` : `/sbti-types/${slugForType(type)}/`}">${isZh ? "查看完整类型解释" : "Read the full type guide"}</a></p>
+        ${guideLink(type)}
       </div>
     </article>
   `).join("");
