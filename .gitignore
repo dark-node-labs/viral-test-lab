@@ -2,3 +2,7 @@
 *.log
 
 .wrangler/
+
+backlink-outreach.md
+backlink-tracker.csv
+social-posting-drafts.md
