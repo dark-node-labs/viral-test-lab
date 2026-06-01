@@ -1,20 +1,36 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKTRP4LELE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YKTRP4LELE');
+    </script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mouse Test - Free Online Mouse Button & Scroll Test</title>
     <meta name="description" content="Use a free online mouse test to check left click, right click, middle click, double click, wheel scrolling, and pointer movement.">
     <link rel="canonical" href="https://quicktesthub.com/mouse-test/">
     <link rel="alternate" hreflang="en" href="https://quicktesthub.com/mouse-test/">
+    <link rel="alternate" hreflang="zh-CN" href="https://quicktesthub.com/zh/mouse-test/">
+    <link rel="alternate" hreflang="fr" href="https://quicktesthub.com/fr/mouse-test/">
+    <link rel="alternate" hreflang="vi" href="https://quicktesthub.com/vi/mouse-test/">
     <link rel="alternate" hreflang="x-default" href="https://quicktesthub.com/mouse-test/">
     <meta property="og:title" content="Mouse Test - Free Online Mouse Button & Scroll Test">
     <meta property="og:description" content="Check mouse buttons, wheel scrolling, double click, and pointer movement in your browser.">
     <meta property="og:image" content="https://quicktesthub.com/assets/og-card.png">
     <link rel="icon" href="/assets/og-card.png" type="image/png">
-    <link rel="stylesheet" href="/assets/styles.css?v=12">
+    <link rel="stylesheet" href="/assets/styles.css?v=15">
     <script type="application/ld+json">
       {"@context":"https://schema.org","@type":"WebApplication","name":"Mouse Test","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","url":"https://quicktesthub.com/mouse-test/","description":"A free online mouse tester for buttons, wheel, double click, and pointer movement."}
+    </script>
+    <script type="application/ld+json" data-seo-faq-schema="mouse-test">
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What can a mouse test diagnose?","acceptedAnswer":{"@type":"Answer","text":"A mouse test can help spot button failures, double-click problems, wheel issues, and pointer movement problems reported to the browser."}},{"@type":"Question","name":"Why is right-click different in the browser?","acceptedAnswer":{"@type":"Answer","text":"Browsers normally open a context menu on right-click, so the test area blocks that menu to detect the button."}},{"@type":"Question","name":"Should I compare mouse results on the same device?","acceptedAnswer":{"@type":"Answer","text":"Yes. Browser, operating system, mouse driver, wireless connection, and device condition can all change results."}}]}
     </script>
   </head>
   <body>
@@ -27,6 +43,7 @@
           <a href="/cps-test/">CPS Test</a>
           <a href="/reaction-time-test/">Reaction Time</a>
           <a href="/typing-speed-test/">Typing Speed</a>
+          <details class="language-menu"><summary>Language</summary><div class="language-popover"><a data-lang="en" href="/">English</a><a data-lang="zh" href="/zh/">中文</a><a data-lang="fr" href="/fr/">Français</a><a data-lang="vi" href="/vi/">Tiếng Việt</a></div></details>
         </div>
       </nav>
     </header>
@@ -81,13 +98,35 @@
         <p>A browser mouse test can show whether common inputs are reaching the page. It can help identify a button that does not respond, a wheel that sends inconsistent scroll events, or pointer movement that seems jumpy.</p>
         <h2>Why might results differ by browser?</h2>
         <p>Browsers and operating systems handle right-click menus, touchpads, high-resolution wheels, and special mouse buttons differently. This test focuses on common inputs that most browsers expose reliably.</p>
-        <h2>Mouse Test FAQ</h2>
-        <h3>Why is right click blocked inside the test area?</h3>
-        <p>The normal context menu is disabled inside the test area so the page can detect the right button cleanly.</p>
-        <h3>Does this work with a touchpad?</h3>
-        <p>Many touchpads work for movement, clicking, and scrolling, but gestures may be handled by your system before they reach the browser.</p>
-        <h3>What should I try next?</h3>
-        <p>Try the <a href="/cps-test/">CPS Test</a> for click speed or the <a href="/keyboard-test/">Keyboard Test</a> for key detection.</p>
+
+        <h2 data-seo-faq-heading>Mouse Test FAQ</h2>
+        <h3>What can a mouse test diagnose?</h3>
+        <p>A mouse test can help spot button failures, double-click problems, wheel issues, and pointer movement problems reported to the browser.</p>
+
+        <h3>Why is right-click different in the browser?</h3>
+        <p>Browsers normally open a context menu on right-click, so the test area blocks that menu to detect the button.</p>
+
+        <h3>Should I compare mouse results on the same device?</h3>
+        <p>Yes. Browser, operating system, mouse driver, wireless connection, and device condition can all change results.</p>
+      </section>
+
+      <section class="section related-tools" data-seo-related-tools>
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Related Input Tools</p>
+              <h2>Related Input Tools</h2>
+            </div>
+            <p>Keep checking the full input chain with these quick browser tools.</p>
+          </div>
+          <div class="grid">
+            <a class="card" href="/reaction-time-test/"><strong>Reaction Time Test</strong><p>Measure visual reaction speed in milliseconds over five rounds.</p></a>
+            <a class="card" href="/typing-speed-test/"><strong>Typing Speed Test</strong><p>Measure WPM, accuracy, time, and errors with a browser typing test.</p></a>
+            <a class="card" href="/cps-test/"><strong>CPS Test</strong><p>Measure clicks per second in a quick 5-second burst.</p></a>
+            <a class="card" href="/keyboard-test/"><strong>Keyboard Test</strong><p>Check whether keyboard keys and key codes are detected correctly.</p></a>
+            <a class="card" href="/keyboard-polling-rate-test/"><strong>Keyboard Polling Rate Test</strong><p>Estimate keyboard Hz, input interval, peak rate, and stability.</p></a>
+          </div>
+        </div>
       </section>
     </main>
 
@@ -97,6 +136,7 @@
         <span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span>
       </div>
     </footer>
-    <script src="/assets/app.js?v=12"></script>
+    <script src="/assets/i18n.js?v=15"></script>
+    <script src="/assets/app.js?v=15"></script>
   </body>
 </html>

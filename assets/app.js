@@ -248,6 +248,284 @@ function byId(id) {
   return document.getElementById(id);
 }
 
+function currentPageLang() {
+  const lang = document.documentElement.lang || "en";
+  if (lang.startsWith("zh")) return "zh";
+  if (lang.startsWith("fr")) return "fr";
+  if (lang.startsWith("vi")) return "vi";
+  return "en";
+}
+
+const dynamicTextTranslations = {
+  zh: {
+    "Reaction Time Test": "反应速度测试",
+    "Click when the screen turns green.": "屏幕变绿时立即点击。",
+    "Run five rounds to measure your average visual reaction time. Wait for the green signal, then click or tap as quickly as you can.": "完成 5 轮测试，测量你的平均视觉反应时间。等待绿色信号，然后尽快点击或轻点。",
+    "rounds": "轮",
+    "result": "结果",
+    "Tap": "轻点",
+    "friendly": "适配",
+    "Start Test": "开始测试",
+    "Wait for green...": "等待变绿...",
+    "Do not click yet": "还不要点击",
+    "Click now": "现在点击",
+    "Fast and clean": "快速点击",
+    "Too Soon": "太早了",
+    "Wait for the green signal.": "请等待绿色信号。",
+    "This round does not count. Try again and keep your cursor or finger relaxed until the color changes.": "本轮不计入结果。再试一次，颜色变化前保持手指放松。",
+    "Retry Round": "重试本轮",
+    "Next Round": "下一轮",
+    "Your Reaction Time": "你的反应时间",
+    "Elite reflex range": "顶级反应范围",
+    "Fast reaction range": "快速反应范围",
+    "Typical reaction range": "常见反应范围",
+    "Steady but improvable": "稳定但可提升",
+    "Average": "平均值",
+    "Best": "最佳",
+    "Rounds": "轮数",
+    "Range": "范围",
+    "Share Result": "分享结果",
+    "Try Again": "再试一次",
+    "CPS Test": "CPS 测试",
+    "Click as fast as you can for 5 seconds.": "在 5 秒内尽可能快地点击。",
+    "Start clicking": "开始点击",
+    "clicks": "次点击",
+    "test": "测试",
+    "Reset": "重置",
+    "Your CPS Result": "你的 CPS 结果",
+    "Very fast clicking": "点击非常快",
+    "Solid clicking speed": "点击速度不错",
+    "Casual clicking speed": "休闲点击速度",
+    "Typing Speed Test": "打字速度测试",
+    "Type the sample text exactly.": "准确输入示例文本。",
+    "Start typing here...": "从这里开始输入...",
+    "accuracy": "准确率",
+    "errors": "错误",
+    "Your Typing Speed": "你的打字速度",
+    "Fast typing speed": "打字速度很快",
+    "Comfortable typing speed": "打字速度舒适",
+    "Practice typing speed": "练习级打字速度",
+    "Speed": "速度",
+    "Accuracy": "准确率",
+    "Time": "时间",
+    "Errors": "错误",
+    "Keyboard Test": "键盘测试",
+    "Press keys to test your keyboard.": "按键测试你的键盘。",
+    "Click inside this panel, then press keys. Working keys light up and the latest key appears below.": "点击这个面板，然后按下按键。正常工作的键会亮起，最新按键会显示在下方。",
+    "Last key": "最新按键",
+    "Code": "键码",
+    "Keys tested": "已测按键",
+    "None yet": "暂无",
+    "Waiting": "等待中",
+    "Focus Test": "聚焦测试",
+    "Keyboard Polling Rate Test": "键盘轮询率测试",
+    "Alternate two keys for 10 seconds.": "交替按两个键 10 秒。",
+    "Click Start Test, then quickly press A and S back and forth. The tool ignores held-key repeats and estimates keyboard Hz from real keydown intervals.": "点击开始测试，然后快速交替按 A 和 S。本工具会忽略长按重复，并根据真实按键间隔估算键盘 Hz。",
+    "For a cleaner result, alternate two keys instead of holding one key. Holding a key often measures OS repeat behavior.": "为了获得更干净的结果，请交替按两个键，不要长按单键。长按通常测到的是系统重复速度。",
+    "Open Keyboard Test": "打开键盘测试",
+    "Testing Keyboard Hz": "正在测试键盘 Hz",
+    "Press A and S alternately.": "交替按 A 和 S。",
+    "Current": "当前",
+    "Time Left": "剩余时间",
+    "Peak": "峰值",
+    "Events": "事件数",
+    "Min Interval": "最小间隔",
+    "Waiting for key presses...": "等待按键...",
+    "Stop Early": "提前停止",
+    "First key": "第一个按键",
+    "Your Keyboard Hz Result": "你的键盘 Hz 结果",
+    "Gaming keyboard range": "游戏键盘范围",
+    "Very good input rate": "非常好的输入频率",
+    "Good input rate": "良好的输入频率",
+    "Standard input rate": "标准输入频率",
+    "Keep testing": "继续测试",
+    "Run a longer test": "请测试更久一点",
+    "Average Hz": "平均 Hz",
+    "Peak Hz": "峰值 Hz",
+    "Stability": "稳定性",
+    "Stable": "稳定",
+    "Moderate": "中等",
+    "Unstable": "不稳定",
+    "Jitter": "抖动",
+    "Max Interval": "最大间隔",
+    "Ignored Holds": "忽略长按",
+    "Browser tests estimate event timing. Results can vary with browser, OS settings, CPU load, wireless connection, and pressing rhythm.": "浏览器测试是在估算事件时序。结果会受到浏览器、系统设置、CPU 负载、无线连接和按键节奏影响。",
+    "Mouse Test": "鼠标测试",
+    "Click, scroll, and move inside the test area.": "在测试区域内点击、滚动和移动。",
+    "Move pointer here, click each button, double-click, and scroll.": "把指针移到这里，点击每个按键，双击并滚动。",
+    "Left": "左键",
+    "Middle": "中键",
+    "Right": "右键",
+    "Double": "双击",
+    "Wait": "等待",
+    "wheel": "滚轮"
+  },
+  fr: {
+    "Reaction Time Test": "Test de Réaction",
+    "Click when the screen turns green.": "Cliquez quand l’écran devient vert.",
+    "Start Test": "Commencer",
+    "Wait for green...": "Attendez le vert...",
+    "Do not click yet": "Ne cliquez pas encore",
+    "Click now": "Cliquez maintenant",
+    "Too Soon": "Trop tôt",
+    "Retry Round": "Réessayer",
+    "Next Round": "Manche suivante",
+    "Your Reaction Time": "Votre temps de réaction",
+    "Average": "Moyenne",
+    "Best": "Meilleur",
+    "Rounds": "Manches",
+    "Range": "Écart",
+    "Share Result": "Partager",
+    "Try Again": "Réessayer",
+    "CPS Test": "Test CPS",
+    "Click as fast as you can for 5 seconds.": "Cliquez aussi vite que possible pendant 5 secondes.",
+    "Start clicking": "Commencez à cliquer",
+    "Reset": "Réinitialiser",
+    "Your CPS Result": "Votre résultat CPS",
+    "Typing Speed Test": "Test de Vitesse de Frappe",
+    "Type the sample text exactly.": "Tapez exactement le texte exemple.",
+    "Start typing here...": "Commencez à taper ici...",
+    "Your Typing Speed": "Votre vitesse de frappe",
+    "Speed": "Vitesse",
+    "Accuracy": "Précision",
+    "Time": "Temps",
+    "Errors": "Erreurs",
+    "Keyboard Test": "Test Clavier",
+    "Press keys to test your keyboard.": "Appuyez sur les touches pour tester votre clavier.",
+    "Last key": "Dernière touche",
+    "Code": "Code",
+    "Keys tested": "Touches testées",
+    "None yet": "Aucune",
+    "Waiting": "En attente",
+    "Focus Test": "Activer le test",
+    "Keyboard Polling Rate Test": "Test de Polling Rate Clavier",
+    "Alternate two keys for 10 seconds.": "Alternez deux touches pendant 10 secondes.",
+    "Open Keyboard Test": "Ouvrir le test clavier",
+    "Testing Keyboard Hz": "Test des Hz clavier",
+    "Press A and S alternately.": "Appuyez sur A et S en alternance.",
+    "Current": "Actuel",
+    "Time Left": "Temps restant",
+    "Peak": "Pic",
+    "Events": "Événements",
+    "Min Interval": "Intervalle min.",
+    "Waiting for key presses...": "En attente des touches...",
+    "Stop Early": "Arrêter",
+    "First key": "Première touche",
+    "Your Keyboard Hz Result": "Votre résultat clavier Hz",
+    "Average Hz": "Hz moyen",
+    "Peak Hz": "Pic Hz",
+    "Stability": "Stabilité",
+    "Stable": "Stable",
+    "Moderate": "Moyen",
+    "Unstable": "Instable",
+    "Jitter": "Jitter",
+    "Max Interval": "Intervalle max.",
+    "Ignored Holds": "Maintiens ignorés",
+    "Mouse Test": "Test Souris",
+    "Click, scroll, and move inside the test area.": "Cliquez, faites défiler et bougez dans la zone.",
+    "Left": "Gauche",
+    "Middle": "Milieu",
+    "Right": "Droite",
+    "Double": "Double",
+    "Wait": "Attente"
+  },
+  vi: {
+    "Reaction Time Test": "Test Phản Xạ",
+    "Click when the screen turns green.": "Bấm khi màn hình chuyển xanh.",
+    "Start Test": "Bắt đầu",
+    "Wait for green...": "Chờ màu xanh...",
+    "Do not click yet": "Chưa bấm",
+    "Click now": "Bấm ngay",
+    "Too Soon": "Quá sớm",
+    "Retry Round": "Thử lại vòng này",
+    "Next Round": "Vòng tiếp theo",
+    "Your Reaction Time": "Thời gian phản xạ của bạn",
+    "Average": "Trung bình",
+    "Best": "Tốt nhất",
+    "Rounds": "Vòng",
+    "Range": "Khoảng",
+    "Share Result": "Chia sẻ",
+    "Try Again": "Thử lại",
+    "CPS Test": "CPS Test",
+    "Click as fast as you can for 5 seconds.": "Bấm nhanh nhất có thể trong 5 giây.",
+    "Start clicking": "Bắt đầu bấm",
+    "Reset": "Đặt lại",
+    "Your CPS Result": "Kết quả CPS của bạn",
+    "Typing Speed Test": "Test Tốc Độ Gõ",
+    "Type the sample text exactly.": "Gõ chính xác đoạn mẫu.",
+    "Start typing here...": "Bắt đầu gõ ở đây...",
+    "Your Typing Speed": "Tốc độ gõ của bạn",
+    "Speed": "Tốc độ",
+    "Accuracy": "Chính xác",
+    "Time": "Thời gian",
+    "Errors": "Lỗi",
+    "Keyboard Test": "Test Bàn Phím",
+    "Press keys to test your keyboard.": "Nhấn phím để test bàn phím.",
+    "Last key": "Phím cuối",
+    "Code": "Mã",
+    "Keys tested": "Phím đã test",
+    "None yet": "Chưa có",
+    "Waiting": "Đang chờ",
+    "Focus Test": "Focus test",
+    "Keyboard Polling Rate Test": "Test Polling Rate Bàn Phím",
+    "Alternate two keys for 10 seconds.": "Bấm luân phiên hai phím trong 10 giây.",
+    "Open Keyboard Test": "Mở test bàn phím",
+    "Testing Keyboard Hz": "Đang test keyboard Hz",
+    "Press A and S alternately.": "Bấm A và S luân phiên.",
+    "Current": "Hiện tại",
+    "Time Left": "Còn lại",
+    "Peak": "Đỉnh",
+    "Events": "Sự kiện",
+    "Min Interval": "Khoảng min",
+    "Waiting for key presses...": "Đang chờ phím...",
+    "Stop Early": "Dừng sớm",
+    "First key": "Phím đầu",
+    "Your Keyboard Hz Result": "Kết quả keyboard Hz",
+    "Average Hz": "Hz trung bình",
+    "Peak Hz": "Hz đỉnh",
+    "Stability": "Ổn định",
+    "Stable": "Ổn định",
+    "Moderate": "Trung bình",
+    "Unstable": "Không ổn định",
+    "Jitter": "Jitter",
+    "Max Interval": "Khoảng max",
+    "Ignored Holds": "Giữ phím bỏ qua",
+    "Mouse Test": "Test Chuột",
+    "Click, scroll, and move inside the test area.": "Bấm, cuộn và di chuyển trong vùng test.",
+    "Left": "Trái",
+    "Middle": "Giữa",
+    "Right": "Phải",
+    "Double": "Double",
+    "Wait": "Chờ"
+  }
+};
+
+function localizeDynamicDom() {
+  const lang = currentPageLang();
+  if (lang === "en") return;
+  const map = dynamicTextTranslations[lang];
+  if (!map || !document.body) return;
+  document.querySelectorAll("textarea[placeholder]").forEach((input) => {
+    const translated = map[input.getAttribute("placeholder")];
+    if (translated) input.setAttribute("placeholder", translated);
+  });
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((node) => {
+    const value = node.nodeValue;
+    const trimmed = value.trim();
+    if (!trimmed || !map[trimmed]) return;
+    node.nodeValue = value.replace(trimmed, map[trimmed]);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  localizeDynamicDom();
+  const observer = new MutationObserver(() => localizeDynamicDom());
+  observer.observe(document.body, { childList: true, subtree: true });
+});
+
 function initSbtiQuiz() {
   const root = byId("sbti-quiz");
   if (!root) return;
@@ -1092,6 +1370,203 @@ function initKeyboardTest() {
   render();
 }
 
+function initKeyboardPollingRateTest() {
+  const root = byId("keyboard-polling-test");
+  if (!root) return;
+
+  const durationMs = 10000;
+  const state = {
+    running: false,
+    startedAt: 0,
+    timerId: null,
+    events: [],
+    lastTime: 0,
+    lastCode: "",
+    ignoredRepeats: 0
+  };
+
+  function formatMs(value) {
+    return Number.isFinite(value) ? `${value.toFixed(2)}ms` : "--";
+  }
+
+  function hzFromInterval(interval) {
+    return interval > 0 ? 1000 / interval : 0;
+  }
+
+  function stats() {
+    const intervals = state.events.slice(1).map((event, index) => event.time - state.events[index].time).filter((value) => value > 0);
+    const rates = intervals.map(hzFromInterval).filter((value) => Number.isFinite(value) && value > 0);
+    const avgHz = rates.length ? Math.round(rates.reduce((sum, value) => sum + value, 0) / rates.length) : 0;
+    const peakHz = rates.length ? Math.round(Math.max(...rates)) : 0;
+    const minInterval = intervals.length ? Math.min(...intervals) : 0;
+    const maxInterval = intervals.length ? Math.max(...intervals) : 0;
+    const meanInterval = intervals.length ? intervals.reduce((sum, value) => sum + value, 0) / intervals.length : 0;
+    const variance = intervals.length ? intervals.reduce((sum, value) => sum + Math.pow(value - meanInterval, 2), 0) / intervals.length : 0;
+    const jitter = Math.sqrt(variance);
+    const stability = jitter <= 8 && intervals.length >= 12 ? "Stable" : jitter <= 18 && intervals.length >= 8 ? "Moderate" : "Unstable";
+    const label = avgHz >= 900 ? "Gaming keyboard range" : avgHz >= 500 ? "Very good input rate" : avgHz >= 250 ? "Good input rate" : avgHz >= 120 ? "Standard input rate" : "Keep testing";
+
+    return { intervals, rates, avgHz, peakHz, minInterval, maxInterval, jitter, stability, label };
+  }
+
+  function renderStart() {
+    window.clearInterval(state.timerId);
+    state.running = false;
+    root.innerHTML = `
+      <div class="tool-card polling-card" tabindex="0" data-polling-area>
+        <p class="eyebrow">Keyboard Polling Rate Test</p>
+        <h2>Alternate two keys for 10 seconds.</h2>
+        <p>Click Start Test, then quickly press A and S back and forth. The tool ignores held-key repeats and estimates keyboard Hz from real keydown intervals.</p>
+        <div class="polling-keys" aria-label="Suggested keys">
+          <span>A</span>
+          <span>S</span>
+        </div>
+        <div class="tool-stats">
+          <span><strong>10s</strong> test</span>
+          <span><strong>Hz</strong> result</span>
+          <span><strong>ms</strong> interval</span>
+        </div>
+        <div class="notice"><p>For a cleaner result, alternate two keys instead of holding one key. Holding a key often measures OS repeat behavior.</p></div>
+        <div class="actions">
+          <button class="button primary" data-start-polling>Start Test</button>
+          <a class="button secondary" href="/keyboard-test/">Open Keyboard Test</a>
+        </div>
+      </div>
+    `;
+    const area = root.querySelector("[data-polling-area]");
+    root.querySelector("[data-start-polling]").addEventListener("click", () => start(area));
+  }
+
+  function start(area) {
+    Object.assign(state, {
+      running: true,
+      startedAt: performance.now(),
+      events: [],
+      lastTime: 0,
+      lastCode: "",
+      ignoredRepeats: 0
+    });
+    renderRunning();
+    root.querySelector("[data-polling-area]").focus();
+    state.timerId = window.setInterval(updateRunning, 80);
+  }
+
+  function renderRunning() {
+    root.innerHTML = `
+      <div class="tool-card polling-card polling-active" tabindex="0" data-polling-area>
+        <p class="eyebrow">Testing Keyboard Hz</p>
+        <h2>Press A and S alternately.</h2>
+        <div class="polling-meter">
+          <div>
+            <span>Current</span>
+            <strong data-current-hz>0 Hz</strong>
+          </div>
+          <div>
+            <span>Time Left</span>
+            <strong data-time-left>10.0s</strong>
+          </div>
+        </div>
+        <div class="result-metrics">
+          <div><span>Average</span><strong data-avg-hz>0 Hz</strong></div>
+          <div><span>Peak</span><strong data-peak-hz>0 Hz</strong></div>
+          <div><span>Events</span><strong data-events>0</strong></div>
+          <div><span>Min Interval</span><strong data-min-interval>--</strong></div>
+        </div>
+        <p class="polling-live" data-live-message>Waiting for key presses...</p>
+        <div class="actions">
+          <button class="button ghost" data-stop-polling>Stop Early</button>
+        </div>
+      </div>
+    `;
+    const area = root.querySelector("[data-polling-area]");
+    area.addEventListener("keydown", handleKeydown);
+    root.querySelector("[data-stop-polling]").addEventListener("click", finish);
+  }
+
+  function handleKeydown(event) {
+    if (!state.running) return;
+    event.preventDefault();
+    if (event.repeat) {
+      state.ignoredRepeats += 1;
+      return;
+    }
+    const now = performance.now();
+    const interval = state.lastTime ? now - state.lastTime : 0;
+    state.events.push({ time: now, code: event.code, key: event.key });
+    state.lastTime = now;
+    state.lastCode = event.code;
+
+    const currentHz = interval ? Math.round(hzFromInterval(interval)) : 0;
+    const current = root.querySelector("[data-current-hz]");
+    const live = root.querySelector("[data-live-message]");
+    if (current) current.textContent = currentHz ? `${currentHz} Hz` : "First key";
+    if (live) live.textContent = `Last key: ${event.key === " " ? "Space" : event.key} (${event.code})`;
+    updateNumbers();
+  }
+
+  function updateNumbers() {
+    const result = stats();
+    const avg = root.querySelector("[data-avg-hz]");
+    const peak = root.querySelector("[data-peak-hz]");
+    const events = root.querySelector("[data-events]");
+    const minInterval = root.querySelector("[data-min-interval]");
+    if (avg) avg.textContent = `${result.avgHz} Hz`;
+    if (peak) peak.textContent = `${result.peakHz} Hz`;
+    if (events) events.textContent = state.events.length;
+    if (minInterval) minInterval.textContent = formatMs(result.minInterval || NaN);
+  }
+
+  function updateRunning() {
+    if (!state.running) return;
+    const elapsed = performance.now() - state.startedAt;
+    const remaining = Math.max(0, durationMs - elapsed);
+    const timeLeft = root.querySelector("[data-time-left]");
+    if (timeLeft) timeLeft.textContent = `${(remaining / 1000).toFixed(1)}s`;
+    if (remaining <= 0) finish();
+  }
+
+  function finish() {
+    if (!state.running && state.events.length === 0) {
+      renderStart();
+      return;
+    }
+    window.clearInterval(state.timerId);
+    state.running = false;
+    const result = stats();
+    const responseMs = result.avgHz ? 1000 / result.avgHz : 0;
+    const enoughData = state.events.length >= 8;
+    root.innerHTML = `
+      <div class="result-card tool-result polling-result">
+        <p class="eyebrow">Your Keyboard Hz Result</p>
+        <div class="tool-number">${result.avgHz || "--"}<small>Hz</small></div>
+        <h2>${enoughData ? result.label : "Run a longer test"}</h2>
+        <p>${enoughData ? `Your average was ${result.avgHz}Hz with a peak of ${result.peakHz}Hz. The estimated average input interval is ${formatMs(responseMs)}.` : "There were not enough key presses for a reliable estimate. Try again and alternate A and S for the full 10 seconds."}</p>
+        <div class="result-metrics">
+          <div><span>Average Hz</span><strong>${result.avgHz || "--"}</strong></div>
+          <div><span>Peak Hz</span><strong>${result.peakHz || "--"}</strong></div>
+          <div><span>Min Interval</span><strong>${formatMs(result.minInterval || NaN)}</strong></div>
+          <div><span>Stability</span><strong>${enoughData ? result.stability : "--"}</strong></div>
+        </div>
+        <div class="result-metrics">
+          <div><span>Events</span><strong>${state.events.length}</strong></div>
+          <div><span>Jitter</span><strong>${formatMs(result.jitter || NaN)}</strong></div>
+          <div><span>Max Interval</span><strong>${formatMs(result.maxInterval || NaN)}</strong></div>
+          <div><span>Ignored Holds</span><strong>${state.ignoredRepeats}</strong></div>
+        </div>
+        <div class="notice"><p>Browser tests estimate event timing. Results can vary with browser, OS settings, CPU load, wireless connection, and pressing rhythm.</p></div>
+        <div class="actions">
+          <button class="button primary" data-share-polling>Share Result</button>
+          <button class="button ghost" data-restart-polling>Try Again</button>
+        </div>
+      </div>
+    `;
+    attachShare(root.querySelector("[data-share-polling]"), `My keyboard polling rate test result is ${result.avgHz || 0}Hz`);
+    root.querySelector("[data-restart-polling]").addEventListener("click", renderStart);
+  }
+
+  renderStart();
+}
+
 function initMouseTest() {
   const root = byId("mouse-test");
   if (!root) return;
@@ -1423,4 +1898,5 @@ initReactionTimeTest();
 initCpsTest();
 initTypingSpeedTest();
 initKeyboardTest();
+initKeyboardPollingRateTest();
 initMouseTest();

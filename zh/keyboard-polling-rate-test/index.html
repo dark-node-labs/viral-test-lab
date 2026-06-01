@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKTRP4LELE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YKTRP4LELE');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>键盘轮询率测试 - 在线检查键盘 Hz</title>
+    <meta name="description" content="在线测试键盘轮询率。检查键盘 Hz、输入间隔、峰值、平均值和稳定性。">
+    <link rel="canonical" href="https://quicktesthub.com/zh/keyboard-polling-rate-test/">
+    <link rel="alternate" hreflang="en" href="https://quicktesthub.com/keyboard-polling-rate-test/">
+    <link rel="alternate" hreflang="zh-CN" href="https://quicktesthub.com/zh/keyboard-polling-rate-test/">
+    <link rel="alternate" hreflang="fr" href="https://quicktesthub.com/fr/keyboard-polling-rate-test/">
+    <link rel="alternate" hreflang="vi" href="https://quicktesthub.com/vi/keyboard-polling-rate-test/">
+    <link rel="alternate" hreflang="x-default" href="https://quicktesthub.com/keyboard-polling-rate-test/">
+    <meta property="og:title" content="键盘轮询率测试 - 在线检查键盘 Hz">
+    <meta property="og:description" content="在线测试键盘轮询率。检查键盘 Hz、输入间隔、峰值、平均值和稳定性。">
+    <meta property="og:image" content="https://quicktesthub.com/assets/og-card.png">
+    <link rel="icon" href="/assets/og-card.png" type="image/png">
+    <link rel="stylesheet" href="/assets/styles.css?v=15">
+    <script type="application/ld+json" data-seo-faq-schema="keyboard-polling-rate-test">
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"键盘轮询率多少算好？","acceptedAnswer":{"@type":"Answer","text":"125Hz 很常见，250Hz 到 500Hz 属于不错范围，1000Hz 或更高常见于游戏键盘。"}},{"@type":"Question","name":"怎么在线测试键盘 Hz？","acceptedAnswer":{"@type":"Answer","text":"开始测试后聚焦面板，然后快速交替按 A 和 S 这类两个按键，持续 10 秒。"}},{"@type":"Question","name":"浏览器能准确测试真实键盘轮询率吗？","acceptedAnswer":{"@type":"Answer","text":"浏览器可以估算键盘事件时序，但不能直接读取 USB 硬件原始轮询数据，结果应作为浏览器输入估算。"}}]}
+    </script>
+    <script type="application/ld+json" data-seo-app-schema="keyboard-polling-rate-test">
+      {"@context":"https://schema.org","@type":"WebApplication","name":"键盘轮询率测试","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","url":"https://quicktesthub.com/zh/keyboard-polling-rate-test/","inLanguage":"zh-CN","description":"估算键盘 Hz、输入间隔、峰值和稳定性。"}
+    </script>
+  </head>
+  <body>
+    <header class="site-header"><nav class="nav" aria-label="Main navigation"><a class="logo" href="/zh/"><span class="logo-mark">Q</span><span>Quick Test Hub</span></a><div class="nav-links"><a href="/zh/reaction-time-test/">反应速度</a><a href="/zh/typing-speed-test/">打字速度</a><a href="/zh/cps-test/">CPS 测试</a><a href="/zh/keyboard-test/">键盘测试</a><a href="/zh/keyboard-polling-rate-test/" aria-current="page">键盘 Hz</a><a href="/zh/mouse-test/">鼠标测试</a><a href="/zh/iq-test/">IQ 测试</a><a href="/zh/sbti-test/">SBTI 测试</a><a href="/zh/rice-purity-test/">Rice Purity</a><details class="language-menu"><summary>语言</summary><div class="language-popover"><a data-lang="en" href="/">English</a><a data-lang="zh" href="/zh/">中文</a><a data-lang="fr" href="/fr/">Français</a><a data-lang="vi" href="/vi/">Tiếng Việt</a></div></details></div></nav></header>
+    <main>
+      <section class="hero"><div><p class="eyebrow">键盘 Hz 检测</p><h1>键盘轮询率测试</h1><p>快速检查键盘 Hz、输入间隔和稳定性。开始测试后交替按两个键，10 秒后得到平均值和峰值。</p><p>适合游戏键盘、笔记本键盘和输入延迟排查，不需要安装软件。</p><div class="actions"><a class="button primary" href="#keyboard-polling-test">开始键盘 Hz 测试</a><a class="button secondary" href="/zh/keyboard-test/">试试键盘测试</a></div></div><div class="tool-visual" aria-label="键盘轮询率测试"><div class="tool-visual-grid"><span>Hz</span><span>ms</span><span>峰值</span><span>稳定</span></div><div class="floating-card"><div class="score-ring">1000</div><h3>输入时序检查</h3><p>估算键盘事件频率和输入间隔稳定性。</p></div></div></section>
+      <section class="quiz-shell"><div id="keyboard-polling-test"></div></section>
+      <section class="section alt"><div class="wrap"><div class="section-head"><div><p class="eyebrow">结果说明</p><h2>把键盘 Hz 转换成响应间隔。</h2></div><p>轮询率用 Hz 表示。Hz 越高，输入更新间隔越短，但实际手感还会受到键盘、系统、游戏、屏幕和浏览器影响。</p></div><div class="grid"><div class="card"><strong>125Hz</strong><p>约 8ms 更新一次，常见于基础键盘。</p></div><div class="card"><strong>250Hz 到 500Hz</strong><p>约 4ms 到 2ms，很多性能键盘处于这个范围。</p></div><div class="card"><strong>1000Hz+</strong><p>约 1ms 或更短，常见于游戏键盘宣传参数。</p></div></div></div></section>
+      <section class="article"><h2>如何准确测试键盘轮询率？</h2><p>点击开始后，快速交替按 A 和 S 这类相邻按键。不要长按单键，因为长按往往测到系统重复速度。</p>
+        <h2>什么是键盘轮询率？</h2><p>它表示键盘向电脑报告输入更新的频率，通常用 Hz 表示。</p>
+        <h2>浏览器测试限制</h2><p>本工具根据浏览器按键事件估算，不能直接读取 USB 硬件原始轮询数据。</p>
+
+        <h2 data-seo-faq-heading>键盘轮询率测试常见问题</h2>
+        <h3>键盘轮询率多少算好？</h3>
+        <p>125Hz 很常见，250Hz 到 500Hz 属于不错范围，1000Hz 或更高常见于游戏键盘。</p>
+
+        <h3>怎么在线测试键盘 Hz？</h3>
+        <p>开始测试后聚焦面板，然后快速交替按 A 和 S 这类两个按键，持续 10 秒。</p>
+
+        <h3>浏览器能准确测试真实键盘轮询率吗？</h3>
+        <p>浏览器可以估算键盘事件时序，但不能直接读取 USB 硬件原始轮询数据，结果应作为浏览器输入估算。</p>
+      </section>
+
+      <section class="section related-tools" data-seo-related-tools>
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">相关输入测试工具</p>
+              <h2>相关输入测试工具</h2>
+            </div>
+            <p>继续检查键盘、鼠标、点击速度和反应速度，形成完整的输入设备测试链路。</p>
+          </div>
+          <div class="grid">
+            <a class="card" href="/zh/reaction-time-test/"><strong>反应速度测试</strong><p>测量视觉信号出现到点击之间的毫秒级反应时间。</p></a>
+            <a class="card" href="/zh/typing-speed-test/"><strong>打字速度测试</strong><p>测试 WPM、准确率、用时和错误数。</p></a>
+            <a class="card" href="/zh/cps-test/"><strong>CPS 测试</strong><p>用 5 秒短测试测量每秒点击次数。</p></a>
+            <a class="card" href="/zh/keyboard-test/"><strong>键盘测试</strong><p>检查按键和键码是否被浏览器正确识别。</p></a>
+            <a class="card" href="/zh/mouse-test/"><strong>鼠标测试</strong><p>检查鼠标按键、双击、滚轮和指针移动。</p></a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub 工具仅供娱乐、练习和快速设备检查。</span><span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span></div></footer>
+    <script src="/assets/i18n.js?v=15"></script>
+    <script src="/assets/app.js?v=15"></script>
+  </body>
+</html>

@@ -7,7 +7,7 @@
   };
 
   const sbtiTypeSlug = (path) => {
-    const match = path.match(/^\/(?:zh\/)?sbti-types\/([^/]+)\/?$/);
+    const match = path.match(/^\/(?:(?:zh|fr|vi)\/)?sbti-types\/([^/]+)\/?$/);
     return match ? match[1] : "";
   };
 
@@ -20,6 +20,7 @@
     if (path.includes("/typing-speed-test/")) return "typing-test";
     if (path.includes("/cps-test/")) return "cps-test";
     if (path.includes("/keyboard-test/")) return "keyboard-test";
+    if (path.includes("/keyboard-polling-rate-test/")) return "keyboard-polling-test";
     if (path.includes("/mouse-test/")) return "mouse-test";
     if (path.includes("/iq-test")) return "iq-test";
     if (path.includes("/rice-purity-test-score-meaning/")) return "rice-score";
@@ -40,6 +41,7 @@
         "typing-test": "/typing-speed-test/",
         "cps-test": "/cps-test/",
         "keyboard-test": "/keyboard-test/",
+        "keyboard-polling-test": "/keyboard-polling-rate-test/",
         "mouse-test": "/mouse-test/",
         "sbti-test": "/sbti-test/",
         "sbti-types": "/sbti-types/",
@@ -53,11 +55,12 @@
       zh: {
         home: "/zh/",
         "iq-test": "/zh/iq-test/",
-        "reaction-test": "/reaction-time-test/",
-        "typing-test": "/typing-speed-test/",
-        "cps-test": "/cps-test/",
-        "keyboard-test": "/keyboard-test/",
-        "mouse-test": "/mouse-test/",
+        "reaction-test": "/zh/reaction-time-test/",
+        "typing-test": "/zh/typing-speed-test/",
+        "cps-test": "/zh/cps-test/",
+        "keyboard-test": "/zh/keyboard-test/",
+        "keyboard-polling-test": "/zh/keyboard-polling-rate-test/",
+        "mouse-test": "/zh/mouse-test/",
         "sbti-test": "/zh/sbti-test/",
         "sbti-types": "/zh/sbti-types/",
         "rice-test": "/zh/rice-purity-test/",
@@ -70,11 +73,12 @@
       fr: {
         home: "/fr/",
         "iq-test": "/iq-test/",
-        "reaction-test": "/reaction-time-test/",
-        "typing-test": "/typing-speed-test/",
-        "cps-test": "/cps-test/",
-        "keyboard-test": "/keyboard-test/",
-        "mouse-test": "/mouse-test/",
+        "reaction-test": "/fr/reaction-time-test/",
+        "typing-test": "/fr/typing-speed-test/",
+        "cps-test": "/fr/cps-test/",
+        "keyboard-test": "/fr/keyboard-test/",
+        "keyboard-polling-test": "/fr/keyboard-polling-rate-test/",
+        "mouse-test": "/fr/mouse-test/",
         "sbti-test": "/fr/sbti-test/",
         "sbti-types": "/fr/sbti-types/",
         "rice-test": "/fr/test-de-purete/",
@@ -87,11 +91,12 @@
       vi: {
         home: "/vi/",
         "iq-test": "/iq-test/",
-        "reaction-test": "/reaction-time-test/",
-        "typing-test": "/typing-speed-test/",
-        "cps-test": "/cps-test/",
-        "keyboard-test": "/keyboard-test/",
-        "mouse-test": "/mouse-test/",
+        "reaction-test": "/vi/reaction-time-test/",
+        "typing-test": "/vi/typing-speed-test/",
+        "cps-test": "/vi/cps-test/",
+        "keyboard-test": "/vi/keyboard-test/",
+        "keyboard-polling-test": "/vi/keyboard-polling-rate-test/",
+        "mouse-test": "/vi/mouse-test/",
         "sbti-test": "/vi/sbti-test/",
         "sbti-types": "/vi/sbti-types/",
         "rice-test": "/vi/rice-purity-test/",
@@ -116,7 +121,9 @@
   const key = routeKey(window.location.pathname);
   const currentTypeSlug = sbtiTypeSlug(window.location.pathname);
 
-  if (storedLang && storedLang !== currentLang && ["en", "zh", "fr", "vi"].includes(storedLang)) {
+  if (currentLang !== "en") {
+    localStorage.setItem("siteLang", currentLang);
+  } else if (storedLang && storedLang !== currentLang && ["en", "zh", "fr", "vi"].includes(storedLang)) {
     const next = localizedPath(storedLang, key, window.location.hash, currentTypeSlug);
     if (next !== window.location.pathname + window.location.hash) {
       window.location.replace(next);

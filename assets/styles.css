@@ -873,6 +873,80 @@ button.button {
   box-shadow: inset 0 0 0 2px rgba(24, 169, 153, 0.18);
 }
 
+.polling-card:focus {
+  outline: 3px solid rgba(108, 99, 255, 0.18);
+}
+
+.polling-keys {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(90px, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.polling-keys span {
+  min-height: 86px;
+  border: 1px solid rgba(108, 99, 255, 0.28);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  background: #f0f1ff;
+  font-size: clamp(2.2rem, 10vw, 4rem);
+  font-weight: 950;
+}
+
+.polling-active {
+  border-color: rgba(108, 99, 255, 0.45);
+}
+
+.polling-meter {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.polling-meter div {
+  min-height: 150px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgba(108, 99, 255, 0.94), rgba(24, 169, 153, 0.9)),
+    var(--ink);
+}
+
+.polling-meter span {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.polling-meter strong {
+  font-size: clamp(2.1rem, 8vw, 4.8rem);
+  line-height: 1;
+}
+
+.polling-live {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #f8f9fc;
+  color: var(--ink);
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.polling-result .notice {
+  margin-top: 16px;
+}
+
 .mouse-zone {
   min-height: 310px;
   border: 2px dashed rgba(108, 99, 255, 0.45);
@@ -1546,6 +1620,7 @@ button.button {
   .iq-test-stats,
   .tool-stats,
   .keyboard-status,
+  .polling-meter,
   .result-metrics {
     grid-template-columns: 1fr;
   }
