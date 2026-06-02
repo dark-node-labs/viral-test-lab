@@ -739,6 +739,8 @@ function typeAvatar(type) {
 function initSbtiTypes() {
   const root = byId("sbti-types-grid");
   if (!root) return;
+  const noindexTypeCodes = new Set(["DEAD", "DRUNK", "FUCK", "POOR", "SEXY", "SHIT"]);
+  const publicTypes = sbtiTypes.filter((type) => !noindexTypeCodes.has(type.code));
   const docLang = document.documentElement.lang || "en";
   const lang = root.dataset.lang || (docLang.startsWith("zh") ? "zh" : docLang.startsWith("fr") ? "fr" : docLang.startsWith("vi") ? "vi" : "en");
   const isZh = lang === "zh";
@@ -747,7 +749,7 @@ function initSbtiTypes() {
     if (lang === "en") return `<p><a href="/sbti-types/${slugForType(type)}/">Read the full type guide</a></p>`;
     return "";
   };
-  root.innerHTML = sbtiTypes.map((type, index) => `
+  root.innerHTML = publicTypes.map((type, index) => `
     <article class="type-card">
       <button class="type-summary" type="button" aria-expanded="${index === 0 ? "true" : "false"}">
         ${typeAvatar(type)}
