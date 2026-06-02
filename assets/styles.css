@@ -1519,6 +1519,7 @@ button.button {
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 18px;
   flex-wrap: wrap;
@@ -1528,6 +1529,22 @@ button.button {
 
 .footer-inner a {
   font-weight: 750;
+}
+
+.footer-links {
+  white-space: nowrap;
+}
+
+.startup-fame-badge {
+  display: inline-flex;
+  line-height: 0;
+}
+
+.startup-fame-badge img {
+  width: 224px;
+  height: 36px;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 @media (max-width: 780px) {
