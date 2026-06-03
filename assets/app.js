@@ -1649,6 +1649,315 @@ function initMouseTest() {
   render();
 }
 
+function initMicrophoneTest() {
+  const root = byId("microphone-test");
+  if (!root) return;
+
+  let stream = null;
+  let audioContext = null;
+  let analyser = null;
+  let frameId = null;
+  let peak = 0;
+
+  function render() {
+    root.innerHTML = `
+      <div class="tool-card media-test-card">
+        <p class="eyebrow">Microphone Test</p>
+        <h2>Check your mic level in the browser.</h2>
+        <p>Start the test, allow microphone access, then speak normally. The meter shows live input level without uploading audio.</p>
+        <div class="mic-meter" aria-label="Microphone input meter">
+          <span data-mic-level style="width:0%"></span>
+        </div>
+        <div class="result-metrics">
+          <div><span>Status</span><strong data-mic-status>Waiting</strong></div>
+          <div><span>Live Level</span><strong data-mic-live>0%</strong></div>
+          <div><span>Peak</span><strong data-mic-peak>0%</strong></div>
+          <div><span>Privacy</span><strong>Local</strong></div>
+        </div>
+        <div class="actions">
+          <button class="button primary" data-start-mic>Start Mic Test</button>
+          <button class="button ghost" data-stop-mic>Stop</button>
+        </div>
+        <div class="notice"><p data-mic-message>Your browser will ask for permission before the test can read microphone input.</p></div>
+      </div>
+    `;
+    root.querySelector("[data-start-mic]").addEventListener("click", start);
+    root.querySelector("[data-stop-mic]").addEventListener("click", stop);
+  }
+
+  function setMessage(message) {
+    const item = root.querySelector("[data-mic-message]");
+    if (item) item.textContent = message;
+  }
+
+  function setStatus(status) {
+    const item = root.querySelector("[data-mic-status]");
+    if (item) item.textContent = status;
+  }
+
+  async function start() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setStatus("Unsupported");
+      setMessage("This browser does not expose microphone testing through getUserMedia.");
+      return;
+    }
+    stop(false);
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 512;
+      audioContext.createMediaStreamSource(stream).connect(analyser);
+      peak = 0;
+      setStatus("Listening");
+      setMessage("Speak into the microphone and watch the level meter move.");
+      tick();
+    } catch (error) {
+      setStatus("Blocked");
+      setMessage("Microphone permission was blocked or no microphone was detected.");
+    }
+  }
+
+  function tick() {
+    if (!analyser) return;
+    const data = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteTimeDomainData(data);
+    const sum = data.reduce((total, value) => total + Math.abs(value - 128), 0);
+    const level = Math.min(100, Math.round((sum / data.length) * 3.2));
+    peak = Math.max(peak, level);
+    const bar = root.querySelector("[data-mic-level]");
+    const live = root.querySelector("[data-mic-live]");
+    const peakItem = root.querySelector("[data-mic-peak]");
+    if (bar) bar.style.width = `${level}%`;
+    if (live) live.textContent = `${level}%`;
+    if (peakItem) peakItem.textContent = `${peak}%`;
+    frameId = window.requestAnimationFrame(tick);
+  }
+
+  function stop(update = true) {
+    if (frameId) window.cancelAnimationFrame(frameId);
+    frameId = null;
+    if (stream) stream.getTracks().forEach((track) => track.stop());
+    stream = null;
+    if (audioContext) audioContext.close().catch(() => {});
+    audioContext = null;
+    analyser = null;
+    if (update) {
+      setStatus("Stopped");
+      setMessage("The microphone stream has been stopped.");
+    }
+  }
+
+  window.addEventListener("pagehide", () => stop(false));
+  render();
+}
+
+function initWebcamTest() {
+  const root = byId("webcam-test");
+  if (!root) return;
+
+  let stream = null;
+
+  function render() {
+    root.innerHTML = `
+      <div class="tool-card media-test-card">
+        <p class="eyebrow">Webcam Test</p>
+        <h2>Preview your camera and take a local snapshot.</h2>
+        <p>Allow camera access to check focus, framing, brightness, and browser detection. Nothing is uploaded by this page.</p>
+        <div class="webcam-frame">
+          <video data-webcam-video autoplay muted playsinline></video>
+          <canvas data-webcam-canvas hidden></canvas>
+          <img data-webcam-shot alt="Captured webcam snapshot" hidden>
+        </div>
+        <div class="result-metrics">
+          <div><span>Status</span><strong data-webcam-status>Waiting</strong></div>
+          <div><span>Resolution</span><strong data-webcam-resolution>--</strong></div>
+          <div><span>Snapshot</span><strong data-webcam-snapshot>No</strong></div>
+          <div><span>Privacy</span><strong>Local</strong></div>
+        </div>
+        <div class="actions">
+          <button class="button primary" data-start-webcam>Start Camera</button>
+          <button class="button secondary" data-snapshot-webcam>Snapshot</button>
+          <button class="button ghost" data-stop-webcam>Stop</button>
+        </div>
+        <div class="notice"><p data-webcam-message>Your browser will ask for permission before the camera preview starts.</p></div>
+      </div>
+    `;
+    root.querySelector("[data-start-webcam]").addEventListener("click", start);
+    root.querySelector("[data-snapshot-webcam]").addEventListener("click", snapshot);
+    root.querySelector("[data-stop-webcam]").addEventListener("click", stop);
+  }
+
+  function setText(selector, text) {
+    const item = root.querySelector(selector);
+    if (item) item.textContent = text;
+  }
+
+  async function start() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setText("[data-webcam-status]", "Unsupported");
+      setText("[data-webcam-message]", "This browser does not expose camera testing through getUserMedia.");
+      return;
+    }
+    stop(false);
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false });
+      const video = root.querySelector("[data-webcam-video]");
+      video.srcObject = stream;
+      await video.play();
+      setText("[data-webcam-status]", "Live");
+      setText("[data-webcam-resolution]", `${video.videoWidth || "--"}x${video.videoHeight || "--"}`);
+      setText("[data-webcam-message]", "Camera preview is live. Use Snapshot to capture a local still image.");
+    } catch (error) {
+      setText("[data-webcam-status]", "Blocked");
+      setText("[data-webcam-message]", "Camera permission was blocked or no camera was detected.");
+    }
+  }
+
+  function snapshot() {
+    const video = root.querySelector("[data-webcam-video]");
+    const canvas = root.querySelector("[data-webcam-canvas]");
+    const image = root.querySelector("[data-webcam-shot]");
+    if (!stream || !video.videoWidth) {
+      setText("[data-webcam-message]", "Start the camera before taking a snapshot.");
+      return;
+    }
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+    image.src = canvas.toDataURL("image/png");
+    image.hidden = false;
+    setText("[data-webcam-snapshot]", "Yes");
+    setText("[data-webcam-message]", "Snapshot captured locally in this page.");
+  }
+
+  function stop(update = true) {
+    if (stream) stream.getTracks().forEach((track) => track.stop());
+    stream = null;
+    const video = root.querySelector("[data-webcam-video]");
+    if (video) video.srcObject = null;
+    if (update) {
+      setText("[data-webcam-status]", "Stopped");
+      setText("[data-webcam-message]", "The camera stream has been stopped.");
+    }
+  }
+
+  window.addEventListener("pagehide", () => stop(false));
+  render();
+}
+
+function initGamepadTester() {
+  const root = byId("gamepad-tester");
+  if (!root) return;
+
+  let frameId = null;
+  let running = false;
+
+  function render() {
+    root.innerHTML = `
+      <div class="tool-card gamepad-card">
+        <p class="eyebrow">Gamepad Tester</p>
+        <h2>Press any controller button to test inputs.</h2>
+        <p>Connect a gamepad or controller, press a button, then start the live tester. Browsers often hide controllers until the first button press.</p>
+        <div class="result-metrics">
+          <div><span>Status</span><strong data-gamepad-status>Waiting</strong></div>
+          <div><span>Name</span><strong data-gamepad-name>None</strong></div>
+          <div><span>Buttons</span><strong data-gamepad-buttons>0</strong></div>
+          <div><span>Axes</span><strong data-gamepad-axes>0</strong></div>
+        </div>
+        <div class="gamepad-live">
+          <div>
+            <h3>Buttons</h3>
+            <div class="gamepad-buttons" data-gamepad-button-grid></div>
+          </div>
+          <div>
+            <h3>Axes</h3>
+            <div class="gamepad-axes" data-gamepad-axis-grid></div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="button primary" data-start-gamepad>Start Tester</button>
+          <button class="button ghost" data-stop-gamepad>Stop</button>
+        </div>
+        <div class="notice"><p data-gamepad-message>For best results, plug in the controller and press any button once before starting.</p></div>
+      </div>
+    `;
+    root.querySelector("[data-start-gamepad]").addEventListener("click", start);
+    root.querySelector("[data-stop-gamepad]").addEventListener("click", stop);
+  }
+
+  function setText(selector, text) {
+    const item = root.querySelector(selector);
+    if (item) item.textContent = text;
+  }
+
+  function currentGamepad() {
+    return Array.from(navigator.getGamepads?.() || []).find(Boolean);
+  }
+
+  function start() {
+    if (!navigator.getGamepads) {
+      setText("[data-gamepad-status]", "Unsupported");
+      setText("[data-gamepad-message]", "This browser does not expose the Gamepad API.");
+      return;
+    }
+    running = true;
+    setText("[data-gamepad-status]", "Scanning");
+    tick();
+  }
+
+  function tick() {
+    if (!running) return;
+    const gamepad = currentGamepad();
+    if (!gamepad) {
+      setText("[data-gamepad-status]", "No gamepad");
+      setText("[data-gamepad-message]", "Press a controller button or reconnect the gamepad, then keep this page focused.");
+      frameId = window.requestAnimationFrame(tick);
+      return;
+    }
+    setText("[data-gamepad-status]", "Connected");
+    setText("[data-gamepad-name]", gamepad.id || "Gamepad");
+    setText("[data-gamepad-buttons]", gamepad.buttons.length);
+    setText("[data-gamepad-axes]", gamepad.axes.length);
+    setText("[data-gamepad-message]", "Inputs are updating live. Press buttons and move sticks or triggers.");
+
+    const buttonGrid = root.querySelector("[data-gamepad-button-grid]");
+    const axisGrid = root.querySelector("[data-gamepad-axis-grid]");
+    if (buttonGrid) {
+      buttonGrid.innerHTML = gamepad.buttons.map((button, index) => `
+        <span class="${button.pressed ? "pressed" : ""}">B${index}<strong>${button.value.toFixed(2)}</strong></span>
+      `).join("");
+    }
+    if (axisGrid) {
+      axisGrid.innerHTML = gamepad.axes.map((axis, index) => {
+        const offset = Math.round(((axis + 1) / 2) * 100);
+        return `
+          <div class="axis-row">
+            <span>A${index}</span>
+            <div><i style="left:${offset}%"></i></div>
+            <strong>${axis.toFixed(2)}</strong>
+          </div>
+        `;
+      }).join("");
+    }
+    frameId = window.requestAnimationFrame(tick);
+  }
+
+  function stop() {
+    running = false;
+    if (frameId) window.cancelAnimationFrame(frameId);
+    frameId = null;
+    setText("[data-gamepad-status]", "Stopped");
+    setText("[data-gamepad-message]", "The live gamepad tester is stopped.");
+  }
+
+  window.addEventListener("gamepadconnected", () => {
+    if (!running) setText("[data-gamepad-status]", "Detected");
+  });
+  window.addEventListener("pagehide", stop);
+  render();
+}
+
 function initIqQuiz() {
   const root = byId("iq-quiz");
   if (!root) return;
@@ -1902,3 +2211,6 @@ initTypingSpeedTest();
 initKeyboardTest();
 initKeyboardPollingRateTest();
 initMouseTest();
+initMicrophoneTest();
+initWebcamTest();
+initGamepadTester();

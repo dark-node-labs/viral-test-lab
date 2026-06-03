@@ -22,6 +22,14 @@
     if (path.includes("/keyboard-test/")) return "keyboard-test";
     if (path.includes("/keyboard-polling-rate-test/")) return "keyboard-polling-test";
     if (path.includes("/mouse-test/")) return "mouse-test";
+    if (path.includes("/microphone-test/")) return "microphone-test";
+    if (path.includes("/mic-test/")) return "mic-test";
+    if (path.includes("/webcam-test/")) return "webcam-test";
+    if (path.includes("/camera-test/")) return "camera-test";
+    if (path.includes("/gamepad-tester/")) return "gamepad-tester";
+    if (path.includes("/controller-test/")) return "controller-test";
+    if (path.includes("/click-test/")) return "click-test";
+    if (path.includes("/mouse-click-test/")) return "mouse-click-test";
     if (path.includes("/iq-test")) return "iq-test";
     if (path.includes("/rice-purity-test-score-meaning/")) return "rice-score";
     if (path.includes("/rice-purity-test/") || path.includes("/test-de-purete/")) return "rice-test";
@@ -43,6 +51,14 @@
         "keyboard-test": "/keyboard-test/",
         "keyboard-polling-test": "/keyboard-polling-rate-test/",
         "mouse-test": "/mouse-test/",
+        "microphone-test": "/microphone-test/",
+        "mic-test": "/mic-test/",
+        "webcam-test": "/webcam-test/",
+        "camera-test": "/camera-test/",
+        "gamepad-tester": "/gamepad-tester/",
+        "controller-test": "/controller-test/",
+        "click-test": "/click-test/",
+        "mouse-click-test": "/mouse-click-test/",
         "sbti-test": "/sbti-test/",
         "sbti-types": "/sbti-types/",
         "rice-test": "/rice-purity-test/",
@@ -61,6 +77,14 @@
         "keyboard-test": "/zh/keyboard-test/",
         "keyboard-polling-test": "/zh/keyboard-polling-rate-test/",
         "mouse-test": "/zh/mouse-test/",
+        "microphone-test": "/microphone-test/",
+        "mic-test": "/mic-test/",
+        "webcam-test": "/webcam-test/",
+        "camera-test": "/camera-test/",
+        "gamepad-tester": "/gamepad-tester/",
+        "controller-test": "/controller-test/",
+        "click-test": "/click-test/",
+        "mouse-click-test": "/mouse-click-test/",
         "sbti-test": "/zh/sbti-test/",
         "sbti-types": "/zh/sbti-types/",
         "rice-test": "/zh/rice-purity-test/",
@@ -79,6 +103,14 @@
         "keyboard-test": "/fr/keyboard-test/",
         "keyboard-polling-test": "/fr/keyboard-polling-rate-test/",
         "mouse-test": "/fr/mouse-test/",
+        "microphone-test": "/microphone-test/",
+        "mic-test": "/mic-test/",
+        "webcam-test": "/webcam-test/",
+        "camera-test": "/camera-test/",
+        "gamepad-tester": "/gamepad-tester/",
+        "controller-test": "/controller-test/",
+        "click-test": "/click-test/",
+        "mouse-click-test": "/mouse-click-test/",
         "sbti-test": "/fr/sbti-test/",
         "sbti-types": "/fr/sbti-types/",
         "rice-test": "/fr/test-de-purete/",
@@ -97,6 +129,14 @@
         "keyboard-test": "/vi/keyboard-test/",
         "keyboard-polling-test": "/vi/keyboard-polling-rate-test/",
         "mouse-test": "/vi/mouse-test/",
+        "microphone-test": "/microphone-test/",
+        "mic-test": "/mic-test/",
+        "webcam-test": "/webcam-test/",
+        "camera-test": "/camera-test/",
+        "gamepad-tester": "/gamepad-tester/",
+        "controller-test": "/controller-test/",
+        "click-test": "/click-test/",
+        "mouse-click-test": "/mouse-click-test/",
         "sbti-test": "/vi/sbti-test/",
         "sbti-types": "/vi/sbti-types/",
         "rice-test": "/vi/rice-purity-test/",
