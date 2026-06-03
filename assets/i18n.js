@@ -19,6 +19,8 @@
     if (path.includes("/reaction-time-test/")) return "reaction-test";
     if (path.includes("/typing-speed-test/")) return "typing-test";
     if (path.includes("/cps-test/")) return "cps-test";
+    if (path.includes("/speed-tests/")) return "speed-tests";
+    if (path.includes("/device-tests/")) return "device-tests";
     if (path.includes("/keyboard-test/")) return "keyboard-test";
     if (path.includes("/keyboard-polling-rate-test/")) return "keyboard-polling-test";
     if (path.includes("/mouse-test/")) return "mouse-test";
@@ -48,6 +50,8 @@
         "reaction-test": "/reaction-time-test/",
         "typing-test": "/typing-speed-test/",
         "cps-test": "/cps-test/",
+        "speed-tests": "/speed-tests/",
+        "device-tests": "/device-tests/",
         "keyboard-test": "/keyboard-test/",
         "keyboard-polling-test": "/keyboard-polling-rate-test/",
         "mouse-test": "/mouse-test/",
@@ -74,6 +78,8 @@
         "reaction-test": "/zh/reaction-time-test/",
         "typing-test": "/zh/typing-speed-test/",
         "cps-test": "/zh/cps-test/",
+        "speed-tests": "/speed-tests/",
+        "device-tests": "/device-tests/",
         "keyboard-test": "/zh/keyboard-test/",
         "keyboard-polling-test": "/zh/keyboard-polling-rate-test/",
         "mouse-test": "/zh/mouse-test/",
@@ -100,6 +106,8 @@
         "reaction-test": "/fr/reaction-time-test/",
         "typing-test": "/fr/typing-speed-test/",
         "cps-test": "/fr/cps-test/",
+        "speed-tests": "/speed-tests/",
+        "device-tests": "/device-tests/",
         "keyboard-test": "/fr/keyboard-test/",
         "keyboard-polling-test": "/fr/keyboard-polling-rate-test/",
         "mouse-test": "/fr/mouse-test/",
@@ -126,6 +134,8 @@
         "reaction-test": "/vi/reaction-time-test/",
         "typing-test": "/vi/typing-speed-test/",
         "cps-test": "/vi/cps-test/",
+        "speed-tests": "/speed-tests/",
+        "device-tests": "/device-tests/",
         "keyboard-test": "/vi/keyboard-test/",
         "keyboard-polling-test": "/vi/keyboard-polling-rate-test/",
         "mouse-test": "/vi/mouse-test/",

@@ -1,5 +1,27 @@
+function withSeoAndCacheHeaders(request, response, options = {}) {
+  const url = new URL(request.url);
+  const headers = new Headers(response.headers);
+  const contentType = headers.get("content-type") || "";
+
+  if (options.xRobotsTag) {
+    headers.set("x-robots-tag", options.xRobotsTag);
+  }
+
+  if (url.pathname.startsWith("/assets/")) {
+    headers.set("cache-control", "public, max-age=31536000, immutable");
+  } else if (contentType.includes("text/html")) {
+    headers.set("cache-control", "public, max-age=600, s-maxage=86400, stale-while-revalidate=604800");
+  }
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
+  });
+}
+
 export default {
-  fetch(request, env) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     const sensitiveSbtiPath = /^\/(?:zh\/)?sbti-types\/(?:dead|drunk|fuck|poor|sexy|shit)\/?$/;
 
@@ -19,17 +41,11 @@ export default {
     }
 
     if (sensitiveSbtiPath.test(url.pathname)) {
-      return env.ASSETS.fetch(request).then((response) => {
-        const headers = new Headers(response.headers);
-        headers.set("x-robots-tag", "noindex, follow");
-        return new Response(response.body, {
-          status: response.status,
-          statusText: response.statusText,
-          headers
-        });
-      });
+      const response = await env.ASSETS.fetch(request);
+      return withSeoAndCacheHeaders(request, response, { xRobotsTag: "noindex, follow" });
     }
 
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    return withSeoAndCacheHeaders(request, response);
   }
 };

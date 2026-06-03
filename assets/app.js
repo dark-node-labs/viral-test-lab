@@ -1679,6 +1679,14 @@ function initMicrophoneTest() {
           <button class="button ghost" data-stop-mic>Stop</button>
         </div>
         <div class="notice"><p data-mic-message>Your browser will ask for permission before the test can read microphone input.</p></div>
+        <div class="device-help" aria-label="Microphone troubleshooting">
+          <strong>If the mic test does not move</strong>
+          <ul>
+            <li>Allow microphone access in the browser prompt.</li>
+            <li>Select an input device in system sound settings.</li>
+            <li>Close meeting, recording, or streaming apps that may be using the mic.</li>
+          </ul>
+        </div>
       </div>
     `;
     root.querySelector("[data-start-mic]").addEventListener("click", start);
@@ -1713,8 +1721,8 @@ function initMicrophoneTest() {
       setMessage("Speak into the microphone and watch the level meter move.");
       tick();
     } catch (error) {
-      setStatus("Blocked");
-      setMessage("Microphone permission was blocked or no microphone was detected.");
+      setStatus(error.name === "NotFoundError" ? "No mic" : "Blocked");
+      setMessage(mediaAccessMessage(error, "microphone"));
     }
   }
 
@@ -1781,6 +1789,14 @@ function initWebcamTest() {
           <button class="button ghost" data-stop-webcam>Stop</button>
         </div>
         <div class="notice"><p data-webcam-message>Your browser will ask for permission before the camera preview starts.</p></div>
+        <div class="device-help" aria-label="Camera troubleshooting">
+          <strong>If the camera test is blocked</strong>
+          <ul>
+            <li>Allow camera access in the browser prompt.</li>
+            <li>Check operating system privacy settings for this browser.</li>
+            <li>Close other apps that may already be using the camera.</li>
+          </ul>
+        </div>
       </div>
     `;
     root.querySelector("[data-start-webcam]").addEventListener("click", start);
@@ -1809,8 +1825,8 @@ function initWebcamTest() {
       setText("[data-webcam-resolution]", `${video.videoWidth || "--"}x${video.videoHeight || "--"}`);
       setText("[data-webcam-message]", "Camera preview is live. Use Snapshot to capture a local still image.");
     } catch (error) {
-      setText("[data-webcam-status]", "Blocked");
-      setText("[data-webcam-message]", "Camera permission was blocked or no camera was detected.");
+      setText("[data-webcam-status]", error.name === "NotFoundError" ? "No camera" : "Blocked");
+      setText("[data-webcam-message]", mediaAccessMessage(error, "camera"));
     }
   }
 
@@ -1880,6 +1896,14 @@ function initGamepadTester() {
           <button class="button ghost" data-stop-gamepad>Stop</button>
         </div>
         <div class="notice"><p data-gamepad-message>For best results, plug in the controller and press any button once before starting.</p></div>
+        <div class="device-help" aria-label="Controller troubleshooting">
+          <strong>If no controller appears</strong>
+          <ul>
+            <li>Reconnect the controller with USB or Bluetooth.</li>
+            <li>Press any controller button while this tab is focused.</li>
+            <li>Try Chrome or Edge if the current browser does not expose gamepads.</li>
+          </ul>
+        </div>
       </div>
     `;
     root.querySelector("[data-start-gamepad]").addEventListener("click", start);
@@ -1956,6 +1980,23 @@ function initGamepadTester() {
   });
   window.addEventListener("pagehide", stop);
   render();
+}
+
+function mediaAccessMessage(error, deviceName) {
+  if (error?.name === "NotAllowedError" || error?.name === "SecurityError") {
+    return `${capitalize(deviceName)} permission was blocked. Use the browser site settings to allow access, then start the test again.`;
+  }
+  if (error?.name === "NotFoundError" || error?.name === "DevicesNotFoundError") {
+    return `No ${deviceName} device was detected. Connect or enable one in system settings, then try again.`;
+  }
+  if (error?.name === "NotReadableError" || error?.name === "TrackStartError") {
+    return `The ${deviceName} is present but another app or system setting may be using it. Close other apps and retry.`;
+  }
+  return `${capitalize(deviceName)} access failed. Check browser permission, system privacy settings, and connected devices.`;
+}
+
+function capitalize(value) {
+  return value ? value.charAt(0).toUpperCase() + value.slice(1) : "";
 }
 
 function initIqQuiz() {
