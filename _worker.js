@@ -24,9 +24,22 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const sensitiveSbtiPath = /^\/(?:zh\/)?sbti-types\/(?:dead|drunk|fuck|poor|sexy|shit)\/?$/;
+    const aliasRedirects = new Map([
+      ["/camera-test/", "/webcam-test/"],
+      ["/controller-test/", "/gamepad-tester/"],
+      ["/mic-test/", "/microphone-test/"],
+      ["/mouse-click-test/", "/click-test/"]
+    ]);
 
     if (url.hostname === "www.quicktesthub.com") {
       url.hostname = "quicktesthub.com";
+      return Response.redirect(url.toString(), 301);
+    }
+
+    const normalizedPath = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`;
+    const canonicalPath = aliasRedirects.get(normalizedPath);
+    if (canonicalPath) {
+      url.pathname = canonicalPath;
       return Response.redirect(url.toString(), 301);
     }
 

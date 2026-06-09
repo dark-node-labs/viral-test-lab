@@ -248,6 +248,14 @@ function byId(id) {
   return document.getElementById(id);
 }
 
+function trackEvent(name, params = {}) {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", name, {
+    page_path: window.location.pathname,
+    ...params
+  });
+}
+
 function currentPageLang() {
   const lang = document.documentElement.lang || "en";
   if (lang.startsWith("zh")) return "zh";
@@ -535,6 +543,7 @@ function initSbtiQuiz() {
   const isVi = docLang.startsWith("vi");
   const questions = isZh ? zhSbtiQuestions : isFr ? frSbtiQuestions : isVi ? viSbtiQuestions : sbtiQuestions;
   let index = 0;
+  let started = false;
   const picks = [];
 
   function render() {
@@ -553,6 +562,10 @@ function initSbtiQuiz() {
     `;
     root.querySelectorAll(".option").forEach((btn) => {
       btn.addEventListener("click", () => {
+        if (!started) {
+          started = true;
+          trackEvent("quiz_start", { quiz_name: "sbti", language: isZh ? "zh" : isFr ? "fr" : isVi ? "vi" : "en" });
+        }
         picks[index] = btn.dataset.pick;
         index += 1;
         if (index >= questions.length) showSbtiResult(root, picks, isZh ? "zh" : isFr ? "fr" : isVi ? "vi" : "en");
@@ -577,6 +590,7 @@ function showSbtiResult(root, picks, lang = "en") {
   const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([key]) => key).join("");
   const score = picks.join("").split("").reduce((sum, char, i) => sum + char.charCodeAt(0) * (i + 3), top.length);
   const type = sbtiTypes[score % sbtiTypes.length];
+  trackEvent("quiz_complete", { quiz_name: "sbti", language: lang, result_type: type.code });
   const resultCopy = {
     en: {
       title: "Your SBTI Type",
@@ -886,6 +900,7 @@ function initRiceQuiz() {
     `;
     root.querySelector("[data-confirm]").addEventListener("click", () => {
       confirmed = true;
+      trackEvent("quiz_start", { quiz_name: "rice_purity", language: lang });
       render();
     });
   }
@@ -927,6 +942,7 @@ function showRiceResult(root, answers) {
   const band = riceBands.find((item) => score >= item.min);
   const docLang = document.documentElement.lang || "en";
   const lang = docLang.startsWith("zh") ? "zh" : docLang.startsWith("fr") ? "fr" : docLang.startsWith("vi") ? "vi" : "en";
+  trackEvent("quiz_complete", { quiz_name: "rice_purity", language: lang, score });
   const resultCopy = {
     en: {
       eyebrow: "Your Rice Purity Score",
@@ -987,8 +1003,10 @@ function showRiceResult(root, answers) {
   attachShare(root.querySelector("[data-share]"), `My Rice Purity score is ${score}`);
 }
 
-function attachShare(button, text) {
+function attachShare(button, text, params = {}) {
+  if (!button) return;
   button.addEventListener("click", async () => {
+    trackEvent("result_share", params);
     const shareData = { title: "Quick Test Hub", text, url: window.location.href };
     if (navigator.share) {
       await navigator.share(shareData);
@@ -1043,6 +1061,9 @@ function initReactionTimeTest() {
   }
 
   function startRound() {
+    if (state.round === 0 && state.rounds.length === 0) {
+      trackEvent("tool_start", { tool_name: "reaction_time" });
+    }
     window.clearTimeout(state.timeoutId);
     state.phase = "waiting";
     state.round += 1;
@@ -1108,6 +1129,7 @@ function initReactionTimeTest() {
     const avg = average(state.rounds);
     const best = Math.min(...state.rounds);
     const worst = Math.max(...state.rounds);
+    trackEvent("tool_complete", { tool_name: "reaction_time", value: avg, unit: "ms" });
     root.innerHTML = `
       <div class="result-card tool-result">
         <p class="eyebrow">Your Reaction Time</p>
@@ -1180,6 +1202,7 @@ function initCpsTest() {
   }
 
   function start() {
+    trackEvent("tool_start", { tool_name: "cps_test" });
     running = true;
     const startedAt = performance.now();
     timerId = window.setInterval(() => {
@@ -1194,6 +1217,7 @@ function initCpsTest() {
     window.clearInterval(timerId);
     running = false;
     const cps = (clicks / 5).toFixed(1);
+    trackEvent("tool_complete", { tool_name: "cps_test", value: Number(cps), unit: "cps" });
     root.innerHTML = `
       <div class="result-card tool-result">
         <p class="eyebrow">Your CPS Result</p>
@@ -1215,6 +1239,249 @@ function initCpsTest() {
     clicks = 0;
     seconds = 5;
     running = false;
+    render();
+  }
+
+  render();
+}
+
+function initSpacebarClicker() {
+  const root = byId("spacebar-clicker");
+  if (!root) return;
+
+  let presses = 0;
+  let seconds = 10;
+  let timerId = null;
+  let running = false;
+  let startedAt = 0;
+
+  function render() {
+    root.innerHTML = `
+      <div class="tool-card cps-card">
+        <p class="eyebrow">Spacebar Clicker</p>
+        <h2>Press the spacebar as fast as you can for 10 seconds.</h2>
+        <button class="click-zone keyboard-zone" data-spacebar-zone>
+          <strong>${presses}</strong>
+          <span>${running ? `${seconds.toFixed(1)}s left` : "Press Space to start"}</span>
+        </button>
+        <div class="tool-stats">
+          <span><strong>${(presses / 10).toFixed(1)}</strong> SPS</span>
+          <span><strong>${presses}</strong> presses</span>
+          <span><strong>10s</strong> test</span>
+        </div>
+        <div class="actions">
+          <button class="button primary" data-start-spacebar>Start Test</button>
+          <button class="button ghost" data-reset-spacebar>Reset</button>
+        </div>
+        <div class="notice"><p>Focus the test area, then press Space. Holding the key down does not count repeated browser key events.</p></div>
+      </div>
+    `;
+    const zone = root.querySelector("[data-spacebar-zone]");
+    zone.addEventListener("click", () => zone.focus());
+    zone.addEventListener("keydown", handleKeydown);
+    root.querySelector("[data-start-spacebar]").addEventListener("click", () => {
+      zone.focus();
+      if (!running) start();
+    });
+    root.querySelector("[data-reset-spacebar]").addEventListener("click", reset);
+  }
+
+  function handleKeydown(event) {
+    if (event.code !== "Space") return;
+    event.preventDefault();
+    if (event.repeat) return;
+    if (!running && seconds > 0) start();
+    if (!running) return;
+    presses += 1;
+    const number = root.querySelector(".click-zone strong");
+    const sps = root.querySelector(".tool-stats span strong");
+    if (number) number.textContent = presses;
+    if (sps) sps.textContent = (presses / 10).toFixed(1);
+  }
+
+  function start() {
+    if (running) return;
+    trackEvent("tool_start", { tool_name: "spacebar_clicker" });
+    running = true;
+    startedAt = performance.now();
+    const label = root.querySelector(".click-zone span");
+    if (label) label.textContent = `${seconds.toFixed(1)}s left`;
+    timerId = window.setInterval(() => {
+      seconds = Math.max(0, 10 - (performance.now() - startedAt) / 1000);
+      const currentLabel = root.querySelector(".click-zone span");
+      if (currentLabel) currentLabel.textContent = `${seconds.toFixed(1)}s left`;
+      if (seconds <= 0) finish();
+    }, 80);
+  }
+
+  function finish() {
+    window.clearInterval(timerId);
+    running = false;
+    const sps = (presses / 10).toFixed(1);
+    trackEvent("tool_complete", { tool_name: "spacebar_clicker", value: Number(sps), unit: "sps" });
+    root.innerHTML = `
+      <div class="result-card tool-result">
+        <p class="eyebrow">Your Spacebar Result</p>
+        <div class="tool-number">${sps}<small>SPS</small></div>
+        <h2>${Number(sps) >= 8 ? "Very fast spacebar speed" : Number(sps) >= 5 ? "Solid spacebar speed" : "Casual spacebar speed"}</h2>
+        <p>You pressed Space ${presses} times in 10 seconds. Retake the test on the same keyboard when comparing attempts.</p>
+        <div class="result-metrics">
+          <div><span>Speed</span><strong>${sps} SPS</strong></div>
+          <div><span>Presses</span><strong>${presses}</strong></div>
+          <div><span>Time</span><strong>10s</strong></div>
+          <div><span>Input</span><strong>Space</strong></div>
+        </div>
+        <div class="actions">
+          <button class="button primary" data-share-spacebar>Share Result</button>
+          <button class="button ghost" data-reset-spacebar>Try Again</button>
+        </div>
+      </div>
+    `;
+    attachShare(root.querySelector("[data-share-spacebar]"), `My spacebar clicker result is ${sps} presses per second`);
+    root.querySelector("[data-reset-spacebar]").addEventListener("click", reset);
+  }
+
+  function reset() {
+    window.clearInterval(timerId);
+    presses = 0;
+    seconds = 10;
+    running = false;
+    startedAt = 0;
+    render();
+  }
+
+  render();
+}
+
+function initDoubleClickTest() {
+  const root = byId("double-click-test");
+  if (!root) return;
+
+  let clicks = 0;
+  let doubleClicks = 0;
+  let fastestDouble = 0;
+  let lastClickAt = 0;
+  let seconds = 10;
+  let timerId = null;
+  let running = false;
+  let startedAt = 0;
+
+  function render() {
+    root.innerHTML = `
+      <div class="tool-card mouse-card">
+        <p class="eyebrow">Double Click Test</p>
+        <h2>Click the test area for 10 seconds.</h2>
+        <button class="click-zone double-click-zone" data-double-click-zone>
+          <strong>${doubleClicks}</strong>
+          <span>${running ? `${seconds.toFixed(1)}s left` : "Start clicking"}</span>
+        </button>
+        <div class="result-metrics">
+          <div><span>Clicks</span><strong data-clicks>${clicks}</strong></div>
+          <div><span>Double Clicks</span><strong data-double-clicks>${doubleClicks}</strong></div>
+          <div><span>Fastest Pair</span><strong data-fastest-double>${fastestDouble ? `${fastestDouble}ms` : "--"}</strong></div>
+          <div><span>Timer</span><strong data-double-time>${seconds.toFixed(1)}s</strong></div>
+        </div>
+        <div class="actions">
+          <button class="button primary" data-start-double-click>Start Test</button>
+          <button class="button ghost" data-reset-double-click>Reset</button>
+        </div>
+        <div class="notice"><p>Use normal single clicks if you are checking for unwanted double-click behavior. Intentional rapid double-clicks will also be counted.</p></div>
+      </div>
+    `;
+    const zone = root.querySelector("[data-double-click-zone]");
+    zone.addEventListener("click", handleClick);
+    zone.addEventListener("dblclick", handleDoubleClick);
+    root.querySelector("[data-start-double-click]").addEventListener("click", () => {
+      zone.focus();
+      if (!running) start();
+    });
+    root.querySelector("[data-reset-double-click]").addEventListener("click", reset);
+  }
+
+  function handleClick() {
+    if (!running && seconds > 0) start();
+    if (!running) return;
+    const now = performance.now();
+    clicks += 1;
+    if (lastClickAt) {
+      const gap = Math.round(now - lastClickAt);
+      if (gap <= 300) fastestDouble = fastestDouble ? Math.min(fastestDouble, gap) : gap;
+    }
+    lastClickAt = now;
+    updateLive();
+  }
+
+  function handleDoubleClick(event) {
+    event.preventDefault();
+    if (!running) return;
+    doubleClicks += 1;
+    updateLive();
+  }
+
+  function start() {
+    if (running) return;
+    trackEvent("tool_start", { tool_name: "double_click_test" });
+    running = true;
+    startedAt = performance.now();
+    timerId = window.setInterval(() => {
+      seconds = Math.max(0, 10 - (performance.now() - startedAt) / 1000);
+      updateLive();
+      if (seconds <= 0) finish();
+    }, 80);
+  }
+
+  function updateLive() {
+    const clickItem = root.querySelector("[data-clicks]");
+    const doubleItem = root.querySelector("[data-double-clicks]");
+    const fastestItem = root.querySelector("[data-fastest-double]");
+    const timeItem = root.querySelector("[data-double-time]");
+    const zoneNumber = root.querySelector(".click-zone strong");
+    const zoneLabel = root.querySelector(".click-zone span");
+    if (clickItem) clickItem.textContent = clicks;
+    if (doubleItem) doubleItem.textContent = doubleClicks;
+    if (fastestItem) fastestItem.textContent = fastestDouble ? `${fastestDouble}ms` : "--";
+    if (timeItem) timeItem.textContent = `${seconds.toFixed(1)}s`;
+    if (zoneNumber) zoneNumber.textContent = doubleClicks;
+    if (zoneLabel) zoneLabel.textContent = `${seconds.toFixed(1)}s left`;
+  }
+
+  function finish() {
+    window.clearInterval(timerId);
+    running = false;
+    const ratio = clicks ? ((doubleClicks / clicks) * 100).toFixed(1) : "0.0";
+    const label = doubleClicks === 0 ? "No browser double-clicks detected" : doubleClicks <= 2 ? "A few double-click events detected" : "Frequent double-click events detected";
+    trackEvent("tool_complete", { tool_name: "double_click_test", value: doubleClicks, unit: "events" });
+    root.innerHTML = `
+      <div class="result-card tool-result">
+        <p class="eyebrow">Your Double Click Test Result</p>
+        <div class="tool-number">${doubleClicks}<small>events</small></div>
+        <h2>${label}</h2>
+        <p>The browser recorded ${clicks} clicks and ${doubleClicks} double-click events in 10 seconds. If you were only using slow single clicks, repeated double-click events can point to a mouse switch issue.</p>
+        <div class="result-metrics">
+          <div><span>Clicks</span><strong>${clicks}</strong></div>
+          <div><span>Double Clicks</span><strong>${doubleClicks}</strong></div>
+          <div><span>Ratio</span><strong>${ratio}%</strong></div>
+          <div><span>Fastest Pair</span><strong>${fastestDouble ? `${fastestDouble}ms` : "--"}</strong></div>
+        </div>
+        <div class="actions">
+          <button class="button primary" data-share-double-click>Share Result</button>
+          <button class="button ghost" data-reset-double-click>Try Again</button>
+        </div>
+      </div>
+    `;
+    attachShare(root.querySelector("[data-share-double-click]"), `My double click test recorded ${doubleClicks} double-click events in 10 seconds`);
+    root.querySelector("[data-reset-double-click]").addEventListener("click", reset);
+  }
+
+  function reset() {
+    window.clearInterval(timerId);
+    clicks = 0;
+    doubleClicks = 0;
+    fastestDouble = 0;
+    lastClickAt = 0;
+    seconds = 10;
+    running = false;
+    startedAt = 0;
     render();
   }
 
@@ -1266,6 +1533,9 @@ function initTypingSpeedTest() {
       return;
     }
     if (!startedAt && value.length) startedAt = performance.now();
+    if (startedAt && value.length === 1) {
+      trackEvent("tool_start", { tool_name: "typing_speed" });
+    }
     let errors = 0;
     for (let index = 0; index < value.length; index += 1) {
       if (value[index] !== text[index]) errors += 1;
@@ -1294,6 +1564,7 @@ function initTypingSpeedTest() {
   function finish(wpm, accuracy, errors) {
     done = true;
     const seconds = Math.round((performance.now() - startedAt) / 1000);
+    trackEvent("tool_complete", { tool_name: "typing_speed", value: wpm, unit: "wpm", accuracy });
     root.innerHTML = `
       <div class="result-card tool-result">
         <p class="eyebrow">Your Typing Speed</p>
@@ -1440,6 +1711,7 @@ function initKeyboardPollingRateTest() {
   }
 
   function start(area) {
+    trackEvent("tool_start", { tool_name: "keyboard_polling_rate" });
     Object.assign(state, {
       running: true,
       startedAt: performance.now(),
@@ -1537,6 +1809,7 @@ function initKeyboardPollingRateTest() {
     const result = stats();
     const responseMs = result.avgHz ? 1000 / result.avgHz : 0;
     const enoughData = state.events.length >= 8;
+    trackEvent("tool_complete", { tool_name: "keyboard_polling_rate", value: result.avgHz || 0, unit: "hz", event_count: state.events.length });
     root.innerHTML = `
       <div class="result-card tool-result polling-result">
         <p class="eyebrow">Your Keyboard Hz Result</p>
@@ -1704,6 +1977,7 @@ function initMicrophoneTest() {
   }
 
   async function start() {
+    trackEvent("tool_start", { tool_name: "microphone_test" });
     if (!navigator.mediaDevices?.getUserMedia) {
       setStatus("Unsupported");
       setMessage("This browser does not expose microphone testing through getUserMedia.");
@@ -1719,6 +1993,7 @@ function initMicrophoneTest() {
       peak = 0;
       setStatus("Listening");
       setMessage("Speak into the microphone and watch the level meter move.");
+      trackEvent("tool_complete", { tool_name: "microphone_test", status: "permission_granted" });
       tick();
     } catch (error) {
       setStatus(error.name === "NotFoundError" ? "No mic" : "Blocked");
@@ -1810,6 +2085,7 @@ function initWebcamTest() {
   }
 
   async function start() {
+    trackEvent("tool_start", { tool_name: "webcam_test" });
     if (!navigator.mediaDevices?.getUserMedia) {
       setText("[data-webcam-status]", "Unsupported");
       setText("[data-webcam-message]", "This browser does not expose camera testing through getUserMedia.");
@@ -1824,6 +2100,7 @@ function initWebcamTest() {
       setText("[data-webcam-status]", "Live");
       setText("[data-webcam-resolution]", `${video.videoWidth || "--"}x${video.videoHeight || "--"}`);
       setText("[data-webcam-message]", "Camera preview is live. Use Snapshot to capture a local still image.");
+      trackEvent("tool_complete", { tool_name: "webcam_test", status: "permission_granted", resolution: `${video.videoWidth || "--"}x${video.videoHeight || "--"}` });
     } catch (error) {
       setText("[data-webcam-status]", error.name === "NotFoundError" ? "No camera" : "Blocked");
       setText("[data-webcam-message]", mediaAccessMessage(error, "camera"));
@@ -1868,6 +2145,7 @@ function initGamepadTester() {
 
   let frameId = null;
   let running = false;
+  let reportedConnection = false;
 
   function render() {
     root.innerHTML = `
@@ -1920,12 +2198,14 @@ function initGamepadTester() {
   }
 
   function start() {
+    trackEvent("tool_start", { tool_name: "gamepad_tester" });
     if (!navigator.getGamepads) {
       setText("[data-gamepad-status]", "Unsupported");
       setText("[data-gamepad-message]", "This browser does not expose the Gamepad API.");
       return;
     }
     running = true;
+    reportedConnection = false;
     setText("[data-gamepad-status]", "Scanning");
     tick();
   }
@@ -1944,6 +2224,10 @@ function initGamepadTester() {
     setText("[data-gamepad-buttons]", gamepad.buttons.length);
     setText("[data-gamepad-axes]", gamepad.axes.length);
     setText("[data-gamepad-message]", "Inputs are updating live. Press buttons and move sticks or triggers.");
+    if (!reportedConnection) {
+      reportedConnection = true;
+      trackEvent("tool_complete", { tool_name: "gamepad_tester", status: "connected", buttons: gamepad.buttons.length, axes: gamepad.axes.length });
+    }
 
     const buttonGrid = root.querySelector("[data-gamepad-button-grid]");
     const axisGrid = root.querySelector("[data-gamepad-axis-grid]");
@@ -2083,6 +2367,7 @@ function initIqQuiz() {
     root.querySelector("[data-start-iq]").addEventListener("click", () => {
       startedAt = Date.now();
       enteredAt.value = Date.now();
+      trackEvent("quiz_start", { quiz_name: "iq_test", language: lang });
       timerId = window.setInterval(tick, 1000);
       renderQuestion();
     });
@@ -2174,6 +2459,7 @@ function initIqQuiz() {
     const percentile = Math.max(3, Math.min(99, Math.round(4 + ratio * 94)));
     const minutesUsed = Math.max(1, Math.round((Date.now() - startedAt) / 60000));
     const band = getIqBand(estimate, lang);
+    trackEvent("quiz_complete", { quiz_name: "iq_test", language: lang, score: estimate, percentile });
     const categoryRows = Object.keys(iqCategoryLabels[lang]).map((category) => {
       const pct = Math.round(((categoryScores[category] || 0) / (categoryMax[category] || 1)) * 100);
       return `
@@ -2248,6 +2534,8 @@ initSbtiTypes();
 initIqQuiz();
 initReactionTimeTest();
 initCpsTest();
+initSpacebarClicker();
+initDoubleClickTest();
 initTypingSpeedTest();
 initKeyboardTest();
 initKeyboardPollingRateTest();

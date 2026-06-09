@@ -19,6 +19,8 @@
     if (path.includes("/reaction-time-test/")) return "reaction-test";
     if (path.includes("/typing-speed-test/")) return "typing-test";
     if (path.includes("/cps-test/")) return "cps-test";
+    if (path.includes("/spacebar-clicker/")) return "spacebar-clicker";
+    if (path.includes("/double-click-test/")) return "double-click-test";
     if (path.includes("/speed-tests/")) return "speed-tests";
     if (path.includes("/device-tests/")) return "device-tests";
     if (path.includes("/keyboard-test/")) return "keyboard-test";
@@ -50,6 +52,8 @@
         "reaction-test": "/reaction-time-test/",
         "typing-test": "/typing-speed-test/",
         "cps-test": "/cps-test/",
+        "spacebar-clicker": "/spacebar-clicker/",
+        "double-click-test": "/double-click-test/",
         "speed-tests": "/speed-tests/",
         "device-tests": "/device-tests/",
         "keyboard-test": "/keyboard-test/",
@@ -78,6 +82,8 @@
         "reaction-test": "/zh/reaction-time-test/",
         "typing-test": "/zh/typing-speed-test/",
         "cps-test": "/zh/cps-test/",
+        "spacebar-clicker": "/spacebar-clicker/",
+        "double-click-test": "/double-click-test/",
         "speed-tests": "/speed-tests/",
         "device-tests": "/device-tests/",
         "keyboard-test": "/zh/keyboard-test/",
@@ -106,6 +112,8 @@
         "reaction-test": "/fr/reaction-time-test/",
         "typing-test": "/fr/typing-speed-test/",
         "cps-test": "/fr/cps-test/",
+        "spacebar-clicker": "/spacebar-clicker/",
+        "double-click-test": "/double-click-test/",
         "speed-tests": "/speed-tests/",
         "device-tests": "/device-tests/",
         "keyboard-test": "/fr/keyboard-test/",
@@ -134,6 +142,8 @@
         "reaction-test": "/vi/reaction-time-test/",
         "typing-test": "/vi/typing-speed-test/",
         "cps-test": "/vi/cps-test/",
+        "spacebar-clicker": "/spacebar-clicker/",
+        "double-click-test": "/double-click-test/",
         "speed-tests": "/speed-tests/",
         "device-tests": "/device-tests/",
         "keyboard-test": "/vi/keyboard-test/",
