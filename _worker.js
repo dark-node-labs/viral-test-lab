@@ -24,6 +24,7 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const sensitiveSbtiPath = /^\/(?:zh\/)?sbti-types\/(?:dead|drunk|fuck|poor|sexy|shit)\/?$/;
+    const matureQuizPath = /^\/(?:(?:zh|vi)\/rice-purity-test|(?:zh|vi|fr)\/rice-purity-test-score-meaning|rice-purity-test|rice-purity-test-score-meaning|fr\/test-de-purete)\/?$/;
     const aliasRedirects = new Map([
       ["/camera-test/", "/webcam-test/"],
       ["/controller-test/", "/gamepad-tester/"],
@@ -53,7 +54,7 @@ export default {
       });
     }
 
-    if (sensitiveSbtiPath.test(url.pathname)) {
+    if (sensitiveSbtiPath.test(url.pathname) || matureQuizPath.test(url.pathname)) {
       const response = await env.ASSETS.fetch(request);
       return withSeoAndCacheHeaders(request, response, { xRobotsTag: "noindex, follow" });
     }
