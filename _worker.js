@@ -1,7 +1,12 @@
-function withSeoAndCacheHeaders(request, response, options = {}) {
+const ADSENSE_CLIENT = "ca-pub-3196187117350639";
+const ADSENSE_SCRIPT = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}"
+     crossorigin="anonymous"></script>`;
+
+async function withSeoAndCacheHeaders(request, response, options = {}) {
   const url = new URL(request.url);
   const headers = new Headers(response.headers);
   const contentType = headers.get("content-type") || "";
+  let body = response.body;
 
   if (options.xRobotsTag) {
     headers.set("x-robots-tag", options.xRobotsTag);
@@ -11,9 +16,15 @@ function withSeoAndCacheHeaders(request, response, options = {}) {
     headers.set("cache-control", "public, max-age=31536000, immutable");
   } else if (contentType.includes("text/html")) {
     headers.set("cache-control", "public, max-age=600, s-maxage=86400, stale-while-revalidate=604800");
+
+    if (!options.skipAdsense) {
+      const html = await response.text();
+      body = html.includes(ADSENSE_CLIENT) ? html : html.replace("</head>", `    ${ADSENSE_SCRIPT}\n  </head>`);
+      headers.delete("content-length");
+    }
   }
 
-  return new Response(response.body, {
+  return new Response(body, {
     status: response.status,
     statusText: response.statusText,
     headers
@@ -56,10 +67,10 @@ export default {
 
     if (sensitiveSbtiPath.test(url.pathname) || matureQuizPath.test(url.pathname)) {
       const response = await env.ASSETS.fetch(request);
-      return withSeoAndCacheHeaders(request, response, { xRobotsTag: "noindex, follow" });
+      return await withSeoAndCacheHeaders(request, response, { xRobotsTag: "noindex, follow", skipAdsense: true });
     }
 
     const response = await env.ASSETS.fetch(request);
-    return withSeoAndCacheHeaders(request, response);
+    return await withSeoAndCacheHeaders(request, response);
   }
 };
