@@ -39,8 +39,11 @@
     if (path.includes("/rice-purity-test/") || path.includes("/test-de-purete/")) return "rice-test";
     if (path.includes("/best-fun-personality-tests/")) return "fun-tests";
     if (path.includes("/link-to-us/")) return "link-to-us";
+    if (path.includes("/about/")) return "about";
+    if (path.includes("/contact/")) return "contact";
     if (path.includes("/privacy/")) return "privacy";
     if (path.includes("/terms/")) return "terms";
+    if (path.includes("/cookies/")) return "cookies";
     return "home";
   };
 
@@ -73,8 +76,11 @@
         "rice-score": "/rice-purity-test-score-meaning/",
         "fun-tests": "/best-fun-personality-tests/",
         "link-to-us": "/link-to-us/",
+        about: "/about/",
+        contact: "/contact/",
         privacy: "/privacy/",
-        terms: "/terms/"
+        terms: "/terms/",
+        cookies: "/cookies/"
       },
       zh: {
         home: "/zh/",
@@ -103,8 +109,11 @@
         "rice-score": "/zh/rice-purity-test-score-meaning/",
         "fun-tests": "/best-fun-personality-tests/",
         "link-to-us": "/link-to-us/",
+        about: "/about/",
+        contact: "/contact/",
         privacy: "/privacy/",
-        terms: "/terms/"
+        terms: "/terms/",
+        cookies: "/cookies/"
       },
       fr: {
         home: "/fr/",
@@ -133,8 +142,11 @@
         "rice-score": "/fr/rice-purity-test-score-meaning/",
         "fun-tests": "/best-fun-personality-tests/",
         "link-to-us": "/link-to-us/",
+        about: "/about/",
+        contact: "/contact/",
         privacy: "/privacy/",
-        terms: "/terms/"
+        terms: "/terms/",
+        cookies: "/cookies/"
       },
       vi: {
         home: "/vi/",
@@ -163,8 +175,11 @@
         "rice-score": "/vi/rice-purity-test-score-meaning/",
         "fun-tests": "/best-fun-personality-tests/",
         "link-to-us": "/link-to-us/",
+        about: "/about/",
+        contact: "/contact/",
         privacy: "/privacy/",
-        terms: "/terms/"
+        terms: "/terms/",
+        cookies: "/cookies/"
       }
     };
     if (key === "sbti-type") {

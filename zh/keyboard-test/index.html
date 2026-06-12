@@ -46,9 +46,14 @@
       <section class="hero"><div><p class="eyebrow">免费在线按键检测</p><h1>键盘测试</h1><p>检查键盘按键是否能被浏览器识别。点击测试面板，按下按键，正常工作的键会立即高亮。</p><p>适合检查按键失灵、新键盘到手、或确认修饰键和字母键是否正常。</p><div class="actions"><a class="button primary" href="#keyboard-test">开始键盘测试</a><a class="button secondary" href="/zh/keyboard-polling-rate-test/">检查键盘 Hz</a></div></div><div class="tool-visual" aria-label="键盘测试"><div class="tool-visual-grid"><span>按键</span><span>键码</span><span>焦点</span><span>OK</span></div><div class="floating-card"><div class="score-ring">A</div><h3>实时按键检测</h3><p>按键后查看最新键名、键码和测试数量。</p></div></div></section>
       <section class="quiz-shell"><div id="keyboard-test"></div></section>
       <section class="section alt"><div class="wrap"><div class="section-head"><div><p class="eyebrow">使用方法</p><h2>聚焦面板并按键。</h2></div><p>键盘测试会监听测试区域里的 keydown 事件，然后显示浏览器报告的键名和物理键码。</p></div><div class="grid"><div class="card"><strong>按键高亮</strong><p>检测到的键会在屏幕键盘上高亮。</p></div><div class="card"><strong>键码显示</strong><p>查看物理键码，适合不同键盘布局。</p></div><div class="card"><strong>无需安装</strong><p>直接在浏览器中运行。</p></div></div></div></section>
-      <section class="article"><h2>键盘测试能检查什么？</h2><p>它能确认常见按键是否发送输入事件，也能帮助发现失灵、误触或键码异常。</p>
-        <h2>为什么有些键行为不同？</h2><p>键盘布局、系统快捷键、浏览器快捷键和 Fn 层都会影响按键报告。</p>
-        <h2>下一步做什么？</h2><p>试试键盘 Hz 测试、鼠标测试或打字速度测试。</p>
+      <section class="article"><h2>键盘测试能检查什么？</h2><p>它能确认常见按键是否发送输入事件，也能帮助发现失灵、误触、连击、修饰键异常或键码显示不符合预期。你可以按下字母、数字、方向键、空格、Enter、Shift、Ctrl、Alt 等按键，观察页面是否立刻高亮并显示浏览器识别到的键名。</p>
+        <p>这个工具尤其适合新键盘到手、笔记本键盘进灰、外接键盘更换轴体、蓝牙键盘连接不稳定、或某些游戏里按键不响应时做第一步排查。它不是厂商级维修工具，但可以快速判断“浏览器有没有收到按键事件”。</p>
+        <h2>如何使用键盘测试</h2><p>先点击测试面板，让页面获得焦点，然后逐个按下需要检查的按键。正常情况下，屏幕键盘会高亮对应按键，并显示最近一次按键的 key、code 或类似信息。测试组合键时，可以先按住 Shift、Ctrl、Alt 或 Command，再按另一个键，观察修饰键是否被识别。</p>
+        <p>如果某些按键没有反应，先确认页面仍然处于聚焦状态。有些系统快捷键会被操作系统或浏览器提前拦截，例如刷新、关闭标签页、音量键、亮度键或 Fn 层功能键，这不一定代表键盘损坏。对于笔记本键盘，Fn 键、媒体键和厂商快捷键经常不会像普通字母键那样被网页完整捕捉。</p>
+        <h2>结果怎么看才可靠？</h2><p>如果同一个按键在多个浏览器和多个输入框里都没有反应，硬件或系统设置问题的可能性更高。如果只在某个网页里不反应，可能是页面焦点、浏览器快捷键或脚本限制导致。机械键盘用户还可以反复轻按同一个键，观察是否出现一次按压触发多次的情况。</p>
+        <p>键盘布局也会影响显示结果。例如中文输入法、英文布局、法语布局或其他地区布局，可能让按键字符和物理位置看起来不完全一致。遇到这种情况，物理键码通常比字符更适合排查硬件问题，因为它更接近按键在键盘上的位置。</p>
+        <h2>隐私和使用说明</h2><p>键盘测试在本地浏览器里运行，不需要登录或安装插件。请不要在测试区域输入密码、验证码、银行卡号、身份证号或其他敏感信息。页面只需要知道“哪个键被按下”来显示测试结果，不需要你提交个人资料。</p>
+        <h2>下一步做什么？</h2><p>如果基础按键正常，可以继续使用 <a href="/zh/keyboard-polling-rate-test/">键盘 Hz 测试</a> 查看输入间隔和估算轮询率；也可以打开 <a href="/zh/typing-speed-test/">打字速度测试</a> 检查实际输入效率，或用 <a href="/zh/mouse-test/">鼠标测试</a> 排查另一类输入设备。</p>
 
         <h2 data-seo-faq-heading>键盘测试常见问题</h2>
         <h3>键盘测试能检查什么？</h3>
@@ -59,6 +64,9 @@
 
         <h3>外接键盘可以测试吗？</h3>
         <p>可以。USB、蓝牙、笔记本和很多平板键盘，只要浏览器能收到输入就能检查。</p>
+
+        <h3>为什么功能键或媒体键没有显示？</h3>
+        <p>部分功能键会被系统、浏览器或键盘固件提前处理，网页可能收不到完整事件。建议同时测试普通字母键和数字键，判断是否只是特殊键受限。</p>
       </section>
 
       <section class="section related-tools" data-seo-related-tools>
@@ -80,8 +88,8 @@
         </div>
       </section>
     </main>
-    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub 工具仅供娱乐、练习和快速设备检查。</span><span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span></div></footer>
-    <script src="/assets/i18n.js?v=18"></script>
+    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub 工具仅供娱乐、练习和快速设备检查。</span><span><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/cookies/">Cookies</a></span></div></footer>
+    <script src="/assets/i18n.js?v=19"></script>
     <script src="/assets/app.js?v=19"></script>
   </body>
 </html>

@@ -46,9 +46,14 @@
       <section class="hero"><div><p class="eyebrow">免费在线鼠标检测</p><h1>鼠标测试</h1><p>检查鼠标按键、滚轮、双击和指针移动是否被正确识别。在测试区域点击、滚动和移动指针即可。</p><p>适合排查按键不稳定、滚轮异常，或比较新鼠标。</p><div class="actions"><a class="button primary" href="#mouse-test">开始鼠标测试</a><a class="button secondary" href="/zh/cps-test/">试试 CPS 测试</a></div></div><div class="tool-visual" aria-label="鼠标测试"><div class="tool-visual-grid"><span>左键</span><span>右键</span><span>滚轮</span><span>移动</span></div><div class="floating-card"><div class="score-ring">OK</div><h3>按键和滚轮检查</h3><p>测试点击、滚动、双击和指针位置。</p></div></div></section>
       <section class="quiz-shell"><div id="mouse-test"></div></section>
       <section class="section alt"><div class="wrap"><div class="section-head"><div><p class="eyebrow">鼠标输入</p><h2>检查常见鼠标操作。</h2></div><p>测试区域会监听左键、中键、右键、滚轮、双击和指针移动。</p></div><div class="grid"><div class="card"><strong>按键检查</strong><p>点击左键、中键和右键确认是否被检测。</p></div><div class="card"><strong>滚轮检查</strong><p>在区域内滚动，查看计数变化。</p></div><div class="card"><strong>指针位置</strong><p>移动鼠标并查看实时坐标。</p></div></div></div></section>
-      <section class="article"><h2>鼠标测试能诊断什么？</h2><p>它可以帮助发现按键无响应、双击异常、滚轮问题或指针事件异常。</p>
-        <h2>为什么结果会不同？</h2><p>浏览器、系统设置、鼠标驱动和设备状态都会影响事件。</p>
-        <h2>下一步做什么？</h2><p>可以做 CPS 测试或反应速度测试。</p>
+      <section class="article"><h2>鼠标测试能诊断什么？</h2><p>它可以帮助发现按键无响应、双击异常、滚轮问题或指针事件异常。常见情况包括左键偶尔不触发、右键被系统菜单打断、中键按下没有反应、滚轮向上或向下滚动不稳定，以及新鼠标到手后想确认每个输入都能被浏览器识别。</p>
+        <p>这个测试不会读取鼠标品牌、序列号或驱动配置，它只显示浏览器收到的输入事件。因此它适合做快速排查：如果页面里完全没有反应，问题可能来自设备、连接、浏览器权限、系统设置或当前页面焦点；如果页面能识别但游戏或软件里异常，则可能需要继续检查目标软件的设置。</p>
+        <h2>如何使用鼠标测试</h2><p>先把指针移动到测试区域，然后依次点击左键、右键和中键。页面会记录最近一次点击、双击次数、滚轮方向和指针坐标。测试右键时，页面会尽量阻止浏览器默认菜单，这样你可以看到右键事件是否真的被检测到。</p>
+        <p>测试滚轮时，请在区域内慢慢向上和向下滚动几次，再快速滚动几次。稳定的滚轮通常会连续产生方向一致的事件；如果计数忽高忽低、方向反复跳变，可能是滚轮编码器、灰尘、驱动或浏览器缩放行为导致的。测试双击时，尽量用自然速度点击，不要刻意超快，这样更接近日常使用。</p>
+        <h2>结果怎么看才合理？</h2><p>如果所有按键都能被识别，说明鼠标的基础输入大概率正常。如果只有某一个按键没有反应，可以换一个浏览器或 USB 接口再测一次；无线鼠标还可以尝试更换电池、靠近接收器、断开蓝牙后重新连接。若多个设备在同一浏览器里都异常，则更可能是系统或浏览器层面的设置问题。</p>
+        <p>坐标变化主要用于确认指针移动事件是否持续到达页面，不代表鼠标 DPI、回报率或传感器精度。想看点击速度，可以继续使用 <a href="/zh/cps-test/">CPS 测试</a>；想确认视觉反应，可以使用 <a href="/zh/reaction-time-test/">反应速度测试</a>。多个工具一起使用，能更完整地排查“鼠标本身”和“操作表现”之间的差异。</p>
+        <h2>隐私和安全说明</h2><p>鼠标测试在浏览器中运行，不需要账号，也不需要安装软件。页面只根据你的点击、滚动和移动事件展示结果，不要求你输入个人信息。请不要在任何测试页面输入密码、证件号、聊天记录或其他敏感内容。</p>
+        <h2>下一步做什么？</h2><p>可以做 CPS 测试、反应速度测试或键盘测试。若你正在排查游戏输入问题，建议在同一台设备、同一个浏览器、相同刷新率和相同鼠标连接方式下重复测试，这样结果更容易比较。</p>
 
         <h2 data-seo-faq-heading>鼠标测试常见问题</h2>
         <h3>鼠标测试能诊断什么？</h3>
@@ -59,6 +64,9 @@
 
         <h3>鼠标结果应该用同一设备比较吗？</h3>
         <p>建议使用同一设备。浏览器、系统、驱动、无线连接和设备状态都会影响结果。</p>
+
+        <h3>这个测试能测鼠标 DPI 吗？</h3>
+        <p>不能。页面主要检查浏览器是否收到按键、滚轮、双击和指针移动事件。DPI、传感器精度和真实回报率需要专门工具或厂商软件配合。</p>
       </section>
 
       <section class="section related-tools" data-seo-related-tools>
@@ -80,8 +88,8 @@
         </div>
       </section>
     </main>
-    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub 工具仅供娱乐、练习和快速设备检查。</span><span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span></div></footer>
-    <script src="/assets/i18n.js?v=18"></script>
+    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub 工具仅供娱乐、练习和快速设备检查。</span><span><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/cookies/">Cookies</a></span></div></footer>
+    <script src="/assets/i18n.js?v=19"></script>
     <script src="/assets/app.js?v=19"></script>
   </body>
 </html>
