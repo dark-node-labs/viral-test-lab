@@ -1163,8 +1163,10 @@ function initCpsTest() {
   const root = byId("cps-test");
   if (!root) return;
 
+  const durations = [5, 10, 30];
+  let duration = 5;
   let clicks = 0;
-  let seconds = 5;
+  let seconds = duration;
   let timerId = null;
   let running = false;
 
@@ -1172,15 +1174,18 @@ function initCpsTest() {
     root.innerHTML = `
       <div class="tool-card cps-card">
         <p class="eyebrow">CPS Test</p>
-        <h2>Click as fast as you can for 5 seconds.</h2>
+        <h2>Click as fast as you can for ${duration} seconds.</h2>
+        <div class="duration-options" aria-label="Choose click test duration">
+          ${durations.map((item) => `<button class="duration-option${item === duration ? " selected" : ""}" type="button" data-cps-duration="${item}"${running ? " disabled" : ""}>${item}s</button>`).join("")}
+        </div>
         <button class="click-zone" data-click-zone>
           <strong>${clicks}</strong>
           <span>${running ? `${seconds.toFixed(1)}s left` : "Start clicking"}</span>
         </button>
         <div class="tool-stats">
-          <span><strong>${(clicks / 5).toFixed(1)}</strong> CPS</span>
-          <span><strong>${clicks}</strong> clicks</span>
-          <span><strong>5s</strong> test</span>
+          <span><strong data-cps-score>${(clicks / duration).toFixed(1)}</strong> CPS</span>
+          <span><strong data-cps-clicks>${clicks}</strong> clicks</span>
+          <span><strong>${duration}s</strong> test</span>
         </div>
         <div class="actions">
           <button class="button ghost" data-reset-cps>Reset</button>
@@ -1189,6 +1194,9 @@ function initCpsTest() {
     `;
     root.querySelector("[data-click-zone]").addEventListener("click", click);
     root.querySelector("[data-reset-cps]").addEventListener("click", reset);
+    root.querySelectorAll("[data-cps-duration]").forEach((button) => {
+      button.addEventListener("click", () => setDuration(Number(button.dataset.cpsDuration)));
+    });
   }
 
   function click() {
@@ -1196,17 +1204,22 @@ function initCpsTest() {
     if (!running) return;
     clicks += 1;
     const number = root.querySelector(".click-zone strong");
-    const cps = root.querySelector(".tool-stats span strong");
+    const cps = root.querySelector("[data-cps-score]");
+    const total = root.querySelector("[data-cps-clicks]");
     if (number) number.textContent = clicks;
-    if (cps) cps.textContent = (clicks / 5).toFixed(1);
+    if (cps) cps.textContent = (clicks / duration).toFixed(1);
+    if (total) total.textContent = clicks;
   }
 
   function start() {
     trackEvent("tool_start", { tool_name: "cps_test" });
     running = true;
     const startedAt = performance.now();
+    root.querySelectorAll("[data-cps-duration]").forEach((button) => {
+      button.disabled = true;
+    });
     timerId = window.setInterval(() => {
-      seconds = Math.max(0, 5 - (performance.now() - startedAt) / 1000);
+      seconds = Math.max(0, duration - (performance.now() - startedAt) / 1000);
       const label = root.querySelector(".click-zone span");
       if (label) label.textContent = `${seconds.toFixed(1)}s left`;
       if (seconds <= 0) finish();
@@ -1216,28 +1229,36 @@ function initCpsTest() {
   function finish() {
     window.clearInterval(timerId);
     running = false;
-    const cps = (clicks / 5).toFixed(1);
+    const cps = (clicks / duration).toFixed(1);
     trackEvent("tool_complete", { tool_name: "cps_test", value: Number(cps), unit: "cps" });
     root.innerHTML = `
       <div class="result-card tool-result">
         <p class="eyebrow">Your CPS Result</p>
         <div class="tool-number">${cps}<small>CPS</small></div>
         <h2>${Number(cps) >= 9 ? "Very fast clicking" : Number(cps) >= 6 ? "Solid clicking speed" : "Casual clicking speed"}</h2>
-        <p>You made ${clicks} clicks in 5 seconds. Use the same mouse or touch device when comparing attempts.</p>
+        <p>You made ${clicks} clicks in ${duration} seconds. Use the same mouse or touch device when comparing attempts.</p>
         <div class="actions">
           <button class="button primary" data-share-cps>Share Result</button>
           <button class="button ghost" data-reset-cps>Try Again</button>
         </div>
       </div>
     `;
-    attachShare(root.querySelector("[data-share-cps]"), `My CPS test result is ${cps} clicks per second`);
+    attachShare(root.querySelector("[data-share-cps]"), `My ${duration}s CPS test result is ${cps} clicks per second`);
     root.querySelector("[data-reset-cps]").addEventListener("click", reset);
+  }
+
+  function setDuration(nextDuration) {
+    if (running || !durations.includes(nextDuration)) return;
+    duration = nextDuration;
+    clicks = 0;
+    seconds = duration;
+    render();
   }
 
   function reset() {
     window.clearInterval(timerId);
     clicks = 0;
-    seconds = 5;
+    seconds = duration;
     running = false;
     render();
   }

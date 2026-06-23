@@ -219,6 +219,22 @@ p {
   font-size: 1.1rem;
 }
 
+.hero-tool-entry {
+  scroll-margin-top: 92px;
+}
+
+.hero-tool-entry .tool-card {
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.hero-tool-entry .tool-card h2 {
+  font-size: clamp(1.45rem, 3vw, 2.2rem);
+}
+
+.hero-tool-entry .click-zone {
+  min-height: 220px;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -740,6 +756,41 @@ button.button {
 
 .tool-result h2 {
   margin-top: 6px;
+}
+
+.duration-options {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: #f8f9fc;
+}
+
+.duration-option {
+  min-width: 72px;
+  min-height: 40px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 14px;
+  color: var(--muted);
+  background: transparent;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.duration-option:hover,
+.duration-option.selected {
+  color: #fff;
+  background: var(--brand-3);
+}
+
+.duration-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
 }
 
 .click-zone {
