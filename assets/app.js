@@ -250,7 +250,13 @@ function byId(id) {
 
 function trackEvent(name, params = {}) {
   if (typeof window.gtag !== "function") return;
+  const isToolKeyEvent = name === "tool_start" || name === "tool_complete";
   window.gtag("event", name, {
+    ...(isToolKeyEvent ? {
+      event_category: "tool_engagement",
+      key_event: true,
+      conversion: true
+    } : {}),
     page_path: window.location.pathname,
     ...params
   });

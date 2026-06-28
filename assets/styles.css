@@ -624,6 +624,14 @@ button.button {
   font-weight: 750;
 }
 
+.hero-score-note {
+  border-left: 4px solid var(--brand-2);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: #ecfbf8;
+  color: #145f59;
+}
+
 .quiz-shell {
   width: min(860px, calc(100% - 32px));
   margin: 0 auto;
