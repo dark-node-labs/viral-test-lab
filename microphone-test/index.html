@@ -82,6 +82,12 @@
       <section class="article">
         <h2>How to use the microphone test</h2>
         <p>Click Start Mic Test and approve the browser permission prompt. Speak at a normal distance. A working microphone should make the live level meter move. If it does not, select the right input device in your operating system and check whether the browser is allowed to use it.</p>
+        <h2>What the live meter measures</h2>
+        <p>The page requests an audio-only stream through the browser MediaDevices API, connects that stream to a Web Audio analyser, and converts the current waveform into a simple input-level percentage. The meter confirms that audio energy is reaching the page; it does not record a file, transcribe speech, rate sound quality, or identify the microphone model.</p>
+        <h2>How to troubleshoot a flat or weak signal</h2>
+        <p>First confirm that the browser tab has microphone permission and that the correct input is selected in the operating system. Then close meeting or recording apps that may hold the device, disconnect and reconnect USB or Bluetooth hardware, and repeat the test at a normal speaking distance. A moving but consistently low meter can indicate low system input gain, an unusually distant microphone, or aggressive noise suppression.</p>
+        <h2>Privacy and limitations</h2>
+        <p>Audio is processed in the active browser session to draw the meter. The page does not create or upload an audio recording. Browser audio processing, automatic gain control, noise cancellation, operating-system settings, and the selected input device can all change the displayed level, so use the meter as a functional check rather than a calibrated loudness measurement.</p>
         <h2>Microphone Test FAQ</h2>
         <h3>Does this microphone test upload audio?</h3>
         <p>No. The page reads microphone level locally in your browser and does not upload recordings.</p>
@@ -91,7 +97,7 @@
         <p>Check browser permission, operating system input settings, the selected microphone, and whether another app is using the device.</p>
       </section>
     </main>
-    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub tools are for entertainment, practice, and quick hardware checks.</span><span><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/cookies/">Cookies</a></span></div></footer>
+    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub provides browser-based tests, device checks, and practical QA tools.</span><span><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/cookies/">Cookies</a></span></div></footer>
     <script src="/assets/i18n.js?v=19"></script>
     <script src="/assets/app.js?v=19"></script>
   </body>

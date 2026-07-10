@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKTRP4LELE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YKTRP4LELE');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test Data Generator - Mock Data Generator for CSV, JSON & SQL</title>
+    <meta name="description" content="Generate test data and mock data online for QA, APIs, Jira tickets, login users, ecommerce orders, and bug reports. Export CSV, JSON, or SQL with local browser generation.">
+    <link rel="canonical" href="https://quicktesthub.com/test-data-generator/">
+    <link rel="alternate" hreflang="en" href="https://quicktesthub.com/test-data-generator/">
+    <link rel="alternate" hreflang="x-default" href="https://quicktesthub.com/test-data-generator/">
+    <meta property="og:title" content="Test Data Generator - Mock Data Generator for CSV, JSON & SQL">
+    <meta property="og:description" content="Generate mock test data for QA scenarios, APIs, SQL inserts, JSON payloads, and CSV spreadsheets.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://quicktesthub.com/assets/og-card.png">
+    <link rel="icon" href="/assets/og-card.png" type="image/png">
+    <link rel="stylesheet" href="/assets/styles.css?v=24">
+    <style>
+      .data-generator-panel { display: grid; gap: 16px; }
+      .field-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .field-options label { min-height: 42px; border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; display: flex; align-items: center; gap: 8px; background: #f8f9fc; font-weight: 800; }
+      .field-options input { width: auto; }
+      .scenario-row { display: flex; flex-wrap: wrap; gap: 8px; }
+      .scenario-row button { border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; color: var(--ink); background: #fff; font: inherit; font-weight: 850; cursor: pointer; }
+      .scenario-row button:hover { border-color: #8d98ff; background: #f0f2ff; }
+      .schema-preview { min-height: 116px; border: 1px solid var(--line); border-radius: 8px; padding: 13px; background: #f8f9fc; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.86rem; line-height: 1.55; white-space: pre-wrap; }
+      .format-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .format-tabs label { border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; background: #fff; font-weight: 900; }
+      .format-tabs input { width: auto; }
+      @media (max-width: 720px) {
+        .field-options,
+        .format-tabs { grid-template-columns: 1fr; }
+      }
+    </style>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Test Data Generator","applicationCategory":"DeveloperApplication","operatingSystem":"Any","url":"https://quicktesthub.com/test-data-generator/","description":"A free browser-based test data generator and mock data generator for CSV, JSON, and SQL output.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Generate test data","Mock data generator","CSV export","JSON data generator","SQL mock data generator","QA scenario presets","Local browser generation"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Quick Test Hub","item":"https://quicktesthub.com/"},{"@type":"ListItem","position":2,"name":"Test Data Generator","item":"https://quicktesthub.com/test-data-generator/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a test data generator?","acceptedAnswer":{"@type":"Answer","text":"A test data generator creates realistic sample records that QA teams, developers, and testers can use for forms, APIs, databases, test cases, and demos without exposing real user data."}},{"@type":"Question","name":"Can I generate mock data as CSV, JSON, and SQL?","acceptedAnswer":{"@type":"Answer","text":"Yes. This tool can generate CSV rows, JSON arrays, or SQL insert statements from the same field schema and scenario preset."}},{"@type":"Question","name":"Is this an AI test data generator?","acceptedAnswer":{"@type":"Answer","text":"The current version uses local scenario presets and keyword-based schema suggestions from your prompt. It does not send your prompt to an external AI service."}},{"@type":"Question","name":"Is the generated test data private?","acceptedAnswer":{"@type":"Answer","text":"Generation runs in your browser. Avoid entering real secrets, production customer data, passwords, tokens, or regulated personal information."}}]}]}
+    </script>
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "x0o9x11k1b");
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="logo" href="/"><span class="logo-mark">Q</span><span>Quick Test Hub</span></a>
+        <div class="nav-links">
+          <a href="/speed-tests/">Speed Tests</a>
+          <a href="/device-tests/">Device Tests</a>
+          <a href="/test-data-generator/" aria-current="page">Test Data</a>
+          <a href="/test-plan-template/">Test Plan</a>
+          <a href="/jira-test-case-template/">Jira Template</a>
+          <a href="/ai-agent-replay-debugging/">Agent Replay</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">QA Tool + Mock Data Generator</p>
+          <h1>Test Data Generator for CSV, JSON, and SQL</h1>
+          <p>Generate test data and mock data for login users, ecommerce orders, bug reports, Jira tickets, and API payloads. Choose fields, row count, output format, then copy or download clean sample data.</p>
+          <div class="actions">
+            <a class="button primary" href="#test-data-generator">Generate Test Data</a>
+            <a class="button secondary" href="#qa-scenarios">QA Scenarios</a>
+            <a class="button secondary" href="#test-data-faq">FAQ</a>
+          </div>
+          <div class="tag-row">
+            <span class="tag">Mock data generator</span>
+            <span class="tag">JSON data generator</span>
+            <span class="tag">SQL mock data generator</span>
+            <span class="tag">AI schema mode</span>
+          </div>
+        </div>
+        <div class="tool-visual" aria-label="Test data generator preview">
+          <div class="tool-visual-grid"><span>CSV</span><span>JSON</span><span>SQL</span><span>QA</span></div>
+          <div class="floating-card"><div class="score-ring">DATA</div><h3>Mock records</h3><p>Local generation for safer QA samples.</p></div>
+        </div>
+      </section>
+
+      <section class="section alt" id="test-data-generator">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Generator</p>
+              <h2>Generate test data.</h2>
+            </div>
+            <p>Use preset QA scenarios or describe the data you need. The AI schema mode is a local prompt-to-schema helper, so the tool stays usable without an API key.</p>
+          </div>
+          <div class="plan-generator">
+            <form class="plan-form data-generator-panel" id="testDataForm">
+              <label>Scenario preset
+                <select id="scenarioPreset">
+                  <option value="login">Login users</option>
+                  <option value="orders">Ecommerce orders</option>
+                  <option value="bugs">Bug reports</option>
+                  <option value="jira">Jira tickets</option>
+                  <option value="api">API payloads</option>
+                  <option value="custom">Custom schema</option>
+                </select>
+              </label>
+              <div class="scenario-row" aria-label="Quick scenario buttons">
+                <button type="button" data-scenario="login">Login users</button>
+                <button type="button" data-scenario="orders">Orders</button>
+                <button type="button" data-scenario="bugs">Bug reports</button>
+                <button type="button" data-scenario="jira">Jira tickets</button>
+                <button type="button" data-scenario="api">API payloads</button>
+              </div>
+              <label>Describe a schema for AI-style suggestions
+                <textarea id="schemaPrompt" rows="3">Generate mock test data for ecommerce orders with customer email, company, status, price, order date, and uuid.</textarea>
+              </label>
+              <button class="button secondary" type="button" id="suggestSchemaButton">Suggest Schema</button>
+              <div class="schema-preview" id="schemaPreview" aria-live="polite"></div>
+
+              <label>Rows
+                <input id="rowCount" type="number" min="1" max="500" value="10">
+              </label>
+
+              <div>
+                <strong>Fields</strong>
+                <div class="field-options" id="fieldOptions">
+                  <label><input type="checkbox" value="name" checked> name</label>
+                  <label><input type="checkbox" value="email" checked> email</label>
+                  <label><input type="checkbox" value="phone"> phone</label>
+                  <label><input type="checkbox" value="company" checked> company</label>
+                  <label><input type="checkbox" value="address"> address</label>
+                  <label><input type="checkbox" value="date" checked> date</label>
+                  <label><input type="checkbox" value="uuid" checked> uuid</label>
+                  <label><input type="checkbox" value="price"> price</label>
+                  <label><input type="checkbox" value="boolean"> boolean</label>
+                  <label><input type="checkbox" value="status" checked> status</label>
+                  <label><input type="checkbox" value="custom_enum"> custom enum</label>
+                </div>
+              </div>
+
+              <label>Custom enum values
+                <input id="customEnum" type="text" value="free,trial,paid,enterprise">
+              </label>
+              <label>SQL table name
+                <input id="tableName" type="text" value="test_records">
+              </label>
+              <div>
+                <strong>Output format</strong>
+                <div class="format-tabs">
+                  <label><input type="radio" name="format" value="json" checked> JSON</label>
+                  <label><input type="radio" name="format" value="csv"> CSV</label>
+                  <label><input type="radio" name="format" value="sql"> SQL</label>
+                </div>
+              </div>
+              <div class="actions">
+                <button class="button primary" type="submit">Generate</button>
+                <button class="button secondary" type="button" id="copyDataButton">Copy Output</button>
+                <button class="button ghost" type="button" id="downloadDataButton">Download</button>
+              </div>
+              <p class="form-status" id="dataStatus" aria-live="polite"></p>
+            </form>
+            <div class="plan-output-card">
+              <div class="output-head">
+                <strong>Generated mock data</strong>
+                <span id="formatBadge">JSON</span>
+              </div>
+              <textarea id="dataOutput" rows="24" spellcheck="false"></textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="qa-scenarios">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">QA Scenarios</p>
+              <h2>Test data generation tools for real QA work.</h2>
+            </div>
+            <p>Start from a realistic scenario, then adjust fields for your test cases, bug reproduction notes, API contract checks, or seed data scripts.</p>
+          </div>
+          <div class="grid">
+            <div class="card"><strong>Login users</strong><p>Generate user names, emails, phone numbers, statuses, booleans, and UUIDs for account creation, password reset, and role tests.</p></div>
+            <div class="card"><strong>Ecommerce orders</strong><p>Create order-like rows with company, email, price, date, status, and IDs for checkout and admin QA.</p></div>
+            <div class="card"><strong>Bug reports</strong><p>Generate issue records with reporter details, status, dates, and IDs for dashboards, filters, and triage screens.</p></div>
+            <div class="card"><strong>Jira tickets</strong><p>Prepare mock ticket data for sprint boards, QA handoff, and import tests before using the <a href="/jira-test-case-template/">Jira test case template</a>.</p></div>
+            <div class="card"><strong>API payloads</strong><p>Use JSON output to test request bodies, fixture files, contract examples, and local mock servers.</p></div>
+            <div class="card"><strong>SQL seed data</strong><p>Use SQL insert output for demos, local databases, integration test setup, and repeatable QA environments.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article">
+        <h2>Example output</h2>
+        <p>This mock data generator can produce the same records as JSON, CSV, or SQL depending on where you plan to use the data.</p>
+        <pre><code>[
+  {
+    "name": "Mia Chen",
+    "email": "mia.chen@example.test",
+    "company": "Northstar QA",
+    "date": "2026-07-06",
+    "uuid": "2a44d50a-76d4-4da9-9a31-546d43e7c8f2",
+    "status": "active"
+  }
+]</code></pre>
+
+        <h2>AI test data generation mode</h2>
+        <p>The prompt box acts like a lightweight AI schema assistant: describe login users, ecommerce orders, bug reports, Jira tickets, or API payloads, and the page selects a useful local preset. This keeps the MVP private and fast while leaving room for future AI test data generation using a secured API.</p>
+
+        <h2>Privacy note</h2>
+        <p>Generated data is fake and created in your browser. Do not paste production customer data, passwords, API keys, payment details, tokens, regulated health data, or private company records into the tool.</p>
+
+        <h2>Connect test data to QA planning</h2>
+        <p>Use generated data with the <a href="/test-plan-template/">software test plan template</a> to document environments, data needs, and risks. Then use the <a href="/jira-test-case-template/">Jira test case template</a> to attach specific values to each test case. For AI-heavy QA workflows, the <a href="/ai-agent-replay-debugging/">AI agent replay debugging checklist</a> helps turn failed runs into repeatable regression cases.</p>
+
+        <h2 id="test-data-faq">Test data generator FAQ</h2>
+        <h3>What is a test data generator?</h3>
+        <p>A test data generator creates realistic sample records for QA, demos, form testing, API testing, database seeding, and bug reproduction without using real customer data.</p>
+        <h3>What is the difference between test data and mock data?</h3>
+        <p>Test data is any input used to verify behavior. Mock data usually means fake but realistic records that stand in for real users, orders, tickets, or API objects.</p>
+        <h3>Can I generate SQL mock data?</h3>
+        <p>Yes. Select SQL output and the tool will create insert statements using the selected fields and table name.</p>
+        <h3>Can this generate JSON data for API testing?</h3>
+        <p>Yes. JSON output is useful for API payload examples, fixture files, local mock servers, and contract test setup.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+          <span>Quick Test Hub provides browser-based QA utilities. Generated data is fictional sample data, not production data.</span>
+        <span class="footer-links"><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/cookies/">Cookies</a></span>
+      </div>
+    </footer>
+
+    <script>
+      const names = ["Mia Chen", "Noah Patel", "Ava Smith", "Liam Garcia", "Sofia Kim", "Ethan Brown", "Zoe Wilson", "Leo Martin", "Nora Davis", "Kai Johnson"];
+      const companies = ["Northstar QA", "Acme Retail", "Bright API", "Pixel Works", "Orbit Labs", "Cedar Cloud", "Blue Finch", "Atlas Checkout"];
+      const streets = ["14 Market Street", "208 Cedar Avenue", "77 Lake View", "901 Sunset Road", "52 Pine Square", "310 River Lane"];
+      const statuses = ["active", "pending", "blocked", "passed", "failed", "in_review", "closed", "open"];
+      const domains = ["example.test", "mail.test", "qa.local", "demo.test"];
+      const presets = {
+        login: ["name", "email", "phone", "uuid", "boolean", "status"],
+        orders: ["name", "email", "company", "address", "date", "uuid", "price", "status"],
+        bugs: ["name", "email", "company", "date", "uuid", "status", "custom_enum"],
+        jira: ["name", "email", "company", "date", "uuid", "status", "custom_enum"],
+        api: ["name", "email", "date", "uuid", "price", "boolean", "status"],
+        custom: ["name", "email", "company", "date", "uuid", "status"]
+      };
+
+      const byId = (id) => document.getElementById(id);
+      const pick = (list, index) => list[index % list.length];
+      const pad = (num) => String(num).padStart(2, "0");
+
+      function uuidFromIndex(index) {
+        const base = `${index + 1}`.padStart(12, "0");
+        return `2a44d50a-76d4-4da9-9a31-${base}`;
+      }
+
+      function dateFromIndex(index) {
+        const day = 1 + (index % 28);
+        return `2026-07-${pad(day)}`;
+      }
+
+      function slug(value) {
+        return value.toLowerCase().replace(/[^a-z0-9]+/g, ".").replace(/^\.+|\.+$/g, "");
+      }
+
+      function selectedFields() {
+        return [...document.querySelectorAll("#fieldOptions input:checked")].map((input) => input.value);
+      }
+
+      function setPreset(name) {
+        byId("scenarioPreset").value = name;
+        const fields = presets[name] || presets.custom;
+        document.querySelectorAll("#fieldOptions input").forEach((input) => {
+          input.checked = fields.includes(input.value);
+        });
+        renderSchemaPreview();
+      }
+
+      function suggestFromPrompt() {
+        const text = byId("schemaPrompt").value.toLowerCase();
+        let preset = "custom";
+        if (text.includes("order") || text.includes("checkout") || text.includes("ecommerce")) preset = "orders";
+        else if (text.includes("bug") || text.includes("defect")) preset = "bugs";
+        else if (text.includes("jira") || text.includes("ticket") || text.includes("sprint")) preset = "jira";
+        else if (text.includes("api") || text.includes("payload") || text.includes("json")) preset = "api";
+        else if (text.includes("login") || text.includes("user") || text.includes("account")) preset = "login";
+        setPreset(preset);
+        byId("dataStatus").textContent = `Schema suggested from prompt: ${preset}.`;
+      }
+
+      function renderSchemaPreview() {
+        const fields = selectedFields();
+        byId("schemaPreview").textContent = fields.length
+          ? fields.map((field) => `- ${field}: ${fieldLabel(field)}`).join("\n")
+          : "Select at least one field to generate data.";
+      }
+
+      function fieldLabel(field) {
+        const labels = {
+          name: "person name",
+          email: "safe example email",
+          phone: "sample phone number",
+          company: "company name",
+          address: "street address",
+          date: "ISO date",
+          uuid: "stable UUID-like id",
+          price: "decimal amount",
+          boolean: "true or false flag",
+          status: "workflow status",
+          custom_enum: "one value from your custom enum"
+        };
+        return labels[field] || field;
+      }
+
+      function makeRecord(index) {
+        const name = pick(names, index);
+        const enumValues = byId("customEnum").value.split(",").map((item) => item.trim()).filter(Boolean);
+        const allValues = {
+          name,
+          email: `${slug(name)}${index + 1}@${pick(domains, index)}`,
+          phone: `+1-555-01${pad(index % 100)}`,
+          company: pick(companies, index),
+          address: pick(streets, index),
+          date: dateFromIndex(index),
+          uuid: uuidFromIndex(index),
+          price: Number((19 + (index * 7.35) % 180).toFixed(2)),
+          boolean: index % 2 === 0,
+          status: pick(statuses, index),
+          custom_enum: pick(enumValues.length ? enumValues : ["alpha", "beta"], index)
+        };
+        return Object.fromEntries(selectedFields().map((field) => [field, allValues[field]]));
+      }
+
+      function generateRows() {
+        const count = Math.max(1, Math.min(500, Number(byId("rowCount").value) || 10));
+        byId("rowCount").value = count;
+        return Array.from({ length: count }, (_, index) => makeRecord(index));
+      }
+
+      function csvValue(value) {
+        const text = String(value);
+        return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+      }
+
+      function toCsv(rows) {
+        const fields = selectedFields();
+        return [fields.join(","), ...rows.map((row) => fields.map((field) => csvValue(row[field])).join(","))].join("\n");
+      }
+
+      function sqlValue(value) {
+        if (typeof value === "number") return String(value);
+        if (typeof value === "boolean") return value ? "TRUE" : "FALSE";
+        return `'${String(value).replace(/'/g, "''")}'`;
+      }
+
+      function toSql(rows) {
+        const fields = selectedFields();
+        const table = byId("tableName").value.trim().replace(/[^a-zA-Z0-9_]/g, "") || "test_records";
+        return rows.map((row) => {
+          const values = fields.map((field) => sqlValue(row[field])).join(", ");
+          return `INSERT INTO ${table} (${fields.join(", ")}) VALUES (${values});`;
+        }).join("\n");
+      }
+
+      function currentFormat() {
+        return document.querySelector("input[name='format']:checked").value;
+      }
+
+      function generateOutput(message = "Generated mock data.") {
+        const fields = selectedFields();
+        if (!fields.length) {
+          byId("dataStatus").textContent = "Select at least one field.";
+          return;
+        }
+        const rows = generateRows();
+        const format = currentFormat();
+        let output = JSON.stringify(rows, null, 2);
+        if (format === "csv") output = toCsv(rows);
+        if (format === "sql") output = toSql(rows);
+        byId("dataOutput").value = output;
+        byId("formatBadge").textContent = format.toUpperCase();
+        byId("dataStatus").textContent = message;
+      }
+
+      function downloadOutput() {
+        const format = currentFormat();
+        const extensions = { json: "json", csv: "csv", sql: "sql" };
+        const blob = new Blob([byId("dataOutput").value], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `mock-test-data.${extensions[format]}`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+      }
+
+      document.querySelectorAll("[data-scenario]").forEach((button) => {
+        button.addEventListener("click", () => setPreset(button.dataset.scenario));
+      });
+      byId("scenarioPreset").addEventListener("change", (event) => setPreset(event.target.value));
+      byId("suggestSchemaButton").addEventListener("click", suggestFromPrompt);
+      document.querySelectorAll("#fieldOptions input, input[name='format']").forEach((input) => {
+        input.addEventListener("change", () => {
+          renderSchemaPreview();
+          generateOutput("Updated output.");
+        });
+      });
+      byId("testDataForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        generateOutput("Generated mock data.");
+      });
+      byId("copyDataButton").addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(byId("dataOutput").value);
+          byId("dataStatus").textContent = "Copied output.";
+        } catch (error) {
+          byId("dataOutput").select();
+          byId("dataStatus").textContent = "Select the output and copy it.";
+        }
+      });
+      byId("downloadDataButton").addEventListener("click", downloadOutput);
+      renderSchemaPreview();
+      generateOutput();
+    </script>
+  </body>
+</html>
