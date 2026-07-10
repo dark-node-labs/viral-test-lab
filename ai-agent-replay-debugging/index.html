@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKTRP4LELE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YKTRP4LELE');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Agent Replay Debugging Checklist & Trace Template</title>
+    <meta name="description" content="Use this AI agent replay debugging checklist, immutable audit log template, trace fields, and comparison table to replay and debug failed AI agent interactions.">
+    <link rel="canonical" href="https://quicktesthub.com/ai-agent-replay-debugging/">
+    <link rel="alternate" hreflang="en" href="https://quicktesthub.com/ai-agent-replay-debugging/">
+    <link rel="alternate" hreflang="x-default" href="https://quicktesthub.com/ai-agent-replay-debugging/">
+    <meta property="og:title" content="AI Agent Replay Debugging Checklist & Trace Template">
+    <meta property="og:description" content="Replay failed AI agent runs with a practical QA checklist, audit log schema, and deterministic replay comparison guide.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://quicktesthub.com/assets/og-card.png">
+    <link rel="icon" href="/assets/og-card.png" type="image/png">
+    <link rel="stylesheet" href="/assets/styles.css?v=22">
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"AI Agent Replay Debugging Checklist & Trace Template","description":"Use an AI agent replay debugging checklist, immutable audit log template, trace fields, and comparison table to replay and debug failed AI agent interactions.","url":"https://quicktesthub.com/ai-agent-replay-debugging/","inLanguage":"en","dateModified":"2026-07-02","author":{"@type":"Organization","name":"Quick Test Hub"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Quick Test Hub","item":"https://quicktesthub.com/"},{"@type":"ListItem","position":2,"name":"AI Agent Replay Debugging","item":"https://quicktesthub.com/ai-agent-replay-debugging/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do you replay failed AI agent interactions?","acceptedAnswer":{"@type":"Answer","text":"Collect the original prompt, model settings, tool definitions, inputs, outputs, approvals, errors, environment metadata, and trace IDs. Re-run the agent in a controlled environment with external calls mocked or pinned, then compare each step against the original trace."}},{"@type":"Question","name":"What should be logged for AI agent replay debugging?","acceptedAnswer":{"@type":"Answer","text":"Log prompts, tool calls, inputs, outputs, retrieved context, errors, approvals, user-visible messages, model configuration, tool versions, timestamps, correlation IDs, and log retention rules. Avoid storing secrets or unnecessary personal data."}},{"@type":"Question","name":"How is AI agent replay debugging different from test case generation?","acceptedAnswer":{"@type":"Answer","text":"Replay debugging reconstructs what already happened in a failed agent run. Test case generation creates planned checks from requirements or acceptance criteria before or after development."}},{"@type":"Question","name":"Is deterministic replay required for AI agents?","acceptedAnswer":{"@type":"Answer","text":"Deterministic replay is ideal for high-risk production agents, audits, and regression investigations, but teams can start with structured traces, mocked tools, pinned inputs, and manual replay checklists before full determinism is available."}}]}]}
+    </script>
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "x0o9x11k1b");
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="logo" href="/"><span class="logo-mark">Q</span><span>Quick Test Hub</span></a>
+        <div class="nav-links">
+          <a href="/speed-tests/">Speed Tests</a>
+          <a href="/device-tests/">Device Tests</a>
+          <a href="/test-plan-template/">Test Plan</a>
+          <a href="/jira-test-case-template/">Jira Template</a>
+          <a href="/ai-agent-replay-debugging/" aria-current="page">Agent Replay</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">AI Agent QA Guide</p>
+          <h1>AI Agent Replay Debugging</h1>
+          <p>Replay failed AI agent interactions with a practical checklist, immutable audit log template, and trace fields that help QA, engineering, and support teams reproduce production failures.</p>
+          <div class="actions">
+            <a class="button primary" href="#failed-agent-run-replay-checklist">Replay Checklist</a>
+            <a class="button secondary" href="#audit-log-template">Trace Template</a>
+            <a class="button secondary" href="#comparison-table">Compare Methods</a>
+          </div>
+          <div class="notice"><p>Do not log secrets, API keys, payment data, or private user data unless your retention, access, and compliance controls explicitly require it.</p></div>
+        </div>
+        <div class="tool-visual" aria-label="AI agent trace replay preview">
+          <div class="tool-visual-grid"><span>Prompt</span><span>Tool</span><span>Error</span><span>Replay</span></div>
+          <div class="floating-card"><div class="score-ring">QA</div><h3>Trace ready</h3><p>Pin the run, compare steps, and turn failures into regression checks.</p></div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Direct Answer</p>
+              <h2>What is AI agent replay debugging?</h2>
+            </div>
+          </div>
+          <div class="card">
+            <p>AI agent replay debugging is the practice of reconstructing a failed agent run from its prompt, tool calls, inputs, outputs, approvals, errors, and environment metadata so a team can reproduce the issue, compare expected behavior, fix the cause, and preserve an audit trail.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="failed-agent-run-replay-checklist">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Checklist</p>
+              <h2>Failed agent run replay checklist.</h2>
+            </div>
+            <p>Use this before changing prompts, tools, or model configuration. First preserve the evidence, then isolate the failure.</p>
+          </div>
+          <div class="grid">
+            <div class="card"><strong>Capture the failing run</strong><p>Save run ID, user-visible outcome, timestamp, model, prompt version, tool versions, environment, and release hash.</p></div>
+            <div class="card"><strong>Freeze volatile inputs</strong><p>Snapshot retrieved documents, API responses, browser state, files, feature flags, and user-provided inputs used by the run.</p></div>
+            <div class="card"><strong>Mark the failure point</strong><p>Identify the exact prompt, tool call, approval, parser step, timeout, policy block, or external service response where behavior diverged.</p></div>
+            <div class="card"><strong>Replay with controls</strong><p>Re-run with the same settings first. Then mock tools, pin retrieval, and vary one factor at a time to find the cause.</p></div>
+            <div class="card"><strong>Compare expected behavior</strong><p>Map the run to requirements, acceptance criteria, and test cases so the team can decide whether the agent or the spec is wrong.</p></div>
+            <div class="card"><strong>Create a regression check</strong><p>Turn the minimal failing trace into a Playwright, MCP, API, or manual QA scenario that can fail before the same bug ships again.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article" id="audit-log-template">
+        <h2>Immutable audit log and trace fields template</h2>
+        <p>An immutable audit log should preserve enough information to explain a run without allowing later edits to hide what happened. Store append-only records, redact sensitive values, and keep retention rules explicit.</p>
+        <pre><code>run_id:
+session_id:
+user_request_id:
+timestamp_utc:
+environment: production / staging / local
+release_version:
+agent_name:
+model:
+model_parameters:
+prompt_version:
+system_prompt_hash:
+developer_prompt_hash:
+user_prompt:
+retrieved_context_ids:
+tool_manifest_version:
+tool_call_id:
+tool_name:
+tool_input:
+tool_output:
+tool_error:
+approval_required: yes / no
+approval_decision:
+approval_actor:
+final_agent_output:
+user_visible_error:
+security_policy_event:
+retention_policy:
+redaction_policy:
+linked_test_case:
+linked_requirement:
+linked_incident:</code></pre>
+
+        <h2>Prompt, tool call, input, output, error, approval, and log retention fields</h2>
+        <div class="table-wrap">
+          <table class="comparison-table">
+            <caption>Trace fields to capture for replay and auditability</caption>
+            <thead>
+              <tr>
+                <th>Field group</th>
+                <th>Capture</th>
+                <th>Replay value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Prompt</td>
+                <td>System prompt hash, developer prompt hash, user prompt, prompt version, policy instructions.</td>
+                <td>Shows whether the model was asked the right thing and whether a prompt change caused the failure.</td>
+              </tr>
+              <tr>
+                <td>Tool call</td>
+                <td>Tool name, schema version, arguments, call order, latency, retries, timeout, and returned status.</td>
+                <td>Separates reasoning bugs from integration bugs, schema mismatch, stale tools, and flaky services.</td>
+              </tr>
+              <tr>
+                <td>Input</td>
+                <td>User inputs, retrieved documents, files, page state, API records, feature flags, and environment state.</td>
+                <td>Lets the team replay the same scenario instead of debugging against changed live data.</td>
+              </tr>
+              <tr>
+                <td>Output</td>
+                <td>Intermediate reasoning summary where allowed, tool outputs, final answer, UI action, or generated artifact.</td>
+                <td>Provides a step-by-step comparison between the original run and the replayed run.</td>
+              </tr>
+              <tr>
+                <td>Error</td>
+                <td>Exception, validation failure, parser error, policy block, refusal, timeout, or human escalation reason.</td>
+                <td>Identifies the failure mode and the smallest reproducible trace for regression coverage.</td>
+              </tr>
+              <tr>
+                <td>Approval</td>
+                <td>Approval type, approver, decision, timestamp, blocked action, and post-approval action taken.</td>
+                <td>Clarifies whether the agent failed before, during, or after a human approval gate.</td>
+              </tr>
+              <tr>
+                <td>Log retention</td>
+                <td>Retention period, redaction method, access role, deletion exception, and audit export location.</td>
+                <td>Keeps debugging useful without turning traces into unmanaged sensitive-data storage.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="comparison-table">Deterministic replay vs recording vs test case generation</h2>
+        <div class="table-wrap">
+          <table class="comparison-table">
+            <caption>Which evidence method fits the failure?</caption>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Best for</th>
+                <th>Limits</th>
+                <th>QA handoff</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Deterministic replay</td>
+                <td>High-risk agents, production incidents, audits, and regression fixes where the same inputs should reproduce the same steps.</td>
+                <td>Requires pinned model settings, stable prompts, captured context, mocked external calls, and careful data controls.</td>
+                <td>Create a minimal replay fixture and connect it to a regression suite.</td>
+              </tr>
+              <tr>
+                <td>Screenshot or video recording</td>
+                <td>Explaining what the user saw, UI timing, browser state, and support handoff.</td>
+                <td>Shows symptoms, but rarely captures hidden prompts, tool inputs, retrieved context, or API failures.</td>
+                <td>Attach to the incident, then link it to the underlying trace and test case.</td>
+              </tr>
+              <tr>
+                <td>Test case generation</td>
+                <td>Turning requirements, acceptance criteria, or incidents into planned manual or automated QA coverage.</td>
+                <td>Does not prove what happened in the failed run unless it is backed by trace evidence.</td>
+                <td>Use the generated case to prevent repeat failures after replay identifies the cause.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="requirements-acceptance-playwright-mcp">Requirements, acceptance criteria, Playwright, and MCP testing links</h2>
+        <p>Replay evidence becomes more valuable when it connects to normal QA artifacts. Start with a <a href="/test-plan-template/">software test plan</a> for scope, environments, risks, entry criteria, and exit criteria, then use the <a href="/jira-test-case-template/">Jira test case template</a> for executable fields. For browser agents, convert stable failures into Playwright checks. For tool-using agents, make an MCP-style tool contract test that verifies tool inputs, outputs, approval behavior, and error handling.</p>
+        <p>Useful internal QA path: <a href="/ai-agent-replay-debugging/#failed-agent-run-replay-checklist">failed run replay checklist</a> to isolate the cause, <a href="/ai-agent-replay-debugging/#audit-log-template">trace template</a> to preserve evidence, <a href="/test-plan-template/">test plan template</a> to define release risk, and <a href="/jira-test-case-template/">test case template</a> to create regression coverage.</p>
+
+        <h2>AI agent replay debugging FAQ</h2>
+        <h3>How do you replay failed AI agent interactions?</h3>
+        <p>Collect the original prompt, model settings, tool definitions, inputs, outputs, approvals, errors, environment metadata, and trace IDs. Re-run the agent in a controlled environment with external calls mocked or pinned, then compare each step against the original trace.</p>
+        <h3>What should be logged?</h3>
+        <p>Log prompts, tool calls, inputs, outputs, retrieved context, errors, approvals, user-visible messages, model configuration, tool versions, timestamps, correlation IDs, and log retention rules. Avoid storing secrets or unnecessary personal data.</p>
+        <h3>How is this different from test case generation?</h3>
+        <p>Replay debugging reconstructs what already happened in a failed agent run. Test case generation creates planned checks from requirements or acceptance criteria before or after development.</p>
+        <h3>Is deterministic replay required?</h3>
+        <p>Deterministic replay is ideal for high-risk production agents, audits, and regression investigations, but teams can start with structured traces, mocked tools, pinned inputs, and manual replay checklists before full determinism is available.</p>
+      </section>
+
+      <section class="section alt">
+        <div class="wrap">
+          <div class="resource-band">
+            <div>
+              <strong>Turn a replay into a QA case.</strong>
+              <p>Once the failure is reproduced, document it with the same fields your team uses for requirements, acceptance criteria, and regression tests.</p>
+            </div>
+            <a class="button primary" href="/jira-test-case-template/">Open Test Case Template</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub provides browser-based tests, device checks, and practical QA tools.</span><span><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/cookies/">Cookies</a></span></div></footer>
+    <script src="/assets/i18n.js?v=19"></script>
+  </body>
+</html>

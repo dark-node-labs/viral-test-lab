@@ -34,10 +34,10 @@ async function withSeoAndCacheHeaders(request, response, options = {}) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const sensitiveSbtiPath = /^\/(?:zh\/)?sbti-types\/(?:dead|drunk|fuck|poor|sexy|shit)\/?$/;
-    const matureQuizPath = /^\/(?:(?:zh|vi)\/rice-purity-test|(?:zh|vi|fr)\/rice-purity-test-score-meaning|rice-purity-test|rice-purity-test-score-meaning|fr\/test-de-purete)\/?$/;
+    const retiredEntertainmentPath = /^\/(?:(?:zh|fr|vi)\/)?(?:sbti-test|sbti-types(?:\/[^/]+)?|rice-purity-test(?:-score-meaning)?|test-de-purete|iq-test|best-fun-personality-tests|link-to-us)\/$/;
     const aliasRedirects = new Map([
       ["/camera-test/", "/webcam-test/"],
+      ["/click-speed-test/", "/click-test/"],
       ["/controller-test/", "/gamepad-tester/"],
       ["/mic-test/", "/microphone-test/"],
       ["/mouse-click-test/", "/click-test/"]
@@ -49,6 +49,33 @@ export default {
     }
 
     const normalizedPath = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`;
+
+    if (retiredEntertainmentPath.test(normalizedPath)) {
+      return new Response(`<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Page retired | Quick Test Hub</title>
+  </head>
+  <body>
+    <main>
+      <h1>This page has been retired</h1>
+      <p>Quick Test Hub now focuses on browser-based device checks, speed tests, and practical QA tools.</p>
+      <p><a href="/">Browse current tools</a></p>
+    </main>
+  </body>
+</html>`, {
+        status: 410,
+        headers: {
+          "content-type": "text/html; charset=utf-8",
+          "cache-control": "public, max-age=300, s-maxage=86400",
+          "x-robots-tag": "noindex, nofollow"
+        }
+      });
+    }
+
     const canonicalPath = aliasRedirects.get(normalizedPath);
     if (canonicalPath) {
       url.pathname = canonicalPath;
@@ -63,11 +90,6 @@ export default {
           "x-robots-tag": "noindex"
         }
       });
-    }
-
-    if (sensitiveSbtiPath.test(url.pathname) || matureQuizPath.test(url.pathname)) {
-      const response = await env.ASSETS.fetch(request);
-      return await withSeoAndCacheHeaders(request, response, { xRobotsTag: "noindex, follow", skipAdsense: true });
     }
 
     const response = await env.ASSETS.fetch(request);

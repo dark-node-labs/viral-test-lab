@@ -43,7 +43,9 @@
           <a href="/reaction-time-test/">Reaction Time</a>
           <a href="/typing-speed-test/">Typing Speed</a>
           <a href="/keyboard-test/">Keyboard Test</a>
+          <a href="/test-plan-template/">Test Plan</a>
           <a href="/jira-test-case-template/" aria-current="page">Jira Template</a>
+          <a href="/ai-agent-replay-debugging/">Agent Replay</a>
         </div>
       </nav>
     </header>
@@ -169,6 +171,12 @@ Context and constraints:
         <h2>When to use a template instead of AI</h2>
         <p>Use the manual template when the story is small, sensitive, regulated, or blocked by unclear acceptance criteria. If the requirement is ambiguous, AI will usually multiply the ambiguity. In that case, write questions in the Jira issue first and generate test cases only after the product decision is clear.</p>
 
+        <h2>From test plan to Jira test cases</h2>
+        <p>For larger releases, start with the <a href="/test-plan-template/">software test plan template</a> to define objectives, scope, approach, environments, risks, entry criteria, and exit criteria. Then use this Jira template to turn the approved plan and acceptance criteria into executable test cases.</p>
+
+        <h2>From failed AI agent runs to regression tests</h2>
+        <p>If a production AI agent fails, start with an <a href="/ai-agent-replay-debugging/">AI agent replay debugging checklist</a> before drafting new cases. Capture the prompt, tool calls, inputs, outputs, errors, approvals, and retention policy first, then convert the reproduced failure into a Jira-linked regression case.</p>
+
         <h2>How many test cases should one Jira story have?</h2>
         <p>There is no fixed number. A small UI copy change may need one checklist item. A new checkout rule may need happy path, negative, boundary, permissions, localization, analytics, and regression coverage. Start with risk: what would hurt users, revenue, compliance, data integrity, or support volume if this story shipped broken?</p>
 
@@ -194,7 +202,7 @@ Context and constraints:
       </section>
     </main>
 
-    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub tools are for entertainment, practice, and quick hardware checks.</span><span><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/cookies/">Cookies</a></span></div></footer>
+    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub provides browser-based tests, device checks, and practical QA tools.</span><span><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/cookies/">Cookies</a></span></div></footer>
     <script src="/assets/i18n.js?v=19"></script>
   </body>
 </html>
