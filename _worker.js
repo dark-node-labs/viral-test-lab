@@ -2,6 +2,21 @@ const ADSENSE_CLIENT = "ca-pub-3196187117350639";
 const ADSENSE_SCRIPT = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}"
      crossorigin="anonymous"></script>`;
 
+const PUBLIC_PAGE_PATHS = new Set([
+  "/", "/about/", "/ai-agent-replay-debugging/", "/click-test/", "/contact/", "/cookies/",
+  "/cps-test/", "/device-tests/", "/double-click-test/", "/gamepad-tester/",
+  "/jira-test-case-template/", "/keyboard-polling-rate-test/", "/keyboard-test/",
+  "/microphone-test/", "/mouse-test/", "/privacy/", "/reaction-time-test/", "/sbti-test/",
+  "/sbti-types/", "/spacebar-clicker/", "/speed-tests/", "/terms/", "/test-data-generator/",
+  "/test-plan-template/", "/typing-speed-test/", "/webcam-test/",
+  "/zh/", "/zh/reaction-time-test/", "/zh/typing-speed-test/", "/zh/cps-test/",
+  "/zh/keyboard-test/", "/zh/keyboard-polling-rate-test/", "/zh/mouse-test/",
+  "/fr/", "/fr/reaction-time-test/", "/fr/typing-speed-test/", "/fr/cps-test/",
+  "/fr/keyboard-test/", "/fr/keyboard-polling-rate-test/", "/fr/mouse-test/",
+  "/vi/", "/vi/reaction-time-test/", "/vi/typing-speed-test/", "/vi/cps-test/",
+  "/vi/keyboard-test/", "/vi/keyboard-polling-rate-test/", "/vi/mouse-test/"
+]);
+
 async function withSeoAndCacheHeaders(request, response, options = {}) {
   const url = new URL(request.url);
   const headers = new Headers(response.headers);
@@ -97,6 +112,17 @@ export default {
           "x-robots-tag": "noindex"
         }
       });
+    }
+
+    const looksLikeStaticFile = url.pathname.startsWith("/assets/") || /\/[^/]+\.[a-z0-9]+$/i.test(url.pathname);
+    if (!PUBLIC_PAGE_PATHS.has(normalizedPath) && !looksLikeStaticFile) {
+      const notFoundRequest = new Request(new URL("/404.html", request.url), request);
+      const notFoundResponse = await env.ASSETS.fetch(notFoundRequest);
+      const headers = new Headers(notFoundResponse.headers);
+      headers.set("cache-control", "public, max-age=300, s-maxage=3600");
+      headers.set("x-robots-tag", "noindex, nofollow");
+      headers.delete("content-length");
+      return new Response(notFoundResponse.body, { status: 404, headers });
     }
 
     const assetCacheBustPaths = new Set(["/about/", "/contact/", "/privacy/", "/terms/", "/test-data-generator/"]);
