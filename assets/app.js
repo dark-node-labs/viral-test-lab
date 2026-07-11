@@ -324,6 +324,24 @@ function attachShare(button, text, params = {}) {
   });
 }
 
+function initQuizStartTracking() {
+  const quizRoot = byId("sbti-quiz") || byId("rice-quiz");
+  if (!quizRoot) return;
+  let started = false;
+  const quizName = byId("sbti-quiz") ? "sbti_quiz" : "rice_purity_quiz";
+  function markStarted() {
+    if (started) return;
+    started = true;
+    trackEvent("quiz_started", { quiz_name: quizName });
+    trackEvent("quiz_start", { quiz_name: quizName });
+  }
+  quizRoot.addEventListener("click", markStarted, { once: true });
+  quizRoot.addEventListener("keydown", markStarted, { once: true });
+  document.querySelectorAll(`a[href*="#${quizRoot.id}"]`).forEach((link) => {
+    link.addEventListener("click", markStarted, { once: true });
+  });
+}
+
 function initReactionTimeTest() {
   const root = byId("reaction-test");
   if (!root) return;
@@ -469,18 +487,48 @@ function initCpsTest() {
   const root = byId("cps-test");
   if (!root) return;
 
-  const durations = [5, 10, 30];
+  const durations = [1, 5, 10, 30];
+  const storageKey = "quicktesthub_cps_history";
   let duration = 5;
   let clicks = 0;
   let seconds = duration;
   let timerId = null;
   let running = false;
 
+  function loadHistory() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      return Array.isArray(parsed) ? parsed.filter((item) => item && Number.isFinite(Number(item.cps))) : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveResult(result) {
+    try {
+      const history = [result, ...loadHistory()].slice(0, 8);
+      localStorage.setItem(storageKey, JSON.stringify(history));
+      return history;
+    } catch (error) {
+      return [result];
+    }
+  }
+
+  function bestForDuration(history, secondsValue) {
+    return history
+      .filter((item) => Number(item.duration) === secondsValue)
+      .reduce((best, item) => Number(item.cps) > Number(best?.cps || 0) ? item : best, null);
+  }
+
+  function recentSummary(history) {
+    return history.slice(0, 3).map((item) => `${Number(item.duration)}s ${Number(item.cps).toFixed(1)} CPS`).join(" · ") || "No recent attempts yet";
+  }
+
   function render() {
     root.innerHTML = `
       <div class="tool-card cps-card">
         <p class="eyebrow">CPS Test</p>
-        <h2>Click as fast as you can for ${duration} seconds.</h2>
+        <h2>Click as fast as you can for ${duration} second${duration === 1 ? "" : "s"}.</h2>
         <div class="duration-options" aria-label="Choose click test duration">
           ${durations.map((item) => `<button class="duration-option${item === duration ? " selected" : ""}" type="button" data-cps-duration="${item}"${running ? " disabled" : ""}>${item}s</button>`).join("")}
         </div>
@@ -536,20 +584,32 @@ function initCpsTest() {
     window.clearInterval(timerId);
     running = false;
     const cps = (clicks / duration).toFixed(1);
-    trackEvent("tool_complete", { tool_name: "cps_test", value: Number(cps), result_value: Number(cps), unit: "cps", duration_seconds: duration, click_count: clicks });
+    const result = { cps: Number(cps), clicks, duration, createdAt: new Date().toISOString() };
+    const history = saveResult(result);
+    const best = bestForDuration(history, duration);
+    const isBest = best && best.createdAt === result.createdAt;
+    trackEvent("tool_complete", { tool_name: "cps_test", value: Number(cps), result_value: Number(cps), unit: "cps", duration_seconds: duration, click_count: clicks, personal_best: isBest });
     root.innerHTML = `
       <div class="result-card tool-result">
         <p class="eyebrow">Your CPS Result</p>
         <div class="tool-number">${cps}<small>CPS</small></div>
         <h2>${Number(cps) >= 9 ? "Very fast clicking" : Number(cps) >= 6 ? "Solid clicking speed" : "Casual clicking speed"}</h2>
-        <p>You made ${clicks} clicks in ${duration} seconds. Use the same mouse or touch device when comparing attempts.</p>
+        <p>You made ${clicks} clicks in ${duration} second${duration === 1 ? "" : "s"}. ${isBest ? "This is your best saved score for this timer on this browser." : `Your best saved ${duration}s score is ${Number(best?.cps || cps).toFixed(1)} CPS.`}</p>
+        <div class="result-metrics">
+          <div><span>Timer</span><strong>${duration}s</strong></div>
+          <div><span>Total</span><strong>${clicks}</strong></div>
+          <div><span>Best ${duration}s</span><strong>${Number(best?.cps || cps).toFixed(1)}</strong></div>
+          <div><span>Recent</span><strong>${history.length}</strong></div>
+        </div>
+        <div class="notice"><p>Recent scores are stored only in this browser with localStorage. They are not uploaded or connected to an account.</p></div>
+        <p class="hero-score-note">Recent attempts: ${recentSummary(history)}</p>
         <div class="actions">
           <button class="button primary" data-share-cps>Share Result</button>
           <button class="button ghost" data-reset-cps>Try Again</button>
         </div>
       </div>
     `;
-    attachShare(root.querySelector("[data-share-cps]"), `My ${duration}s CPS test result is ${cps} clicks per second`);
+    attachShare(root.querySelector("[data-share-cps]"), `My ${duration}s click speed test result is ${cps} CPS (${clicks} clicks).`);
     root.querySelector("[data-reset-cps]").addEventListener("click", reset);
   }
 
@@ -1631,6 +1691,7 @@ function capitalize(value) {
 }
 
 initReactionTimeTest();
+initQuizStartTracking();
 initCpsTest();
 initSpacebarClicker();
 initDoubleClickTest();

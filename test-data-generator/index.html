@@ -202,7 +202,7 @@
         <pre><code>[
   {
     "name": "Mia Chen",
-    "email": "mia.chen@example.test",
+    "email": "mia.chen at example dot test",
     "company": "Northstar QA",
     "date": "2026-07-06",
     "uuid": "2a44d50a-76d4-4da9-9a31-546d43e7c8f2",
@@ -244,6 +244,7 @@
       const streets = ["14 Market Street", "208 Cedar Avenue", "77 Lake View", "901 Sunset Road", "52 Pine Square", "310 River Lane"];
       const statuses = ["active", "pending", "blocked", "passed", "failed", "in_review", "closed", "open"];
       const domains = ["example.test", "mail.test", "qa.local", "demo.test"];
+      const emailAt = String.fromCharCode(64);
       const presets = {
         login: ["name", "email", "phone", "uuid", "boolean", "status"],
         orders: ["name", "email", "company", "address", "date", "uuid", "price", "status"],
@@ -325,7 +326,7 @@
         const enumValues = byId("customEnum").value.split(",").map((item) => item.trim()).filter(Boolean);
         const allValues = {
           name,
-          email: `${slug(name)}${index + 1}@${pick(domains, index)}`,
+          email: `${slug(name)}${index + 1}${emailAt}${pick(domains, index)}`,
           phone: `+1-555-01${pad(index % 100)}`,
           company: pick(companies, index),
           address: pick(streets, index),

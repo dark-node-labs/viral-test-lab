@@ -34,7 +34,7 @@ async function withSeoAndCacheHeaders(request, response, options = {}) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const retiredEntertainmentPath = /^\/(?:(?:zh|fr|vi)\/)?(?:sbti-test|sbti-types(?:\/[^/]+)?|rice-purity-test(?:-score-meaning)?|test-de-purete|iq-test|best-fun-personality-tests|link-to-us)\/$/;
+    const retiredEntertainmentPath = /^\/(?:(?:zh|fr|vi)\/)?(?:rice-purity-test(?:-score-meaning)?|test-de-purete|iq-test|best-fun-personality-tests|link-to-us)\/$/;
     const aliasRedirects = new Map([
       ["/camera-test/", "/webcam-test/"],
       ["/click-speed-test/", "/click-test/"],
@@ -49,6 +49,13 @@ export default {
     }
 
     const normalizedPath = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`;
+
+    if (url.pathname === "/cdn-cgi/l/email-protection") {
+      url.pathname = "/contact/";
+      url.search = "";
+      url.hash = "";
+      return Response.redirect(url.toString(), 301);
+    }
 
     if (retiredEntertainmentPath.test(normalizedPath)) {
       return new Response(`<!doctype html>
@@ -92,7 +99,15 @@ export default {
       });
     }
 
-    const response = await env.ASSETS.fetch(request);
+    const assetCacheBustPaths = new Set(["/about/", "/contact/", "/privacy/", "/terms/", "/test-data-generator/"]);
+    let assetRequest = request;
+    if (assetCacheBustPaths.has(normalizedPath)) {
+      const assetUrl = new URL(request.url);
+      assetUrl.searchParams.set("__qth_asset_v", "20260710-email2");
+      assetRequest = new Request(assetUrl.toString(), request);
+    }
+
+    const response = await env.ASSETS.fetch(assetRequest);
     return await withSeoAndCacheHeaders(request, response);
   }
 };
