@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OpenAPI Mock Server Generator | JSON & YAML Routes</title>
+    <meta name="description" content="Generate a local mock server from an OpenAPI 3 JSON or YAML document. Inspect routes, methods, statuses, examples, cURL, fetch, and download a Node mock or JSON Server fixture.">
+    <link rel="canonical" href="https://quicktesthub.com/openapi-mock-server-generator/">
+    <link rel="alternate" hreflang="en" href="https://quicktesthub.com/openapi-mock-server-generator/">
+    <link rel="alternate" hreflang="x-default" href="https://quicktesthub.com/openapi-mock-server-generator/">
+    <meta property="og:title" content="OpenAPI Mock Server Generator | JSON & YAML Routes">
+    <meta property="og:description" content="Turn an OpenAPI 3 document into browsable mock routes, cURL and fetch examples, and downloadable local mock fixtures.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quicktesthub.com/openapi-mock-server-generator/">
+    <meta property="og:image" content="https://quicktesthub.com/assets/og-card.png">
+    <link rel="icon" href="/assets/og-card.png" type="image/png">
+    <link rel="stylesheet" href="/assets/styles.css?v=20260715-tools3">
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"OpenAPI Mock Server Generator","applicationCategory":"DeveloperApplication","operatingSystem":"Any","url":"https://quicktesthub.com/openapi-mock-server-generator/","description":"A browser-side OpenAPI 3 JSON and YAML parser that generates mock route details and downloadable local fixtures.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["OpenAPI 3 JSON parsing","OpenAPI 3 YAML parsing","Route and response examples","cURL and fetch snippets","Node mock server download","JSON Server fixture download"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Quick Test Hub","item":"https://quicktesthub.com/"},{"@type":"ListItem","position":2,"name":"OpenAPI Mock Server Generator","item":"https://quicktesthub.com/openapi-mock-server-generator/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does this OpenAPI mock server generator upload my file?","acceptedAnswer":{"@type":"Answer","text":"No. Parsing and generation run locally in the current browser tab. The page does not send the pasted or uploaded OpenAPI document to a third-party service."}},{"@type":"Question","name":"Which OpenAPI versions are supported?","acceptedAnswer":{"@type":"Answer","text":"The generator accepts OpenAPI 3.x documents in JSON or common YAML syntax. It reports a clear validation message for other document shapes."}},{"@type":"Question","name":"What can I download?","acceptedAnswer":{"@type":"Answer","text":"You can download a self-contained Node mock server and a JSON Server-style fixture generated from the parsed routes and example responses."}}]}]}
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="logo" href="/"><span class="logo-mark">Q</span><span>Quick Test Hub</span></a>
+        <div class="nav-links">
+          <a href="/api-integration-testing/">Integration Testing</a>
+          <a href="/api-contract-testing/">Contract Testing</a>
+          <a href="/test-plan-template/">Test Plan</a>
+          <a href="/openapi-mock-server-generator/" aria-current="page">OpenAPI Mock</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero openapi-hero">
+        <div>
+          <p class="eyebrow">OpenAPI tooling · Variant 2</p>
+          <h1>OpenAPI Mock Server Generator</h1>
+          <p>Paste or upload an OpenAPI 3 JSON or YAML document. Inspect every route, method, response status, and example, then copy request snippets or download a local mock fixture.</p>
+          <div class="actions">
+            <a class="button primary" href="#openapi-generator">Generate mock routes</a>
+            <a class="button secondary" href="#how-it-works">How it works</a>
+          </div>
+          <div class="notice local-only-notice"><p><strong>Runs locally:</strong> Your OpenAPI input stays in this browser tab. No pasted text or uploaded file is sent to Quick Test Hub or another third party.</p></div>
+        </div>
+        <div class="tool-visual" aria-label="OpenAPI mock server preview">
+          <div class="tool-visual-grid"><span>GET</span><span>POST</span><span>200</span><span>MOCK</span></div>
+          <div class="floating-card"><div class="score-ring">API</div><h3>Routes at a glance</h3><p>Methods, statuses, examples, cURL, and fetch in one local view.</p></div>
+        </div>
+      </section>
+
+      <section class="section alt" id="openapi-generator">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow">Local parser and generator</p><h2>Turn an OpenAPI document into a mock-ready route map.</h2></div>
+            <p>Supports common OpenAPI 3 JSON and YAML documents. Large inputs are capped in the browser to keep the page responsive.</p>
+          </div>
+          <div class="plan-generator openapi-generator-shell">
+            <form class="plan-form" id="openapiForm">
+              <label for="openapiInput">OpenAPI JSON or YAML
+                <textarea id="openapiInput" rows="19" spellcheck="false">openapi: 3.0.3
+info:
+  title: Pet Store API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /pets:
+    get:
+      summary: List pets
+      responses:
+        '200':
+          description: A list of pets
+          content:
+            application/json:
+              example:
+                - id: 1
+                  name: Luna
+                  status: available
+    post:
+      summary: Create a pet
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Milo
+              status: available
+      responses:
+        '201':
+          description: Pet created
+          content:
+            application/json:
+              example:
+                id: 2
+                name: Milo
+                status: available
+  /pets/{petId}:
+    get:
+      summary: Get a pet
+      responses:
+        '200':
+          description: One pet
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Luna
+        '404':
+          description: Pet not found
+          content:
+            application/json:
+              example:
+                message: Pet not found</textarea>
+              </label>
+              <div class="file-drop"><label for="openapiFile">Or upload a .json, .yaml, or .yml file</label><input id="openapiFile" type="file" accept=".json,.yaml,.yml,application/json,text/yaml"><small>File contents are read locally and never uploaded.</small></div>
+              <div class="actions">
+                <button class="button primary" type="submit">Parse OpenAPI 3</button>
+                <button class="button secondary" type="button" id="loadJsonExample">Load JSON example</button>
+                <button class="button ghost" type="button" id="clearOpenapi">Clear</button>
+              </div>
+              <p class="form-status" id="openapiStatus" aria-live="polite">Ready. Paste a document or use the sample.</p>
+            </form>
+            <div class="plan-output-card openapi-output-card">
+              <div class="output-head"><strong>Route inventory</strong><span id="openapiBadge">READY</span></div>
+              <div class="route-summary" id="routeSummary"><p class="empty-state">Parse a document to see routes, methods, statuses, and examples.</p></div>
+              <div class="route-detail" id="routeDetail" hidden></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="how-it-works">
+        <div class="wrap">
+          <div class="section-head"><div><p class="eyebrow">Generated artifacts</p><h2>From route discovery to a local mock.</h2></div><p>Use the generated snippets for quick manual checks, or download a starter fixture for local development and contract tests.</p></div>
+          <div class="grid">
+            <div class="card"><strong>OpenAPI 3 parsing</strong><p>Reads paths, HTTP methods, response statuses, request examples, response examples, and the first server URL.</p></div>
+            <div class="card"><strong>cURL and fetch</strong><p>Select any parsed route to get a copyable request example with the correct method, URL, headers, and body.</p></div>
+            <div class="card"><strong>Node mock server</strong><p>Download a dependency-free <code>mock-server.js</code> that serves the parsed examples on localhost:3000.</p></div>
+            <div class="card"><strong>JSON Server fixture</strong><p>Download a JSON fixture for teams that prefer a quick JSON Server-style local data source.</p></div>
+          </div>
+          <div class="related-links"><strong>Continue the QA workflow</strong><a href="/test-data-generator/">Generate test data</a><a href="/api-integration-testing/">Run API integration checks</a><a href="/api-contract-testing/">Compare API contracts</a><a href="/test-plan-template/">Document the test plan</a></div>
+        </div>
+      </section>
+
+      <section class="article">
+        <h2>What is an OpenAPI mock server generator?</h2>
+        <p>An OpenAPI mock server generator turns an API description into predictable local responses. It is useful when the real backend is unavailable, when a frontend needs stable fixtures, or when a QA team wants to exercise routes before deployment.</p>
+        <h2>How to use this OpenAPI mock server generator</h2>
+        <ol><li>Paste an OpenAPI 3 JSON or YAML document, or choose a local file.</li><li>Parse the document and review every route, method, response status, and example.</li><li>Select a route to copy cURL or fetch, then download a Node mock server or JSON fixture.</li><li>Review generated examples against the real contract and add scenario-specific data before relying on them in tests.</li></ol>
+        <h2>OpenAPI mock server limitations</h2>
+        <p>This lightweight browser tool focuses on route discovery and example responses. It does not resolve remote references, validate every JSON Schema keyword, implement authentication, or simulate latency and state transitions. For release gates, pair it with <a href="/api-contract-testing/">API contract testing</a> and <a href="/api-integration-testing/">API integration testing</a>.</p>
+        <h2>OpenAPI mock server generator FAQ</h2>
+        <h3>Does the generator upload OpenAPI input?</h3><p>No. Parsing, rendering, and downloads happen locally. Do not paste secrets or proprietary documents into any browser tool unless your organization permits it.</p>
+        <h3>Can I use YAML?</h3><p>Yes. Common OpenAPI 3 YAML structures, including nested paths, methods, responses, content, and examples, are parsed in the current tab.</p>
+        <h3>Is the downloaded mock production-ready?</h3><p>No. Treat it as a local development and test fixture. Add authentication, validation, persistence, observability, and realistic failure behavior before using a mock in a wider workflow.</p>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub provides browser-based QA utilities.</span><span class="footer-links"><a href="/about/">About</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span></div></footer>
+
+    <script>
+      (() => {
+        const $ = (id) => document.getElementById(id);
+        const MAX_INPUT = 200000;
+        const METHODS = new Set(['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace']);
+        let routes = [];
+        let selectedRoute = 0;
+
+        function escapeHtml(value) {
+          return String(value ?? '').replace(/[&<>'"]/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+        }
+
+        function scalar(value) {
+          const text = String(value ?? '').trim();
+          if (!text) return {};
+          if ((text.startsWith('{') && text.endsWith('}')) || (text.startsWith('[') && text.endsWith(']'))) {
+            try { return JSON.parse(text); } catch (_) {}
+          }
+          if ((text.startsWith('"') && text.endsWith('"')) || (text.startsWith("'") && text.endsWith("'"))) return text.slice(1, -1).replace(/''/g, "'");
+          if (/^(true|false)$/i.test(text)) return text.toLowerCase() === 'true';
+          if (/^(null|~)$/i.test(text)) return null;
+          if (/^-?\d+(\.\d+)?$/.test(text)) return Number(text);
+          return text.replace(/\s+#.*$/, '').trim();
+        }
+
+        // A compact indentation parser for the YAML shapes commonly used by OpenAPI 3.
+        function parseYaml(source) {
+          const lines = source.replace(/^\uFEFF/, '').split(/\r?\n/).map((raw, index) => ({ raw, index, indent: raw.match(/^\s*/)[0].length, text: raw.trim() })).filter((line) => line.text && !line.text.startsWith('#') && line.text !== '---' && line.text !== '...');
+          const root = {};
+          const stack = [{ indent: -1, container: root }];
+          const nextMeaningful = (position) => lines[position + 1];
+          for (let i = 0; i < lines.length; i += 1) {
+            const line = lines[i];
+            while (stack.length > 1 && stack[stack.length - 1].indent >= line.indent) stack.pop();
+            const parent = stack[stack.length - 1].container;
+            if (line.text.startsWith('- ')) {
+              if (!Array.isArray(parent)) throw new Error('YAML list indentation is not supported at line ' + (line.index + 1));
+              const item = line.text.slice(2).trim();
+              const keyIndex = item.indexOf(':');
+              if (keyIndex > 0 && !item.startsWith('{')) {
+                const object = {};
+                parent.push(object);
+                const key = item.slice(0, keyIndex).trim();
+                const value = item.slice(keyIndex + 1).trim();
+                if (value) object[key] = scalar(value);
+                else {
+                  const next = nextMeaningful(i);
+                  const child = next && next.indent > line.indent && next.text.startsWith('- ') ? [] : {};
+                  object[key] = child;
+                  stack.push({ indent: line.indent, container: object });
+                  stack.push({ indent: line.indent + 1, container: child });
+                  continue;
+                }
+                stack.push({ indent: line.indent, container: object });
+              } else parent.push(scalar(item));
+              continue;
+            }
+            const colon = itemColon(line.text);
+            if (colon < 1 || !parent || Array.isArray(parent)) throw new Error('YAML mapping is invalid at line ' + (line.index + 1));
+            const key = line.text.slice(0, colon).trim().replace(/^['"]|['"]$/g, '');
+            const value = line.text.slice(colon + 1).trim();
+            if (value) parent[key] = scalar(value);
+            else {
+              const next = nextMeaningful(i);
+              const child = next && next.indent > line.indent && next.text.startsWith('- ') ? [] : {};
+              parent[key] = child;
+              stack.push({ indent: line.indent, container: child });
+            }
+          }
+          return root;
+        }
+
+        function itemColon(text) {
+          let quoted = false;
+          for (let i = 0; i < text.length; i += 1) {
+            if (text[i] === '"' || text[i] === "'") quoted = !quoted;
+            if (text[i] === ':' && !quoted && (i + 1 === text.length || /\s/.test(text[i + 1]))) return i;
+          }
+          return -1;
+        }
+
+        function parseDocument(source) {
+          if (!source.trim()) throw new Error('Paste an OpenAPI document before parsing.');
+          if (source.length > MAX_INPUT) throw new Error('This input is larger than 200 KB. Trim the document or use a smaller fixture.');
+          let document;
+          try { document = JSON.parse(source); } catch (_) { document = parseYaml(source); }
+          if (!document || typeof document !== 'object' || Array.isArray(document)) throw new Error('The document must be an object.');
+          if (!/^3\./.test(String(document.openapi || ''))) throw new Error('Only OpenAPI 3.x documents are supported.');
+          if (!document.paths || typeof document.paths !== 'object') throw new Error('The document needs a paths object.');
+          return document;
+        }
+
+        function exampleFrom(content) {
+          if (!content || typeof content !== 'object') return undefined;
+          const media = content[Object.keys(content)[0]] || {};
+          if (Object.prototype.hasOwnProperty.call(media, 'example')) return media.example;
+          const examples = media.examples || {};
+          const first = examples[Object.keys(examples)[0]];
+          if (first && Object.prototype.hasOwnProperty.call(first, 'value')) return first.value;
+          const schema = media.schema || {};
+          if (Object.prototype.hasOwnProperty.call(schema, 'example')) return schema.example;
+          if (Object.prototype.hasOwnProperty.call(schema, 'default')) return schema.default;
+          return undefined;
+        }
+
+        function requestExample(operation) { return exampleFrom(operation.requestBody?.content); }
+
+        function getRoutes(document) {
+          const baseUrl = String(document.servers?.[0]?.url || 'https://api.example.com').replace(/\/$/, '');
+          const output = [];
+          Object.entries(document.paths).forEach(([path, pathItem]) => {
+            if (!pathItem || typeof pathItem !== 'object') return;
+            Object.entries(pathItem).forEach(([method, operation]) => {
+              if (!METHODS.has(method.toLowerCase()) || !operation || typeof operation !== 'object') return;
+              const responses = operation.responses || {};
+              const responseEntries = Object.entries(responses);
+              const responseList = responseEntries.length ? responseEntries : [['200', { description: 'Mock response' }]];
+              responseList.forEach(([status, response]) => {
+                output.push({ path, method: method.toUpperCase(), summary: operation.summary || operation.operationId || '', url: baseUrl + path, status, description: response?.description || '', example: exampleFrom(response?.content), requestExample: requestExample(operation) });
+              });
+            });
+          });
+          return output;
+        }
+
+        function jsonBlock(value) { return value === undefined ? '{"message":"Mock response"}' : JSON.stringify(value, null, 2); }
+        function requestCode(route) {
+          const body = route.requestExample === undefined ? '' : `\n  --data '${JSON.stringify(route.requestExample).replace(/'/g, "'\\''")}'`;
+          const curl = `curl -X ${route.method} '${route.url}' -H 'Accept: application/json'${route.requestExample === undefined ? '' : " -H 'Content-Type: application/json'"}${body}`;
+          const fetchBody = route.requestExample === undefined ? '' : `,\n  headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },\n  body: JSON.stringify(${JSON.stringify(route.requestExample, null, 2)})`;
+          const fetch = `fetch('${route.url}', {\n  method: '${route.method}'${fetchBody}\n}).then(response => response.json())`;
+          return { curl, fetch };
+        }
+
+        function renderRouteTable() {
+          const summary = $('routeSummary');
+          if (!routes.length) { summary.innerHTML = '<p class="empty-state">No routes were found. Check the OpenAPI paths and methods.</p>'; $('routeDetail').hidden = true; return; }
+          summary.innerHTML = `<div class="route-toolbar"><strong>${routes.length} response route${routes.length === 1 ? '' : 's'}</strong><label for="routeSelect">Inspect <select id="routeSelect">${routes.map((route, index) => `<option value="${index}">${escapeHtml(route.method)} ${escapeHtml(route.path)} · ${escapeHtml(route.status)}</option>`).join('')}</select></label></div><div class="table-wrap"><table class="route-table"><thead><tr><th>Method</th><th>Path</th><th>Status</th><th>Example</th></tr></thead><tbody>${routes.map((route, index) => `<tr><td><button class="route-pick" type="button" data-route-index="${index}">${escapeHtml(route.method)}</button></td><td><code>${escapeHtml(route.path)}</code></td><td><span class="status-pill">${escapeHtml(route.status)}</span></td><td>${route.example === undefined ? '—' : '<span class="example-dot">Example</span>'}</td></tr>`).join('')}</tbody></table></div>`;
+          $('routeSelect').value = String(selectedRoute);
+          summary.querySelectorAll('[data-route-index]').forEach((button) => button.addEventListener('click', () => { selectedRoute = Number(button.dataset.routeIndex); renderRouteDetail(); $('routeSelect').value = String(selectedRoute); }));
+          $('routeSelect').addEventListener('change', (event) => { selectedRoute = Number(event.target.value); renderRouteDetail(); });
+          renderRouteDetail();
+        }
+
+        function renderRouteDetail() {
+          const route = routes[selectedRoute];
+          const detail = $('routeDetail');
+          if (!route) { detail.hidden = true; return; }
+          const snippets = requestCode(route);
+          detail.hidden = false;
+          detail.innerHTML = `<div class="route-detail-head"><div><p class="eyebrow">Selected response</p><h3>${escapeHtml(route.method)} ${escapeHtml(route.path)}</h3><p>${escapeHtml(route.description || route.summary || 'Generated mock response')}</p></div><span class="status-pill">${escapeHtml(route.status)}</span></div><div class="code-grid"><div><div class="code-label">cURL</div><pre><code>${escapeHtml(snippets.curl)}</code></pre><button class="button ghost copy-code" type="button" data-copy-value="${escapeHtml(snippets.curl)}">Copy cURL</button></div><div><div class="code-label">fetch</div><pre><code>${escapeHtml(snippets.fetch)}</code></pre><button class="button ghost copy-code" type="button" data-copy-value="${escapeHtml(snippets.fetch)}">Copy fetch</button></div></div><div class="example-panel"><div class="code-label">Example response</div><pre><code>${escapeHtml(jsonBlock(route.example))}</code></pre></div><div class="actions download-actions"><button class="button primary" type="button" id="downloadNodeMock">Download Node mock server</button><button class="button secondary" type="button" id="downloadJsonFixture">Download JSON Server fixture</button></div>`;
+          detail.querySelectorAll('.copy-code').forEach((button) => button.addEventListener('click', () => copyText(button.dataset.copyValue)));
+          $('downloadNodeMock').addEventListener('click', () => downloadText('mock-server.js', nodeMockSource()));
+          $('downloadJsonFixture').addEventListener('click', () => downloadText('openapi-mock-db.json', JSON.stringify(jsonServerFixture(), null, 2)));
+        }
+
+        function nodeMockSource() {
+          const routeSource = routes.map((route) => ({ method: route.method, path: route.path, status: Number(route.status) || 200, example: route.example === undefined ? { message: 'Mock response' } : route.example }));
+          return `const http = require('node:http');\n\nconst routes = ${JSON.stringify(routeSource, null, 2)};\nconst server = http.createServer((request, response) => {\n  const pathname = new URL(request.url, 'http://localhost').pathname;\n  const route = routes.find((item) => item.method === request.method && item.path === pathname);\n  if (!route) { response.writeHead(404, { 'content-type': 'application/json' }); response.end(JSON.stringify({ message: 'Mock route not found' })); return; }\n  response.writeHead(route.status, { 'content-type': 'application/json' });\n  response.end(JSON.stringify(route.example));\n});\nserver.listen(3000, () => console.log('OpenAPI mock listening at http://localhost:3000'));\n`;
+        }
+
+        function jsonServerFixture() {
+          const fixture = {};
+          routes.forEach((route, index) => { fixture[`route_${index + 1}_${route.method.toLowerCase()}_${route.status}`] = route.example === undefined ? { message: 'Mock response' } : route.example; });
+          return fixture;
+        }
+
+        function copyText(value) {
+          if (!value) return;
+          if (navigator.clipboard) navigator.clipboard.writeText(value).then(() => { $('openapiStatus').textContent = 'Copied to clipboard.'; }).catch(() => { $('openapiStatus').textContent = 'Clipboard unavailable; select the snippet manually.'; });
+          else $('openapiStatus').textContent = 'Clipboard unavailable; select the snippet manually.';
+        }
+
+        function downloadText(filename, value) {
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(new Blob([value], { type: 'text/plain;charset=utf-8' }));
+          link.download = filename;
+          link.click();
+          URL.revokeObjectURL(link.href);
+          $('openapiStatus').textContent = `Downloaded ${filename}.`;
+        }
+
+        function parseAndRender(source) {
+          try {
+            const document = parseDocument(source);
+            routes = getRoutes(document);
+            selectedRoute = 0;
+            renderRouteTable();
+            $('openapiBadge').textContent = `${routes.length} ROUTES`;
+            $('openapiStatus').textContent = `Parsed OpenAPI ${document.openapi}. ${routes.length} response route${routes.length === 1 ? '' : 's'} found locally.`;
+          } catch (error) {
+            routes = [];
+            $('routeSummary').innerHTML = `<p class="error-state">${escapeHtml(error.message)}</p>`;
+            $('routeDetail').hidden = true;
+            $('openapiBadge').textContent = 'ERROR';
+            $('openapiStatus').textContent = error.message;
+          }
+        }
+
+        $('openapiForm').addEventListener('submit', (event) => { event.preventDefault(); parseAndRender($('openapiInput').value); });
+        $('openapiFile').addEventListener('change', (event) => {
+          const file = event.target.files?.[0];
+          if (!file) return;
+          if (file.size > MAX_INPUT) { $('openapiStatus').textContent = 'This file is larger than 200 KB. Choose a smaller fixture.'; return; }
+          const reader = new FileReader();
+          reader.onload = () => { $('openapiInput').value = String(reader.result || ''); $('openapiStatus').textContent = `Loaded ${file.name} locally. Press Parse OpenAPI 3 to inspect it.`; };
+          reader.onerror = () => { $('openapiStatus').textContent = 'The selected file could not be read locally.'; };
+          reader.readAsText(file);
+        });
+        $('clearOpenapi').addEventListener('click', () => { $('openapiInput').value = ''; routes = []; renderRouteTable(); $('openapiBadge').textContent = 'READY'; $('openapiStatus').textContent = 'Cleared. Paste an OpenAPI document when ready.'; });
+        $('loadJsonExample').addEventListener('click', () => { $('openapiInput').value = JSON.stringify({ openapi: '3.0.3', info: { title: 'Tasks API', version: '1.0.0' }, servers: [{ url: 'https://api.example.com' }], paths: { '/tasks': { get: { responses: { '200': { description: 'Tasks', content: { 'application/json': { example: [{ id: 1, title: 'Write tests', done: false }] } } } } } } } }, null, 2); $('openapiStatus').textContent = 'Loaded a JSON example. Press Parse OpenAPI 3 to inspect it.'; });
+        parseAndRender($('openapiInput').value);
+      })();
+    </script>
+  </body>
+</html>

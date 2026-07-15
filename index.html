@@ -39,45 +39,18 @@
       })(window, document, "clarity", "script", "x0o9x11k1b");
     </script>
   </head>
-  <body>
+  <body class="home-page">
     <header class="site-header">
-      <nav class="nav" aria-label="Main navigation">
+      <nav class="nav home-nav" aria-label="Main navigation">
         <a class="logo" href="/"><span class="logo-mark">Q</span><span>Quick Test Hub</span></a>
-        <div class="nav-links">
-          <a href="/reaction-time-test/">Reaction Time</a>
-          <a href="/typing-speed-test/">Typing Speed</a>
-          <a href="/cps-test/">CPS Test</a>
-          <a href="/click-test/">Click Speed</a>
-          <a href="/keyboard-polling-rate-test/">Keyboard Hz</a>
-          <a href="/test-data-generator/">Test Data</a>
-          <details class="nav-menu">
-            <summary>Input Tests</summary>
-            <div class="nav-popover">
-              <a href="/keyboard-test/">Keyboard Test</a>
-              <a href="/mouse-test/">Mouse Test</a>
-              <a href="/keyboard-polling-rate-test/">Keyboard Hz</a>
-              <a href="/spacebar-clicker/">Spacebar Clicker</a>
-              <a href="/device-tests/">All Device Tests</a>
-            </div>
-          </details>
-          <details class="nav-menu">
-            <summary>More Tools</summary>
-            <div class="nav-popover">
-              <a href="/speed-tests/">Speed Tests</a>
-              <a href="/microphone-test/">Mic Test</a>
-              <a href="/webcam-test/">Webcam Test</a>
-              <a href="/gamepad-tester/">Gamepad Tester</a>
-            </div>
-          </details>
-          <details class="nav-menu">
-            <summary>Guides</summary>
-            <div class="nav-popover">
-              <a href="/test-plan-template/">Test Plan Template</a>
-              <a href="/test-data-generator/">Test Data Generator</a>
-              <a href="/jira-test-case-template/">QA Tools</a>
-              <a href="/ai-agent-replay-debugging/">Agent Replay</a>
-            </div>
-          </details>
+        <div class="nav-links home-nav-links">
+          <a href="/speed-tests/">Tests</a>
+          <a href="/test-plan-template/">Guides</a>
+          <a href="/device-tests/">More tools</a>
+          <a href="/about/">About</a>
+        </div>
+        <div class="home-nav-actions">
+          <a class="nav-login" href="/account/">Sign in</a>
           <details class="language-menu">
             <summary>Language</summary>
             <div class="language-popover">
@@ -87,75 +60,84 @@
               <a href="/vi/">Tiếng Việt</a>
             </div>
           </details>
+          <a class="button primary nav-cta" href="/reaction-time-test/#reaction-test">Run a quick check</a>
         </div>
       </nav>
     </header>
 
     <main>
-      <section class="hero home-hero">
-        <div>
-          <p class="eyebrow">Free Online Tests & Quick Tools</p>
-          <h1>Pick a quick test and get a clear result.</h1>
-          <p>Start with reaction speed, typing WPM, clicks per second, input checks, or QA templates. Each page gives a clear measurement, device check, or reusable artifact on mobile and desktop.</p>
-          <div class="notice"><p>Tests run in your browser and are designed for quick checks and repeat comparisons. Hardware, browser scheduling, display refresh rate, and system load can affect measured results.</p></div>
-          <div class="actions">
-            <a class="button primary" href="/reaction-time-test/#reaction-test">Reaction Time Test</a>
-            <a class="button primary" href="/typing-speed-test/#typing-test">Typing Speed Test</a>
-            <a class="button secondary" href="/cps-test/#cps-test">CPS Test</a>
-            <a class="button secondary" href="/click-test/#cps-test">Click Speed Test</a>
-            <a class="button secondary" href="/keyboard-polling-rate-test/#keyboard-polling-test">Keyboard Hz Test</a>
-            <a class="button secondary" href="/test-data-generator/#test-data-generator">Test Data Generator</a>
-            <a class="button secondary" href="/device-tests/">Input Tests</a>
-            <a class="button secondary" href="/jira-test-case-template/">QA Tools</a>
-            <a class="button secondary" href="/test-plan-template/">Test Plan Template</a>
-          </div>
+      <section class="hero home-hero guided-hero">
+        <div class="guided-intro">
+          <p class="eyebrow">Browser-based tests & tools</p>
+          <h1>Something feels off?</h1>
+          <p class="guided-subtitle">Check your speed, inputs, and devices in your browser.</p>
         </div>
-        <div class="hero-tool-grid" aria-label="Core Quick Test Hub tools">
-          <a class="hero-tool-link primary-tool" href="/reaction-time-test/#reaction-test">
-            <span>Reaction Time</span>
-            <strong>Get your average reaction speed in milliseconds after 5 rounds.</strong>
-          </a>
-          <a class="hero-tool-link" href="/typing-speed-test/#typing-test">
-            <span>Typing Speed</span>
-            <strong>Get WPM, accuracy, time, and error count from a short typing test.</strong>
-          </a>
-          <a class="hero-tool-link" href="/cps-test/#cps-test">
-            <span>CPS Test</span>
-            <strong>Run a free click speed test and get an instant CPS score for mouse, trackpad, or mobile taps.</strong>
-          </a>
-          <a class="hero-tool-link" href="/keyboard-polling-rate-test/#keyboard-polling-test">
-            <span>Keyboard Polling Rate</span>
-            <strong>Check keyboard Hz, input interval, jitter, and stability for typing or games.</strong>
-          </a>
-          <a class="hero-tool-link" href="/jira-test-case-template/">
-            <span>QA Tools</span>
-            <strong>Get reusable test case fields, acceptance criteria prompts, and QA checklists.</strong>
-          </a>
-          <a class="hero-tool-link" href="/test-data-generator/#test-data-generator">
-            <span>Test Data Generator</span>
-            <strong>Generate mock QA data as CSV, JSON, or SQL for APIs, Jira tickets, and test cases.</strong>
-          </a>
-          <a class="hero-tool-link" href="/test-plan-template/">
-            <span>Test Plan Template</span>
-            <strong>Generate a software test plan with scope, risks, schedule, criteria, and deliverables.</strong>
-          </a>
+        <div class="guide-steps" aria-label="How Quick Test Hub works">
+          <div class="guide-step is-active"><span>1</span><strong>Choose what feels off</strong></div>
+          <div class="guide-step"><span>2</span><strong>Run the check</strong></div>
+          <div class="guide-step"><span>3</span><strong>Get a clear result</strong></div>
+        </div>
+        <div class="intent-panel" role="group" aria-label="Choose what you want to check">
+          <button class="intent-choice is-selected" type="button" data-intent="speed" aria-pressed="true">
+            <span class="intent-index">01</span>
+            <span class="intent-copy"><strong>I'm checking my speed</strong><small>Reaction time, typing speed, and click speed.</small></span>
+          </button>
+          <button class="intent-choice" type="button" data-intent="device" aria-pressed="false">
+            <span class="intent-index">02</span>
+            <span class="intent-copy"><strong>I'm checking a device</strong><small>Keyboard, input stability, or device responsiveness.</small></span>
+          </button>
+          <button class="intent-choice" type="button" data-intent="qa" aria-pressed="false">
+            <span class="intent-index">03</span>
+            <span class="intent-copy"><strong>I'm preparing a QA case</strong><small>Test fields, prompts, and acceptance criteria.</small></span>
+          </button>
+        </div>
+        <p class="guide-note"><span class="guide-dot" aria-hidden="true"></span><span data-intent-note>Pick one to get started. You can always explore more tools later.</span><a class="button primary" data-intent-continue href="/reaction-time-test/#reaction-test">Continue with speed tests <span aria-hidden="true">→</span></a></p>
+        <div class="home-trust-strip" aria-label="Privacy and availability">
+          <div><strong>Works locally</strong><span>All tests run in your browser. No data leaves your device.</span></div>
+          <div><strong>No downloads</strong><span>Nothing to install. Runs on any modern browser.</span></div>
+          <div><strong>No sign-up</strong><span>Start testing instantly. Results stay on this device.</span></div>
         </div>
       </section>
 
-      <section class="section alt">
+      <section class="section home-tool-directory">
         <div class="wrap">
-          <div class="section-head">
+          <div class="section-head directory-heading">
             <div>
-              <p class="eyebrow">Quick Start</p>
-              <h2>Useful tools to start with.</h2>
+              <p class="eyebrow">Everything you can test</p>
+              <h2>Accurate, focused tools for speed, input, devices, and QA.</h2>
             </div>
-            <p>Choose a measurement tool for an immediate result or a QA utility for reusable output.</p>
           </div>
-          <div class="grid">
-            <a class="card" href="/click-test/#cps-test"><strong>Click Speed Test</strong><p>Free online 5s, 10s, or 30s click test with accurate CPS calculation and instant results.</p></a>
-            <a class="card" href="/cps-test/#cps-test"><strong>CPS Test</strong><p>Measure clicks per second on desktop or mobile and compare repeat attempts instantly.</p></a>
-            <a class="card" href="/keyboard-polling-rate-test/#keyboard-polling-test"><strong>Keyboard Polling Rate Test</strong><p>Check keyboard Hz, interval, and jitter for gaming keyboards and input timing.</p></a>
-            <a class="card" href="/test-data-generator/#test-data-generator"><strong>Test Data Generator</strong><p>Generate mock test data for CSV, JSON, SQL, APIs, Jira tickets, and QA scenarios.</p></a>
+          <div class="tool-tabs" role="tablist" aria-label="Filter tools">
+            <button class="is-active" type="button" role="tab" aria-selected="true" data-tool-filter="speed">Speed & Performance</button>
+            <button type="button" role="tab" aria-selected="false" data-tool-filter="device">Input & Device</button>
+            <button type="button" role="tab" aria-selected="false" data-tool-filter="qa">QA & Utilities</button>
+            <button type="button" role="tab" aria-selected="false" data-tool-filter="all">All Tools</button>
+          </div>
+          <div class="tool-list" data-tool-list>
+            <a class="tool-row" data-tool-category="speed" href="/reaction-time-test/">
+              <span class="tool-row-number">01</span><span class="tool-row-copy"><strong>Reaction Time</strong><small>Measure your average response time in milliseconds.</small></span><span class="tool-row-meta">5 rounds</span><span class="tool-row-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="tool-row" data-tool-category="speed" href="/typing-speed-test/">
+              <span class="tool-row-number">02</span><span class="tool-row-copy"><strong>Typing Speed</strong><small>Get WPM, accuracy, time, and error count.</small></span><span class="tool-row-meta">Timed test</span><span class="tool-row-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="tool-row" data-tool-category="speed" href="/cps-test/">
+              <span class="tool-row-number">03</span><span class="tool-row-copy"><strong>Click Speed</strong><small>Measure clicks per second for mouse, trackpad, or taps.</small></span><span class="tool-row-meta">5 seconds</span><span class="tool-row-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="tool-row" data-tool-category="device" href="/keyboard-polling-rate-test/">
+              <span class="tool-row-number">04</span><span class="tool-row-copy"><strong>Keyboard Hz</strong><small>Check polling rate, input interval, jitter, and stability.</small></span><span class="tool-row-meta">Live check</span><span class="tool-row-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="tool-row" data-tool-category="device" href="/keyboard-test/">
+              <span class="tool-row-number">05</span><span class="tool-row-copy"><strong>Keyboard Test</strong><small>Test keys, detection, modifiers, and ghosting.</small></span><span class="tool-row-meta">Input check</span><span class="tool-row-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="tool-row" data-tool-category="device" href="/mouse-test/">
+              <span class="tool-row-number">06</span><span class="tool-row-copy"><strong>Mouse Test</strong><small>Check buttons, wheel, double-click, and pointer movement.</small></span><span class="tool-row-meta">Device check</span><span class="tool-row-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="tool-row" data-tool-category="qa" href="/test-data-generator/">
+              <span class="tool-row-number">07</span><span class="tool-row-copy"><strong>Test Data</strong><small>Generate sample text, records, and payloads for test cases.</small></span><span class="tool-row-meta">CSV · JSON · SQL</span><span class="tool-row-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="tool-row" data-tool-category="qa" href="/jira-test-case-template/">
+              <span class="tool-row-number">08</span><span class="tool-row-copy"><strong>QA Utilities</strong><small>Reusable test cases, acceptance criteria, and checklists.</small></span><span class="tool-row-meta">Templates</span><span class="tool-row-arrow" aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
       </section>
@@ -341,6 +323,7 @@
         </a>
       </div>
     </footer>
-    <script src="/assets/i18n.js?v=19"></script>
+    <script src="/assets/i18n.js?v=20"></script>
+    <script src="/assets/home.js?v=1"></script>
   </body>
 </html>

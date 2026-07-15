@@ -13,6 +13,7 @@
 
   const routeKey = (path) => {
     if (path === "/" || path === "/zh/" || path === "/fr/" || path === "/vi/") return "home";
+    if (path === "/account/" || path === "/zh/account/" || path === "/fr/account/" || path === "/vi/account/") return "account";
     if (sbtiTypeSlug(path)) return "sbti-type";
     if (path.includes("/sbti-types/")) return "sbti-types";
     if (path.includes("/sbti-test/")) return "sbti-test";
@@ -23,6 +24,11 @@
     if (path.includes("/double-click-test/")) return "double-click-test";
     if (path.includes("/speed-tests/")) return "speed-tests";
     if (path.includes("/device-tests/")) return "device-tests";
+    if (path.includes("/test-data-generator/")) return "test-data-generator";
+    if (path.includes("/api-integration-testing/")) return "api-integration-testing";
+    if (path.includes("/jira-test-case-template/")) return "jira-test-case-template";
+    if (path.includes("/test-plan-template/")) return "test-plan-template";
+    if (path.includes("/ai-agent-replay-debugging/")) return "ai-agent-replay-debugging";
     if (path.includes("/keyboard-test/")) return "keyboard-test";
     if (path.includes("/keyboard-polling-rate-test/")) return "keyboard-polling-test";
     if (path.includes("/mouse-test/")) return "mouse-test";
@@ -51,6 +57,7 @@
     const routes = {
       en: {
         home: "/",
+        account: "/account/",
         "iq-test": "/iq-test/",
         "reaction-test": "/reaction-time-test/",
         "typing-test": "/typing-speed-test/",
@@ -59,6 +66,11 @@
         "double-click-test": "/double-click-test/",
         "speed-tests": "/speed-tests/",
         "device-tests": "/device-tests/",
+        "test-data-generator": "/test-data-generator/",
+        "api-integration-testing": "/api-integration-testing/",
+        "jira-test-case-template": "/jira-test-case-template/",
+        "test-plan-template": "/test-plan-template/",
+        "ai-agent-replay-debugging": "/ai-agent-replay-debugging/",
         "keyboard-test": "/keyboard-test/",
         "keyboard-polling-test": "/keyboard-polling-rate-test/",
         "mouse-test": "/mouse-test/",
@@ -84,6 +96,7 @@
       },
       zh: {
         home: "/zh/",
+        account: "/zh/account/",
         "iq-test": "/zh/iq-test/",
         "reaction-test": "/zh/reaction-time-test/",
         "typing-test": "/zh/typing-speed-test/",
@@ -92,6 +105,11 @@
         "double-click-test": "/double-click-test/",
         "speed-tests": "/speed-tests/",
         "device-tests": "/device-tests/",
+        "test-data-generator": "/test-data-generator/",
+        "api-integration-testing": "/api-integration-testing/",
+        "jira-test-case-template": "/jira-test-case-template/",
+        "test-plan-template": "/test-plan-template/",
+        "ai-agent-replay-debugging": "/ai-agent-replay-debugging/",
         "keyboard-test": "/zh/keyboard-test/",
         "keyboard-polling-test": "/zh/keyboard-polling-rate-test/",
         "mouse-test": "/zh/mouse-test/",
@@ -117,6 +135,7 @@
       },
       fr: {
         home: "/fr/",
+        account: "/fr/account/",
         "iq-test": "/iq-test/",
         "reaction-test": "/fr/reaction-time-test/",
         "typing-test": "/fr/typing-speed-test/",
@@ -125,6 +144,11 @@
         "double-click-test": "/double-click-test/",
         "speed-tests": "/speed-tests/",
         "device-tests": "/device-tests/",
+        "test-data-generator": "/test-data-generator/",
+        "api-integration-testing": "/api-integration-testing/",
+        "jira-test-case-template": "/jira-test-case-template/",
+        "test-plan-template": "/test-plan-template/",
+        "ai-agent-replay-debugging": "/ai-agent-replay-debugging/",
         "keyboard-test": "/fr/keyboard-test/",
         "keyboard-polling-test": "/fr/keyboard-polling-rate-test/",
         "mouse-test": "/fr/mouse-test/",
@@ -150,6 +174,7 @@
       },
       vi: {
         home: "/vi/",
+        account: "/vi/account/",
         "iq-test": "/iq-test/",
         "reaction-test": "/vi/reaction-time-test/",
         "typing-test": "/vi/typing-speed-test/",
@@ -158,6 +183,11 @@
         "double-click-test": "/double-click-test/",
         "speed-tests": "/speed-tests/",
         "device-tests": "/device-tests/",
+        "test-data-generator": "/test-data-generator/",
+        "api-integration-testing": "/api-integration-testing/",
+        "jira-test-case-template": "/jira-test-case-template/",
+        "test-plan-template": "/test-plan-template/",
+        "ai-agent-replay-debugging": "/ai-agent-replay-debugging/",
         "keyboard-test": "/vi/keyboard-test/",
         "keyboard-polling-test": "/vi/keyboard-polling-rate-test/",
         "mouse-test": "/vi/mouse-test/",
@@ -212,25 +242,29 @@
 
   document.querySelectorAll("a[href^='/']").forEach((link) => {
     if (link.closest(".language-popover")) return;
-    const url = new URL(link.getAttribute("href"), window.location.origin);
+    const href = link.getAttribute("href");
+    if (href.startsWith("/auth/")) return;
+    const url = new URL(href, window.location.origin);
     const mapped = localizedPath(lang, routeKey(url.pathname), url.hash, sbtiTypeSlug(url.pathname));
     link.setAttribute("href", mapped);
   });
 
   document.querySelectorAll(".language-menu").forEach((menu) => {
     const labels = {
-      en: "EN",
-      zh: "中文",
-      fr: "FR",
-      vi: "VI"
+      en: { short: "EN", native: "English" },
+      zh: { short: "中文", native: "中文" },
+      fr: { short: "FR", native: "Français" },
+      vi: { short: "VI", native: "Tiếng Việt" }
     };
     const switcher = document.createElement("div");
     switcher.className = "language-switcher";
     switcher.setAttribute("aria-label", "Language");
-    Object.entries(labels).forEach(([targetLang, label]) => {
+    Object.entries(labels).forEach(([targetLang, language]) => {
       const item = document.createElement("a");
       item.href = localizedPath(targetLang, key, window.location.hash, currentTypeSlug);
-      item.textContent = label;
+      item.textContent = language.short;
+      item.title = language.native;
+      item.setAttribute("aria-label", language.native);
       item.dataset.lang = targetLang;
       if (targetLang === lang) item.setAttribute("aria-current", "true");
       item.addEventListener("click", () => localStorage.setItem("siteLang", targetLang));
@@ -245,4 +279,13 @@
     link.toggleAttribute("aria-current", targetLang === lang);
     link.addEventListener("click", () => localStorage.setItem("siteLang", targetLang));
   });
+
+  if (!window.location.pathname.endsWith("/account/") && !document.querySelector(".nav-login")) {
+    const labels = { en: "Sign in", zh: "登录", fr: "Se connecter", vi: "Đăng nhập" };
+    const login = document.createElement("a");
+    login.className = "nav-login";
+    login.href = localizedPath(lang, "account");
+    login.textContent = labels[lang] || labels.en;
+    (document.querySelector(".home-nav-actions") || document.querySelector(".nav-links"))?.prepend(login);
+  }
 })();

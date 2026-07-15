@@ -318,6 +318,7 @@ function attachShare(button, text, params = {}) {
       await navigator.share(shareData);
     } else {
       await navigator.clipboard.writeText(`${text} ${window.location.href}`);
+      trackEvent("copy", { ...params, share_method: "clipboard" });
       button.textContent = "Copied";
       setTimeout(() => (button.textContent = "Share Result"), 1300);
     }
@@ -566,6 +567,7 @@ function initCpsTest() {
   }
 
   function start() {
+    trackEvent("checker_start", { checker_name: "click_speed", duration_seconds: duration, test_type: "cps" });
     trackEvent("tool_start", { tool_name: "cps_test", duration_seconds: duration });
     running = true;
     const startedAt = performance.now();
@@ -588,13 +590,14 @@ function initCpsTest() {
     const history = saveResult(result);
     const best = bestForDuration(history, duration);
     const isBest = best && best.createdAt === result.createdAt;
+    trackEvent("result", { checker_name: "click_speed", result_type: "cps", result_value: Number(cps), unit: "cps", duration_seconds: duration, click_count: clicks, personal_best: isBest });
     trackEvent("tool_complete", { tool_name: "cps_test", value: Number(cps), result_value: Number(cps), unit: "cps", duration_seconds: duration, click_count: clicks, personal_best: isBest });
     root.innerHTML = `
       <div class="result-card tool-result">
         <p class="eyebrow">Your CPS Result</p>
         <div class="tool-number">${cps}<small>CPS</small></div>
         <h2>${Number(cps) >= 9 ? "Very fast clicking" : Number(cps) >= 6 ? "Solid clicking speed" : "Casual clicking speed"}</h2>
-        <p>You made ${clicks} clicks in ${duration} second${duration === 1 ? "" : "s"}. ${isBest ? "This is your best saved score for this timer on this browser." : `Your best saved ${duration}s score is ${Number(best?.cps || cps).toFixed(1)} CPS.`}</p>
+        <p><strong>Your clicking speed result:</strong> ${cps} CPS from ${clicks} clicks in ${duration} second${duration === 1 ? "" : "s"}. ${isBest ? "This is your best saved score for this timer on this browser." : `Your best saved ${duration}s score is ${Number(best?.cps || cps).toFixed(1)} CPS.`}</p>
         <div class="result-metrics">
           <div><span>Timer</span><strong>${duration}s</strong></div>
           <div><span>Total</span><strong>${clicks}</strong></div>
@@ -609,7 +612,7 @@ function initCpsTest() {
         </div>
       </div>
     `;
-    attachShare(root.querySelector("[data-share-cps]"), `My ${duration}s click speed test result is ${cps} CPS (${clicks} clicks).`);
+    attachShare(root.querySelector("[data-share-cps]"), `My ${duration}s click speed test result is ${cps} CPS (${clicks} clicks).`, { checker_name: "click_speed", result_type: "cps", result_value: Number(cps), unit: "cps", duration_seconds: duration });
     root.querySelector("[data-reset-cps]").addEventListener("click", reset);
   }
 

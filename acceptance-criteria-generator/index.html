@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Acceptance Criteria Generator | Given When Then</title>
+    <meta name="description" content="Generate acceptance criteria from a user story and constraints. Get Given When Then scenarios, boundary and exception cases, a QA checklist, and Markdown or Jira-ready output in your browser.">
+    <link rel="canonical" href="https://quicktesthub.com/acceptance-criteria-generator/">
+    <link rel="alternate" hreflang="en" href="https://quicktesthub.com/acceptance-criteria-generator/">
+    <link rel="alternate" hreflang="x-default" href="https://quicktesthub.com/acceptance-criteria-generator/">
+    <meta property="og:title" content="Acceptance Criteria Generator | Given When Then">
+    <meta property="og:description" content="Turn a user story and constraints into reviewable Given When Then criteria, edge cases, and a QA checklist.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quicktesthub.com/acceptance-criteria-generator/">
+    <meta property="og:image" content="https://quicktesthub.com/assets/og-card.png">
+    <link rel="icon" href="/assets/og-card.png" type="image/png">
+    <link rel="stylesheet" href="/assets/styles.css?v=20260715-tools3">
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Acceptance Criteria Generator","applicationCategory":"BusinessApplication","operatingSystem":"Any","url":"https://quicktesthub.com/acceptance-criteria-generator/","description":"A browser-side generator for Given When Then acceptance criteria, edge cases, exceptions, and QA checklists.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Given When Then output","Boundary scenarios","Exception scenarios","QA acceptance checklist","Markdown export","Jira-ready export"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Quick Test Hub","item":"https://quicktesthub.com/"},{"@type":"ListItem","position":2,"name":"Acceptance Criteria Generator","item":"https://quicktesthub.com/acceptance-criteria-generator/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does an acceptance criteria generator create?","acceptedAnswer":{"@type":"Answer","text":"It creates reviewable Given When Then scenarios, boundary and exception cases, and a checklist for validation, permissions, recovery, accessibility, and release review."}},{"@type":"Question","name":"Can I export the generated acceptance criteria to Jira?","acceptedAnswer":{"@type":"Answer","text":"Yes. The page provides Jira-style text for copying and a downloadable Jira text file, along with Markdown output for docs and pull requests."}},{"@type":"Question","name":"Should generated acceptance criteria be reviewed?","acceptedAnswer":{"@type":"Answer","text":"Yes. Generated criteria are a starting point. The product owner, designer, developer, and QA reviewer should confirm the behavior, data, permissions, and measurable outcomes."}}]}]}
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="logo" href="/"><span class="logo-mark">Q</span><span>Quick Test Hub</span></a>
+        <div class="nav-links">
+          <a href="/test-plan-template/">Test Plan</a>
+          <a href="/jira-test-case-template/">Jira Template</a>
+          <a href="/test-data-generator/">Test Data</a>
+          <a href="/acceptance-criteria-generator/" aria-current="page">Acceptance Criteria</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero acceptance-hero">
+        <div>
+          <p class="eyebrow">Acceptance criteria · Variant 13</p>
+          <h1>Acceptance Criteria Generator</h1>
+          <p>Turn a user story and its constraints into clear Given, When, Then scenarios, boundary and exception coverage, and a practical acceptance checklist.</p>
+          <div class="actions"><a class="button primary" href="#acceptance-generator">Generate criteria</a><a class="button secondary" href="#acceptance-guide">What good criteria include</a></div>
+          <div class="notice review-notice"><p><strong>Human review required:</strong> Use the output as a structured draft. Confirm product intent, permissions, data rules, accessibility, and measurable outcomes with your team.</p></div>
+        </div>
+        <div class="tool-visual" aria-label="Acceptance criteria preview">
+          <div class="tool-visual-grid"><span>GIVEN</span><span>WHEN</span><span>THEN</span><span>QA</span></div>
+          <div class="floating-card"><div class="score-ring">GWT</div><h3>Review-ready draft</h3><p>Stories, edge cases, and checklists in Markdown or Jira format.</p></div>
+        </div>
+      </section>
+
+      <section class="section alt" id="acceptance-generator">
+        <div class="wrap">
+          <div class="section-head"><div><p class="eyebrow">User story to criteria</p><h2>Describe the behavior. Get testable outcomes.</h2></div><p>Keep inputs concise and specific. Everything is generated in this browser tab and no story text is sent to an AI service or third party.</p></div>
+          <div class="keyword-snapshot" aria-label="Keyword snapshot"><span><strong>US Volume</strong>20</span><span><strong>Global</strong>80</span><span><strong>CPC</strong>$4.10</span><span><strong>Competition</strong>0.30</span><span><strong>KD</strong>Not obtained</span></div>
+          <div class="plan-generator acceptance-generator-shell">
+            <form class="plan-form" id="acceptanceForm">
+              <label for="userStory">User story
+                <textarea id="userStory" rows="8" placeholder="As a customer, I want to save a delivery address so that checkout is faster.">As a customer, I want to save a delivery address so that checkout is faster.</textarea>
+              </label>
+              <label for="constraints">Constraints, rules, or context
+                <textarea id="constraints" rows="8" placeholder="Address line 1 is required. Postal code must match the selected country. Guests cannot save an address.">Address line 1 is required.
+Postal code must match the selected country.
+Guests cannot save an address.
+Saving should not create duplicates when the user double-clicks.</textarea>
+              </label>
+              <div class="actions"><button class="button primary" type="submit">Generate acceptance criteria</button><button class="button secondary" type="button" id="clearAcceptance">Clear</button></div>
+              <p class="form-status" id="acceptanceStatus" aria-live="polite">Ready. Add a user story and any constraints.</p>
+            </form>
+            <div class="plan-output-card acceptance-output-card">
+              <div class="output-head"><strong>Generated output</strong><span id="acceptanceBadge">DRAFT</span></div>
+              <div class="output-tabs" role="tablist" aria-label="Output formats"><button class="is-active" type="button" role="tab" aria-selected="true" data-output-tab="markdown">Markdown</button><button type="button" role="tab" aria-selected="false" data-output-tab="jira">Jira</button></div>
+              <textarea id="markdownOutput" rows="26" spellcheck="false" readonly></textarea>
+              <textarea id="jiraOutput" rows="26" spellcheck="false" readonly hidden></textarea>
+              <div class="actions"><button class="button primary" type="button" id="copyAcceptance">Copy current format</button><button class="button secondary" type="button" id="downloadMarkdown">Download Markdown</button><button class="button ghost" type="button" id="downloadJira">Download Jira text</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="acceptance-guide">
+        <div class="wrap">
+          <div class="section-head"><div><p class="eyebrow">Coverage prompts</p><h2>Make acceptance criteria observable.</h2></div><p>Strong criteria give the team a shared way to decide whether a story is complete. Add domain-specific rules and examples before sign-off.</p></div>
+          <div class="grid"><div class="card"><strong>Given</strong><p>State the actor, setup, permissions, data, and preconditions that must be true before the behavior begins.</p></div><div class="card"><strong>When</strong><p>Describe one observable user action or system event. Avoid combining unrelated behaviors in one scenario.</p></div><div class="card"><strong>Then</strong><p>Describe a measurable outcome: UI state, response, saved data, notification, audit event, or recovery behavior.</p></div><div class="card"><strong>Boundary and exceptions</strong><p>Cover empty, minimum, maximum, invalid, duplicate, unauthorized, unavailable, and retry conditions.</p></div></div>
+          <div class="related-links"><strong>Connect the QA workflow</strong><a href="/test-data-generator/">Create test data</a><a href="/test-plan-template/">Add to a test plan</a><a href="/jira-test-case-template/">Use the Jira test case template</a><a href="/api-integration-testing/">Check API behavior</a></div>
+        </div>
+      </section>
+
+      <section class="article">
+        <h2>What are acceptance criteria?</h2>
+        <p>Acceptance criteria are explicit conditions a story must satisfy before it can be accepted. They align product, design, engineering, and QA around behavior that can be observed and reviewed.</p>
+        <h2>How to use this acceptance criteria generator</h2>
+        <ol><li>Write the user story in plain language, including the actor, desired action, and outcome.</li><li>Add constraints such as required fields, permission rules, limits, integrations, duplicate handling, and error behavior.</li><li>Generate the draft, inspect the Given/When/Then scenarios, then adapt the edge cases and checklist to your product.</li><li>Copy Markdown into a spec or pull request, or copy Jira text into the story description and review it with the team.</li></ol>
+        <h2>Acceptance criteria checklist</h2>
+        <p>Before sign-off, ask whether the criteria cover the happy path, validation, boundaries, permissions, failure and recovery, data persistence, accessibility, responsive behavior, analytics or audit requirements, and any integration dependencies. Use the <a href="/test-plan-template/">test plan template</a> to turn important criteria into release coverage.</p>
+        <h2>Acceptance criteria generator FAQ</h2>
+        <h3>Does the generator use AI or upload my story?</h3><p>No. This page uses local, deterministic templates and keyword checks. Your inputs remain in the current browser tab.</p>
+        <h3>Can I paste the output into Jira?</h3><p>Yes. Choose the Jira tab, copy the structured text, and adapt the headings to your team’s Jira workflow.</p>
+        <h3>Why is human review required?</h3><p>A template can surface common cases but cannot know your domain policy, risk appetite, legal requirements, design decisions, or exact data model. A responsible reviewer must confirm the final criteria.</p>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub provides browser-based QA utilities.</span><span class="footer-links"><a href="/about/">About</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span></div></footer>
+
+    <script>
+      (() => {
+        const $ = (id) => document.getElementById(id);
+        const MAX_INPUT = 30000;
+        let markdown = '';
+        let jira = '';
+        let currentFormat = 'markdown';
+
+        function clean(value) { return String(value || '').replace(/\s+/g, ' ').trim(); }
+        function lines(value) { return String(value || '').split(/\n|;/).map((line) => line.replace(/^[-*•]\s*/, '').trim()).filter(Boolean); }
+        function titleFrom(story) { return clean(story).replace(/^as an?\s+[^,]+,\s*/i, '').replace(/^i want to\s+/i, '').replace(/\s+so that\s+.*$/i, '').replace(/\.$/, '') || 'the requested behavior'; }
+
+        function buildDraft(story, constraintText) {
+          const cleanStory = clean(story);
+          const constraints = lines(constraintText);
+          if (!cleanStory) throw new Error('Add a user story before generating criteria.');
+          if (cleanStory.length > MAX_INPUT || String(constraintText || '').length > MAX_INPUT) throw new Error('Inputs are limited to 30,000 characters each. Trim the text and try again.');
+          const match = cleanStory.match(/^as an?\s+(.+?),\s*i want(?: to)?\s+(.+)$/i);
+          const actor = match ? match[1] : 'the user';
+          const storyAction = match ? match[2].replace(/\.$/, '') : titleFrom(cleanStory);
+          const actionParts = storyAction.split(/,?\s+so that\s+/i);
+          const action = actionParts[0].trim() || titleFrom(cleanStory);
+          const outcome = actionParts[1]?.trim() || 'the requested outcome is clear and observable';
+          const given = `the ${actor.toLowerCase()} has the required access and the relevant data is available`;
+          const constraintGiven = constraints.length ? `the stated rules are configured: ${constraints.slice(0, 2).join('; ')}` : 'the product is in a valid starting state';
+          const scenarios = [
+            { name: 'Happy path', given, when: `the user ${action}`, then: `the system completes the action and supports the outcome: ${outcome}` },
+            { name: 'Validation and required data', given: `${given} and a required value is missing or invalid`, when: `the user submits ${action}`, then: 'the system explains what must be corrected, preserves safe input, and does not create an incomplete result' },
+            { name: 'Boundary value', given: `${given} and an input is at its minimum, maximum, or length limit`, when: `the user submits ${action}`, then: 'the system applies the documented boundary rule consistently and shows a clear result' },
+            { name: 'Permission or session failure', given: 'the user is signed out, unauthorized, or their session has expired', when: `the user attempts to ${action}`, then: 'the system denies the protected action without leaking data and explains the next safe step' },
+            { name: 'Dependency or network failure', given: `${given} but a required dependency is unavailable`, when: `the user attempts to ${action}`, then: 'the system shows a recoverable error, avoids duplicate side effects, and provides a retry or support path' }
+          ];
+          const checklist = [
+            'Happy path produces the intended user-visible and data outcome.',
+            'Required, invalid, empty, minimum, maximum, and unexpected inputs are covered.',
+            'Authentication, authorization, privacy, and role-specific behavior are confirmed.',
+            'Duplicate submits, retries, timeouts, and partial failures do not create unsafe side effects.',
+            'Saved data, downstream events, notifications, and audit records match the agreed behavior.',
+            'Keyboard, screen reader, focus, contrast, responsive layout, and touch behavior are reviewed.',
+            'Analytics, logging, monitoring, and support messages are confirmed where relevant.',
+            'Product owner, design, engineering, and QA complete a human review before acceptance.'
+          ];
+          const md = [`# Acceptance Criteria: ${titleFrom(cleanStory)}`, '', `User story: ${cleanStory}`, '', '## Context and constraints', constraints.length ? constraints.map((item) => `- ${item}`).join('\n') : '- No additional constraints provided. Confirm assumptions during review.', '', '## Given / When / Then', ...scenarios.flatMap((scenario, index) => [`### ${index + 1}. ${scenario.name}`, `- Given ${scenario.given}`, `- And ${constraintGiven}`, `- When ${scenario.when}`, `- Then ${scenario.then}`, '']), '## Boundary and exception scenarios', '- Empty required input: show validation and make no unsafe change.', '- Minimum and maximum accepted values: enforce documented limits and message the user clearly.', '- Invalid format or unexpected data: reject safely and preserve useful context.', '- Duplicate submit or retry: keep the operation idempotent where the story requires it.', '- Unauthorized or expired session: deny access and provide a safe recovery path.', '- Network or dependency outage: show a recoverable error without claiming success.', '', '## Acceptance checklist', ...checklist.map((item) => `- [ ] ${item}`), '', '> Human review required: confirm domain rules, data handling, accessibility, and release risk before marking this story accepted.'].join('\n');
+          const jiraText = [`h2. Acceptance Criteria: ${titleFrom(cleanStory)}`, '', `*User story:* ${cleanStory}`, '', 'h3. Context and constraints', constraints.length ? constraints.map((item) => `* ${item}`).join('\n') : '* No additional constraints provided. Confirm assumptions during review.', '', 'h3. Given / When / Then', ...scenarios.flatMap((scenario, index) => [`h4. ${index + 1}. ${scenario.name}`, `*Given* ${scenario.given}`, `*And* ${constraintGiven}`, `*When* ${scenario.when}`, `*Then* ${scenario.then}`, '']), 'h3. Boundary and exception scenarios', '* Empty required input: show validation and make no unsafe change.\n* Minimum and maximum accepted values: enforce documented limits.\n* Invalid format or unexpected data: reject safely.\n* Duplicate submit or retry: avoid unsafe duplicate side effects.\n* Unauthorized or expired session: deny access and provide recovery.\n* Network or dependency outage: show a recoverable error.', '', 'h3. Acceptance checklist', ...checklist.map((item) => `- [ ] ${item}`), '', '*Human review required:* confirm domain rules, data handling, accessibility, and release risk before acceptance.'].join('\n');
+          return { md, jiraText, count: scenarios.length };
+        }
+
+        function render() {
+          $('markdownOutput').value = markdown;
+          $('jiraOutput').value = jira;
+          $('acceptanceBadge').textContent = markdown ? 'DRAFT READY' : 'DRAFT';
+        }
+        function download(filename, value, type) { const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([value], { type })); link.download = filename; link.click(); URL.revokeObjectURL(link.href); $('acceptanceStatus').textContent = `Downloaded ${filename}.`; }
+        function copyCurrent() { const value = currentFormat === 'markdown' ? markdown : jira; if (!value) { $('acceptanceStatus').textContent = 'Generate criteria before copying.'; return; } if (navigator.clipboard) navigator.clipboard.writeText(value).then(() => { $('acceptanceStatus').textContent = `Copied ${currentFormat === 'markdown' ? 'Markdown' : 'Jira'} output.`; }).catch(() => { $('acceptanceStatus').textContent = 'Clipboard unavailable; select the output manually.'; }); }
+
+        $('acceptanceForm').addEventListener('submit', (event) => { event.preventDefault(); try { const draft = buildDraft($('userStory').value, $('constraints').value); markdown = draft.md; jira = draft.jiraText; render(); $('acceptanceStatus').textContent = `Generated ${draft.count} Given / When / Then scenarios plus boundary, exception, and checklist coverage. Review before use.`; } catch (error) { markdown = ''; jira = ''; render(); $('acceptanceStatus').textContent = error.message; $('acceptanceBadge').textContent = 'ERROR'; } });
+        $('clearAcceptance').addEventListener('click', () => { $('userStory').value = ''; $('constraints').value = ''; markdown = ''; jira = ''; render(); $('acceptanceStatus').textContent = 'Cleared. Add a user story when ready.'; });
+        document.querySelectorAll('[data-output-tab]').forEach((tab) => tab.addEventListener('click', () => { currentFormat = tab.dataset.outputTab; document.querySelectorAll('[data-output-tab]').forEach((item) => { const active = item === tab; item.classList.toggle('is-active', active); item.setAttribute('aria-selected', String(active)); }); $('markdownOutput').hidden = currentFormat !== 'markdown'; $('jiraOutput').hidden = currentFormat !== 'jira'; $('acceptanceStatus').textContent = `Showing ${currentFormat === 'markdown' ? 'Markdown' : 'Jira'} output.`; }));
+        $('copyAcceptance').addEventListener('click', copyCurrent);
+        $('downloadMarkdown').addEventListener('click', () => { if (markdown) download('acceptance-criteria.md', markdown, 'text/markdown;charset=utf-8'); else $('acceptanceStatus').textContent = 'Generate criteria before downloading.'; });
+        $('downloadJira').addEventListener('click', () => { if (jira) download('acceptance-criteria-jira.txt', jira, 'text/plain;charset=utf-8'); else $('acceptanceStatus').textContent = 'Generate criteria before downloading.'; });
+        $('acceptanceForm').dispatchEvent(new Event('submit'));
+      })();
+    </script>
+  </body>
+</html>

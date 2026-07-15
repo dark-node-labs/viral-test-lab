@@ -31,6 +31,7 @@
       .scenario-row button { border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; color: var(--ink); background: #fff; font: inherit; font-weight: 850; cursor: pointer; }
       .scenario-row button:hover { border-color: #8d98ff; background: #f0f2ff; }
       .schema-preview { min-height: 116px; border: 1px solid var(--line); border-radius: 8px; padding: 13px; background: #f8f9fc; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.86rem; line-height: 1.55; white-space: pre-wrap; }
+      .form-hint { margin: -4px 0 2px; color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
       .format-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
       .format-tabs label { border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; background: #fff; font-weight: 900; }
       .format-tabs input { width: auto; }
@@ -40,7 +41,7 @@
       }
     </style>
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Test Data Generator","applicationCategory":"DeveloperApplication","operatingSystem":"Any","url":"https://quicktesthub.com/test-data-generator/","description":"A free browser-based test data generator and mock data generator for CSV, JSON, and SQL output.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Generate test data","Mock data generator","CSV export","JSON data generator","SQL mock data generator","QA scenario presets","Local browser generation"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Quick Test Hub","item":"https://quicktesthub.com/"},{"@type":"ListItem","position":2,"name":"Test Data Generator","item":"https://quicktesthub.com/test-data-generator/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a test data generator?","acceptedAnswer":{"@type":"Answer","text":"A test data generator creates realistic sample records that QA teams, developers, and testers can use for forms, APIs, databases, test cases, and demos without exposing real user data."}},{"@type":"Question","name":"Can I generate mock data as CSV, JSON, and SQL?","acceptedAnswer":{"@type":"Answer","text":"Yes. This tool can generate CSV rows, JSON arrays, or SQL insert statements from the same field schema and scenario preset."}},{"@type":"Question","name":"Is this an AI test data generator?","acceptedAnswer":{"@type":"Answer","text":"The current version uses local scenario presets and keyword-based schema suggestions from your prompt. It does not send your prompt to an external AI service."}},{"@type":"Question","name":"Is the generated test data private?","acceptedAnswer":{"@type":"Answer","text":"Generation runs in your browser. Avoid entering real secrets, production customer data, passwords, tokens, or regulated personal information."}}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Test Data Generator","applicationCategory":"DeveloperApplication","operatingSystem":"Any","url":"https://quicktesthub.com/test-data-generator/","description":"A free browser-based test data generator and mock data generator for CSV, JSON, and SQL output.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Generate test data","Mock data generator","CSV export","JSON data generator","SQL mock data generator","JSON Schema input","Seeded reproducible output","QA scenario presets","Local browser generation"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Quick Test Hub","item":"https://quicktesthub.com/"},{"@type":"ListItem","position":2,"name":"Test Data Generator","item":"https://quicktesthub.com/test-data-generator/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a test data generator?","acceptedAnswer":{"@type":"Answer","text":"A test data generator creates realistic sample records that QA teams, developers, and testers can use for forms, APIs, databases, test cases, and demos without exposing real user data."}},{"@type":"Question","name":"Can I generate mock data as CSV, JSON, and SQL?","acceptedAnswer":{"@type":"Answer","text":"Yes. This tool can generate CSV rows, JSON arrays, or SQL insert statements from the same field schema and scenario preset."}},{"@type":"Question","name":"Can I use a JSON Schema?","acceptedAnswer":{"@type":"Answer","text":"Yes. Paste an object JSON Schema with a properties object to generate columns from common string, email, date, UUID, number, boolean, and enum definitions."}},{"@type":"Question","name":"Does the seed make output reproducible?","acceptedAnswer":{"@type":"Answer","text":"Yes. The same seed, fields, row count, and scenario produce the same fictional records in the browser. Change the seed to create a different deterministic dataset."}},{"@type":"Question","name":"Is this an AI test data generator?","acceptedAnswer":{"@type":"Answer","text":"The current version uses local scenario presets and keyword-based schema suggestions from your prompt. It does not send your prompt to an external AI service."}},{"@type":"Question","name":"Is the generated test data private?","acceptedAnswer":{"@type":"Answer","text":"Generation runs in your browser. Avoid entering real secrets, production customer data, passwords, tokens, or regulated personal information."}}]}]}
     </script>
     <script type="text/javascript">
       (function(c,l,a,r,i,t,y){
@@ -74,6 +75,7 @@
           <div class="actions">
             <a class="button primary" href="#test-data-generator">Generate Test Data</a>
             <a class="button secondary" href="#qa-scenarios">QA Scenarios</a>
+            <a class="button secondary" href="/api-testing-tools/">API Testing Tools</a>
             <a class="button secondary" href="#test-data-faq">FAQ</a>
           </div>
           <div class="tag-row">
@@ -120,11 +122,31 @@
               <label>Describe a schema for AI-style suggestions
                 <textarea id="schemaPrompt" rows="3">Generate mock test data for ecommerce orders with customer email, company, status, price, order date, and uuid.</textarea>
               </label>
-              <button class="button secondary" type="button" id="suggestSchemaButton">Suggest Schema</button>
+              <div class="actions">
+                <button class="button secondary" type="button" id="suggestSchemaButton">Suggest Schema</button>
+                <button class="button secondary" type="button" id="parseSchemaButton">Use JSON Schema</button>
+              </div>
+              <label>JSON Schema input
+                <textarea id="schemaJson" rows="7" spellcheck="false">{
+  "type": "object",
+  "properties": {
+    "name": {"type": "string"},
+    "email": {"type": "string", "format": "email"},
+    "created_at": {"type": "string", "format": "date"},
+    "id": {"type": "string", "format": "uuid"},
+    "status": {"type": "string", "enum": ["active", "pending", "blocked"]}
+  }
+}</textarea>
+              </label>
+              <p class="form-hint">Paste an object schema with <code>properties</code>. Common field formats, enums, numbers, booleans, dates, emails, UUIDs, and unknown string fields are supported locally.</p>
               <div class="schema-preview" id="schemaPreview" aria-live="polite"></div>
 
               <label>Rows
                 <input id="rowCount" type="number" min="1" max="500" value="10">
+              </label>
+
+              <label>Seed (repeatable output)
+                <input id="seed" type="text" value="quicktesthub-demo" maxlength="120">
               </label>
 
               <div>
@@ -217,7 +239,7 @@
         <p>Generated data is fake and created in your browser. Do not paste production customer data, passwords, API keys, payment details, tokens, regulated health data, or private company records into the tool.</p>
 
         <h2>Connect test data to QA planning</h2>
-        <p>Use generated data with the <a href="/test-plan-template/">software test plan template</a> to document environments, data needs, and risks. Then use the <a href="/jira-test-case-template/">Jira test case template</a> to attach specific values to each test case. For AI-heavy QA workflows, the <a href="/ai-agent-replay-debugging/">AI agent replay debugging checklist</a> helps turn failed runs into repeatable regression cases.</p>
+        <p>Use generated data with the <a href="/api-testing-tools/">API testing tools</a>, <a href="/api-integration-testing/">API integration testing tool</a>, or <a href="/api-contract-testing/">API contract testing checker</a> for repeatable fixtures. Then use the <a href="/test-plan-template/">software test plan template</a> to document environments and risks, or the <a href="/jira-test-case-template/">Jira test case template</a> to attach values to each test case. For AI-heavy QA workflows, the <a href="/ai-agent-replay-debugging/">AI agent replay debugging checklist</a> helps turn failed runs into repeatable regression cases.</p>
 
         <h2 id="test-data-faq">Test data generator FAQ</h2>
         <h3>What is a test data generator?</h3>
@@ -228,6 +250,8 @@
         <p>Yes. Select SQL output and the tool will create insert statements using the selected fields and table name.</p>
         <h3>Can this generate JSON data for API testing?</h3>
         <p>Yes. JSON output is useful for API payload examples, fixture files, local mock servers, and contract test setup.</p>
+        <h3>Can I reuse the same dataset?</h3>
+        <p>Yes. Keep the same seed, schema, fields, and row count to reproduce the same fictional records. Do not treat generated values as production identities or secrets.</p>
       </section>
     </main>
 
@@ -257,15 +281,41 @@
       const byId = (id) => document.getElementById(id);
       const pick = (list, index) => list[index % list.length];
       const pad = (num) => String(num).padStart(2, "0");
+      let jsonSchemaFields = null;
 
-      function uuidFromIndex(index) {
-        const base = `${index + 1}`.padStart(12, "0");
-        return `2a44d50a-76d4-4da9-9a31-${base}`;
+      function hashSeed(value) {
+        let hash = 2166136261;
+        for (const char of String(value || "quicktesthub-demo")) {
+          hash ^= char.charCodeAt(0);
+          hash = Math.imul(hash, 16777619);
+        }
+        return hash >>> 0;
       }
 
-      function dateFromIndex(index) {
-        const day = 1 + (index % 28);
-        return `2026-07-${pad(day)}`;
+      function createRng(seed) {
+        let state = hashSeed(seed) || 1;
+        return () => {
+          state += 0x6D2B79F5;
+          let value = state;
+          value = Math.imul(value ^ value >>> 15, value | 1);
+          value ^= value + Math.imul(value ^ value >>> 7, value | 61);
+          return ((value ^ value >>> 14) >>> 0) / 4294967296;
+        };
+      }
+
+      function pickRandom(list, rng) {
+        return list[Math.floor(rng() * list.length) % list.length];
+      }
+
+      function uuidFromRandom(rng) {
+        const part = (length) => Math.floor(rng() * (16 ** length)).toString(16).padStart(length, "0");
+        return `${part(8)}-${part(4)}-4${part(3)}-${(8 + Math.floor(rng() * 4)).toString(16)}${part(3)}-${part(12)}`;
+      }
+
+      function dateFromRandom(rng) {
+        const month = 1 + Math.floor(rng() * 12);
+        const day = 1 + Math.floor(rng() * 28);
+        return `2026-${pad(month)}-${pad(day)}`;
       }
 
       function slug(value) {
@@ -273,10 +323,12 @@
       }
 
       function selectedFields() {
+        if (jsonSchemaFields) return jsonSchemaFields.map((field) => field.key);
         return [...document.querySelectorAll("#fieldOptions input:checked")].map((input) => input.value);
       }
 
       function setPreset(name) {
+        jsonSchemaFields = null;
         byId("scenarioPreset").value = name;
         const fields = presets[name] || presets.custom;
         document.querySelectorAll("#fieldOptions input").forEach((input) => {
@@ -297,10 +349,53 @@
         byId("dataStatus").textContent = `Schema suggested from prompt: ${preset}.`;
       }
 
+      function inferSchemaKind(key, definition) {
+        const name = key.toLowerCase();
+        const format = String(definition?.format || "").toLowerCase();
+        if (Array.isArray(definition?.enum)) return "custom_enum";
+        if (format === "email" || name.includes("email")) return "email";
+        if (format === "uuid" || name === "id" || name.endsWith("_id")) return "uuid";
+        if (format.includes("date") || name.includes("date") || name.endsWith("_at")) return "date";
+        if (name.includes("phone") || name.includes("mobile")) return "phone";
+        if (name.includes("address") || name.includes("street")) return "address";
+        if (name.includes("status") || name.includes("state")) return "status";
+        if (name.includes("price") || name.includes("amount") || name.includes("cost") || name.includes("total")) return "price";
+        if (definition?.type === "integer") return "integer";
+        if (definition?.type === "number") return "number";
+        if (definition?.type === "boolean") return "boolean";
+        if (definition?.type === "object") return "object";
+        if (definition?.type === "array") return "array";
+        if (name.includes("name")) return "name";
+        if (name.includes("company")) return "company";
+        return "string";
+      }
+
+      function applyJsonSchema() {
+        try {
+          const schema = JSON.parse(byId("schemaJson").value);
+          const properties = schema && schema.properties;
+          if (!properties || typeof properties !== "object" || Array.isArray(properties) || !Object.keys(properties).length) {
+            throw new Error("Schema must contain a non-empty properties object.");
+          }
+          jsonSchemaFields = Object.entries(properties).map(([key, definition]) => ({
+            key,
+            kind: inferSchemaKind(key, definition || {}),
+            enum: Array.isArray(definition?.enum) ? definition.enum.map(String).filter(Boolean) : []
+          }));
+          byId("scenarioPreset").value = "custom";
+          renderSchemaPreview();
+          generateOutput(`JSON Schema applied: ${jsonSchemaFields.length} fields.`);
+        } catch (error) {
+          byId("dataStatus").textContent = `JSON Schema error: ${error.message}`;
+        }
+      }
+
       function renderSchemaPreview() {
         const fields = selectedFields();
         byId("schemaPreview").textContent = fields.length
-          ? fields.map((field) => `- ${field}: ${fieldLabel(field)}`).join("\n")
+          ? (jsonSchemaFields
+            ? jsonSchemaFields.map((field) => `- ${field.key}: ${fieldLabel(field.kind)}${field.enum.length ? ` [${field.enum.join(", ")}]` : ""}`).join("\n")
+            : fields.map((field) => `- ${field}: ${fieldLabel(field)}`).join("\n"))
           : "Select at least one field to generate data.";
       }
 
@@ -316,34 +411,52 @@
           price: "decimal amount",
           boolean: "true or false flag",
           status: "workflow status",
-          custom_enum: "one value from your custom enum"
+          custom_enum: "one value from your custom enum",
+          string: "safe sample string",
+          integer: "whole number",
+          number: "decimal number",
+          object: "JSON object placeholder",
+          array: "JSON array placeholder"
         };
         return labels[field] || field;
       }
 
-      function makeRecord(index) {
-        const name = pick(names, index);
+      function makeRecord(index, rng) {
+        const name = pickRandom(names, rng);
         const enumValues = byId("customEnum").value.split(",").map((item) => item.trim()).filter(Boolean);
         const allValues = {
           name,
-          email: `${slug(name)}${index + 1}${emailAt}${pick(domains, index)}`,
-          phone: `+1-555-01${pad(index % 100)}`,
-          company: pick(companies, index),
-          address: pick(streets, index),
-          date: dateFromIndex(index),
-          uuid: uuidFromIndex(index),
-          price: Number((19 + (index * 7.35) % 180).toFixed(2)),
-          boolean: index % 2 === 0,
-          status: pick(statuses, index),
-          custom_enum: pick(enumValues.length ? enumValues : ["alpha", "beta"], index)
+          email: `${slug(name)}${Math.floor(rng() * 9000) + 1000}${emailAt}${pickRandom(domains, rng)}`,
+          phone: `+1-555-${String(Math.floor(rng() * 10000)).padStart(4, "0")}`,
+          company: pickRandom(companies, rng),
+          address: pickRandom(streets, rng),
+          date: dateFromRandom(rng),
+          uuid: uuidFromRandom(rng),
+          price: Number((19 + rng() * 180).toFixed(2)),
+          boolean: rng() >= 0.5,
+          status: pickRandom(statuses, rng),
+          custom_enum: pickRandom(enumValues.length ? enumValues : ["alpha", "beta"], rng)
         };
+        if (jsonSchemaFields) {
+          return Object.fromEntries(jsonSchemaFields.map((field) => {
+            let value = allValues[field.kind];
+            if (field.kind === "custom_enum") value = pickRandom(field.enum.length ? field.enum : (enumValues.length ? enumValues : ["alpha", "beta"]), rng);
+            if (field.kind === "string") value = `sample_${slug(field.key)}_${index + 1}`;
+            if (field.kind === "integer") value = Math.floor(rng() * 1000);
+            if (field.kind === "number") value = Number((rng() * 1000).toFixed(2));
+            if (field.kind === "object") value = { sample: true };
+            if (field.kind === "array") value = [`sample_${index + 1}`];
+            return [field.key, value];
+          }));
+        }
         return Object.fromEntries(selectedFields().map((field) => [field, allValues[field]]));
       }
 
       function generateRows() {
         const count = Math.max(1, Math.min(500, Number(byId("rowCount").value) || 10));
         byId("rowCount").value = count;
-        return Array.from({ length: count }, (_, index) => makeRecord(index));
+        const rng = createRng(byId("seed").value);
+        return Array.from({ length: count }, (_, index) => makeRecord(index, rng));
       }
 
       function csvValue(value) {
@@ -353,7 +466,7 @@
 
       function toCsv(rows) {
         const fields = selectedFields();
-        return [fields.join(","), ...rows.map((row) => fields.map((field) => csvValue(row[field])).join(","))].join("\n");
+        return [fields.map(csvValue).join(","), ...rows.map((row) => fields.map((field) => csvValue(row[field])).join(","))].join("\n");
       }
 
       function sqlValue(value) {
@@ -365,9 +478,10 @@
       function toSql(rows) {
         const fields = selectedFields();
         const table = byId("tableName").value.trim().replace(/[^a-zA-Z0-9_]/g, "") || "test_records";
+        const safeFields = fields.map((field) => field.replace(/[^a-zA-Z0-9_]/g, "_") || "field");
         return rows.map((row) => {
           const values = fields.map((field) => sqlValue(row[field])).join(", ");
-          return `INSERT INTO ${table} (${fields.join(", ")}) VALUES (${values});`;
+          return `INSERT INTO ${table} (${safeFields.join(", ")}) VALUES (${values});`;
         }).join("\n");
       }
 
@@ -407,12 +521,15 @@
       });
       byId("scenarioPreset").addEventListener("change", (event) => setPreset(event.target.value));
       byId("suggestSchemaButton").addEventListener("click", suggestFromPrompt);
+      byId("parseSchemaButton").addEventListener("click", applyJsonSchema);
       document.querySelectorAll("#fieldOptions input, input[name='format']").forEach((input) => {
         input.addEventListener("change", () => {
           renderSchemaPreview();
           generateOutput("Updated output.");
         });
       });
+      byId("seed").addEventListener("input", () => generateOutput("Updated seeded output."));
+      byId("rowCount").addEventListener("input", () => generateOutput("Updated row count."));
       byId("testDataForm").addEventListener("submit", (event) => {
         event.preventDefault();
         generateOutput("Generated mock data.");
