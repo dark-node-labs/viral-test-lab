@@ -1,6 +1,33 @@
 const ADSENSE_CLIENT = "ca-pub-3196187117350639";
 const ADSENSE_SCRIPT = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}"
      crossorigin="anonymous"></script>`;
+const NOT_FOUND_HTML = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Page not found | Quick Test Hub</title>
+    <style>
+      :root { color-scheme: light; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f7f8fb; color: #172033; }
+      main { width: min(620px, calc(100% - 40px)); box-sizing: border-box; padding: 42px; border: 1px solid #e1e5ee; border-radius: 18px; background: #fff; box-shadow: 0 12px 32px rgba(23, 32, 51, .08); }
+      .eyebrow { margin: 0 0 10px; color: #5267a4; font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+      h1 { margin: 0 0 14px; font-size: clamp(2rem, 6vw, 3.2rem); }
+      p { line-height: 1.65; }
+      a { color: #245fce; font-weight: 650; }
+      .actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 28px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Quick Test Hub</p>
+      <h1>Page not found</h1>
+      <p>The page you requested does not exist or may have moved. Return to the homepage to browse the available tests and tools.</p>
+      <div class="actions"><a href="/">Back to Quick Test Hub</a><a href="/contact/">Contact us</a></div>
+    </main>
+  </body>
+</html>`;
 
 const BLOCKED_PROXY_HOSTS = /^(localhost|127\.|0\.0\.0\.0|10\.|192\.168\.|169\.254\.|172\.(?:1[6-9]|2\d|3[0-1])\.|\[?::1\]?|.*\.local$|.*\.internal$)/i;
 
@@ -167,6 +194,16 @@ export default {
     if (url.pathname === "/api/auth/config" && request.method === "GET") return authConfigResponse(env);
     if (url.pathname === "/api/auth/user" && request.method === "GET") return authUserResponse(request, env);
     if (url.pathname === "/api/auth/signout" && request.method === "POST") return authSignoutResponse();
+    if (url.pathname === "/404.html") {
+      return new Response(NOT_FOUND_HTML, {
+        status: 404,
+        headers: {
+          "content-type": "text/html; charset=utf-8",
+          "cache-control": "public, max-age=300, s-maxage=3600",
+          "x-robots-tag": "noindex, nofollow"
+        }
+      });
+    }
 
     if (url.pathname === "/cdn-cgi/l/email-protection") {
       url.pathname = "/contact/";
@@ -219,13 +256,14 @@ export default {
 
     const looksLikeStaticFile = url.pathname.startsWith("/assets/") || /\/[^/]+\.[a-z0-9]+$/i.test(url.pathname);
     if (!PUBLIC_PAGE_PATHS.has(normalizedPath) && !looksLikeStaticFile) {
-      const notFoundRequest = new Request(new URL("/404.html", request.url), request);
-      const notFoundResponse = await env.ASSETS.fetch(notFoundRequest);
-      const headers = new Headers(notFoundResponse.headers);
-      headers.set("cache-control", "public, max-age=300, s-maxage=3600");
-      headers.set("x-robots-tag", "noindex, nofollow");
-      headers.delete("content-length");
-      return new Response(notFoundResponse.body, { status: 404, headers });
+      return new Response(NOT_FOUND_HTML, {
+        status: 404,
+        headers: {
+          "content-type": "text/html; charset=utf-8",
+          "cache-control": "public, max-age=300, s-maxage=3600",
+          "x-robots-tag": "noindex, nofollow"
+        }
+      });
     }
 
     const assetCacheBustPaths = new Set(["/about/", "/contact/", "/privacy/", "/terms/", "/test-data-generator/"]);
