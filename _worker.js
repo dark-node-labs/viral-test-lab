@@ -238,9 +238,10 @@ export default {
 
     const response = await env.ASSETS.fetch(assetRequest);
     const isUnfinishedLocale = /^\/(?:fr|vi)(?:\/|$)/.test(normalizedPath);
-    const isUtilityOrPolicyPage = /^\/(?:account|contact|cookies|privacy|terms)(?:\/|$)/.test(normalizedPath);
+    const isPrivateOrCallbackPage = /^\/(?:account|auth\/callback)(?:\/|$)/.test(normalizedPath);
+    const isUtilityOrPolicyPage = /^\/(?:account|auth\/callback|contact|cookies|privacy|terms)(?:\/|$)/.test(normalizedPath);
     return await withSeoAndCacheHeaders(request, response, {
-      xRobotsTag: isUnfinishedLocale ? "noindex, follow" : undefined,
+      xRobotsTag: isUnfinishedLocale || isPrivateOrCallbackPage ? "noindex, follow" : undefined,
       skipAdsense: isUnfinishedLocale || isUtilityOrPolicyPage
     });
   }
