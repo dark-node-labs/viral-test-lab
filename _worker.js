@@ -46,9 +46,9 @@ async function handleApiProxy(request) {
 const PUBLIC_PAGE_PATHS = new Set([
   "/", "/about/", "/ai-agent-replay-debugging/", "/click-test/", "/contact/", "/cookies/",
   "/cps-test/", "/device-tests/", "/double-click-test/", "/gamepad-tester/",
-  "/jira-test-case-template/", "/keyboard-polling-rate-test/", "/keyboard-test/",
-  "/microphone-test/", "/mouse-test/", "/privacy/", "/reaction-time-test/", "/sbti-test/",
-  "/sbti-types/", "/spacebar-clicker/", "/speed-tests/", "/terms/", "/test-data-generator/", "/openapi-mock-server-generator/", "/acceptance-criteria-generator/",
+  "/jira-test-case-template/", "/keyboard-polling-rate-test/", "/keyboard-test/", "/methodology/",
+  "/microphone-test/", "/mouse-test/", "/privacy/", "/reaction-time-test/",
+  "/spacebar-clicker/", "/speed-tests/", "/terms/", "/test-data-generator/", "/openapi-mock-server-generator/", "/acceptance-criteria-generator/",
   "/test-plan-template/", "/typing-speed-test/", "/webcam-test/", "/api-integration-testing/", "/api-testing-tools/", "/api-contract-testing/",
   "/auth/callback/",
   "/zh/", "/zh/reaction-time-test/", "/zh/typing-speed-test/", "/zh/cps-test/",
@@ -147,7 +147,7 @@ async function withSeoAndCacheHeaders(request, response, options = {}) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const retiredEntertainmentPath = /^\/(?:(?:zh|fr|vi)\/)?(?:rice-purity-test(?:-score-meaning)?|test-de-purete|iq-test|best-fun-personality-tests|link-to-us)\/$/;
+    const retiredEntertainmentPath = /^\/(?:(?:zh|fr|vi)\/)?(?:sbti-test|sbti-types(?:\/[^/]+)?|rice-purity-test(?:-score-meaning)?|test-de-purete|iq-test|best-fun-personality-tests|link-to-us)\/$/;
     const aliasRedirects = new Map([
       ["/camera-test/", "/webcam-test/"],
       ["/click-speed-test/", "/click-test/"],
@@ -237,6 +237,11 @@ export default {
     }
 
     const response = await env.ASSETS.fetch(assetRequest);
-    return await withSeoAndCacheHeaders(request, response);
+    const isUnfinishedLocale = /^\/(?:fr|vi)(?:\/|$)/.test(normalizedPath);
+    const isUtilityOrPolicyPage = /^\/(?:account|contact|cookies|privacy|terms)(?:\/|$)/.test(normalizedPath);
+    return await withSeoAndCacheHeaders(request, response, {
+      xRobotsTag: isUnfinishedLocale ? "noindex, follow" : undefined,
+      skipAdsense: isUnfinishedLocale || isUtilityOrPolicyPage
+    });
   }
 };

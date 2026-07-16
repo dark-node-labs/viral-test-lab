@@ -24,6 +24,8 @@ Quick Test Hub is a free browser-based testing site for quick device checks, spe
   Jira test case template and AI-assisted QA workflow.
 - AI Agent Replay Debugging: https://quicktesthub.com/ai-agent-replay-debugging/
   QA checklist and trace template for replaying failed AI agent runs.
+- Measurement Methodology: https://quicktesthub.com/methodology/
+  Explains the browser signals, calculations, limitations, and privacy boundaries used by the site's tests.
 
 ## Crawl Signals
 

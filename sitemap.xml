@@ -3,13 +3,12 @@
   <url><loc>https://quicktesthub.com/</loc><lastmod>2026-07-10</lastmod></url>
   <url><loc>https://quicktesthub.com/about/</loc><lastmod>2026-07-10</lastmod></url>
   <url><loc>https://quicktesthub.com/ai-agent-replay-debugging/</loc><lastmod>2026-07-02</lastmod></url>
-  <url><loc>https://quicktesthub.com/click-test/</loc><lastmod>2026-07-10</lastmod></url>
+  <url><loc>https://quicktesthub.com/click-test/</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://quicktesthub.com/contact/</loc><lastmod>2026-06-11</lastmod></url>
   <url><loc>https://quicktesthub.com/cookies/</loc><lastmod>2026-06-11</lastmod></url>
   <url><loc>https://quicktesthub.com/device-tests/</loc><lastmod>2026-07-05</lastmod></url>
   <url><loc>https://quicktesthub.com/double-click-test/</loc><lastmod>2026-06-06</lastmod></url>
-  <url><loc>https://quicktesthub.com/cps-test/</loc><lastmod>2026-07-10</lastmod></url>
-  <url><loc>https://quicktesthub.com/fr/</loc><lastmod>2026-07-10</lastmod></url>
+  <url><loc>https://quicktesthub.com/cps-test/</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://quicktesthub.com/gamepad-tester/</loc><lastmod>2026-06-03</lastmod></url>
   <url><loc>https://quicktesthub.com/keyboard-test/</loc><lastmod>2026-06-01</lastmod></url>
   <url><loc>https://quicktesthub.com/keyboard-polling-rate-test/</loc><lastmod>2026-07-06</lastmod></url>
@@ -23,16 +22,14 @@
   <url><loc>https://quicktesthub.com/acceptance-criteria-generator/</loc><lastmod>2026-07-15</lastmod></url>
   <url><loc>https://quicktesthub.com/microphone-test/</loc><lastmod>2026-06-03</lastmod></url>
   <url><loc>https://quicktesthub.com/mouse-test/</loc><lastmod>2026-06-01</lastmod></url>
+  <url><loc>https://quicktesthub.com/methodology/</loc><lastmod>2026-07-16</lastmod></url>
   <url><loc>https://quicktesthub.com/speed-tests/</loc><lastmod>2026-06-09</lastmod></url>
   <url><loc>https://quicktesthub.com/spacebar-clicker/</loc><lastmod>2026-06-06</lastmod></url>
   <url><loc>https://quicktesthub.com/privacy/</loc><lastmod>2026-06-11</lastmod></url>
   <url><loc>https://quicktesthub.com/reaction-time-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/sbti-test/</loc><lastmod>2026-07-10</lastmod></url>
-  <url><loc>https://quicktesthub.com/sbti-types/</loc><lastmod>2026-07-10</lastmod></url>
   <url><loc>https://quicktesthub.com/terms/</loc><lastmod>2026-06-11</lastmod></url>
   <url><loc>https://quicktesthub.com/typing-speed-test/</loc><lastmod>2026-06-01</lastmod></url>
   <url><loc>https://quicktesthub.com/webcam-test/</loc><lastmod>2026-07-10</lastmod></url>
-  <url><loc>https://quicktesthub.com/vi/</loc><lastmod>2026-07-10</lastmod></url>
   <url><loc>https://quicktesthub.com/zh/</loc><lastmod>2026-07-10</lastmod></url>
   <url><loc>https://quicktesthub.com/zh/reaction-time-test/</loc><lastmod>2026-06-11</lastmod></url>
   <url><loc>https://quicktesthub.com/zh/typing-speed-test/</loc><lastmod>2026-06-01</lastmod></url>
@@ -40,16 +37,4 @@
   <url><loc>https://quicktesthub.com/zh/keyboard-test/</loc><lastmod>2026-06-11</lastmod></url>
   <url><loc>https://quicktesthub.com/zh/keyboard-polling-rate-test/</loc><lastmod>2026-06-01</lastmod></url>
   <url><loc>https://quicktesthub.com/zh/mouse-test/</loc><lastmod>2026-06-11</lastmod></url>
-  <url><loc>https://quicktesthub.com/fr/reaction-time-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/fr/typing-speed-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/fr/cps-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/fr/keyboard-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/fr/keyboard-polling-rate-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/fr/mouse-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/vi/reaction-time-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/vi/typing-speed-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/vi/cps-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/vi/keyboard-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/vi/keyboard-polling-rate-test/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://quicktesthub.com/vi/mouse-test/</loc><lastmod>2026-06-01</lastmod></url>
 </urlset>

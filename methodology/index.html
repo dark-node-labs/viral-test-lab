@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKTRP4LELE"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-YKTRP4LELE');</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quick Test Hub Measurement Methodology</title>
+    <meta name="description" content="Learn how Quick Test Hub calculates reaction time, typing speed, CPS, keyboard timing, and device checks in the browser.">
+    <link rel="canonical" href="https://quicktesthub.com/methodology/">
+    <link rel="alternate" hreflang="en" href="https://quicktesthub.com/methodology/">
+    <link rel="alternate" hreflang="x-default" href="https://quicktesthub.com/methodology/">
+    <meta property="og:title" content="Quick Test Hub Measurement Methodology">
+    <meta property="og:description" content="The signals, calculations, limitations, and privacy boundaries behind Quick Test Hub browser tests.">
+    <meta property="og:image" content="https://quicktesthub.com/assets/og-card.png">
+    <link rel="icon" href="/assets/og-card.png" type="image/png">
+    <link rel="stylesheet" href="/assets/styles.css?v=24">
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"Article","headline":"Quick Test Hub Measurement Methodology","url":"https://quicktesthub.com/methodology/","dateModified":"2026-07-16","description":"How Quick Test Hub measures browser timing, input events, device permissions, and local results.","inLanguage":"en"}
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="logo" href="/"><span class="logo-mark">Q</span><span>Quick Test Hub</span></a>
+        <div class="nav-links">
+          <a href="/speed-tests/">Speed Tests</a>
+          <a href="/device-tests/">Device Tests</a>
+          <a href="/test-data-generator/">QA Tools</a>
+          <a href="/methodology/" aria-current="page">How it works</a>
+          <a href="/about/">About</a>
+        </div>
+      </nav>
+    </header>
+    <main class="article">
+      <p class="eyebrow">How the tools work</p>
+      <h1>Quick Test Hub Measurement Methodology</h1>
+      <p>This page explains what each core tool records, how the visible result is calculated, and where the browser cannot provide a laboratory-grade measurement. The goal is a useful, repeatable check—not a misleading claim of precision.</p>
+
+      <h2>One session, one local result</h2>
+      <p>Core tests run in the current browser tab. Timing and input values are calculated from events observed during the active session. The site does not need an account for a test result, and the tools do not ask for a name, password, payment information, or government identifier.</p>
+      <p>Some features such as recent CPS attempts or a personal best use browser-local storage so the same browser can show a comparison later. That local history is not a server-side profile. Clear the site's browser data to remove it.</p>
+
+      <h2>Timing and speed tools</h2>
+      <div class="table-wrap">
+        <table class="comparison-table">
+          <caption>What the main speed tools measure</caption>
+          <thead><tr><th>Tool</th><th>Recorded signal</th><th>Visible calculation</th><th>Best comparison practice</th></tr></thead>
+          <tbody>
+            <tr><td><a href="/reaction-time-test/">Reaction Time</a></td><td>Time from the green signal to the click or tap.</td><td>Average of five valid rounds, plus best and slowest round.</td><td>Use the same device, browser, display, and input method.</td></tr>
+            <tr><td><a href="/typing-speed-test/">Typing Speed</a></td><td>Characters typed, elapsed time, and mismatches against the sample.</td><td>Words per minute, accuracy, elapsed time, and error count.</td><td>Compare the same language, passage length, keyboard, and layout.</td></tr>
+            <tr><td><a href="/cps-test/">CPS</a></td><td>Clicks or taps received during the selected timer.</td><td>Clicks per second = total clicks ÷ timer seconds.</td><td>Compare the same timer length and input surface.</td></tr>
+            <tr><td><a href="/spacebar-clicker/">Spacebar Clicker</a></td><td>Space key presses during the fixed ten-second run.</td><td>Presses per second = valid presses ÷ ten seconds.</td><td>Keep the same keyboard and avoid held-key auto-repeat.</td></tr>
+            <tr><td><a href="/double-click-test/">Double Click</a></td><td>Click pairs and the interval between clicks.</td><td>Double-click count, click count, and fastest observed pair.</td><td>Use the same mouse and button when comparing results.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>These values describe browser-observed behavior. They include human movement, event delivery, display refresh, operating-system scheduling, and device latency. The page cannot separate those components or certify a mouse, keyboard, display, or person.</p>
+
+      <h2>Keyboard and pointer checks</h2>
+      <p>The <a href="/keyboard-test/">Keyboard Test</a> listens for key events and shows the key name, code, and the set of keys detected in the session. The <a href="/mouse-test/">Mouse Test</a> listens for buttons, wheel movement, double-click events, and pointer movement. These tools answer a practical question: did the browser receive the input event?</p>
+      <p>The <a href="/keyboard-polling-rate-test/">Keyboard Polling Rate Test</a> runs for ten seconds while the visitor alternates two keys. It ignores held-key repeats, converts each positive interval to an estimated rate using <code>1000 ÷ interval in milliseconds</code>, and reports the average rate, peak rate, interval range, jitter, and a broad stability label. It is an event-timing estimate, not a USB-bus or firmware measurement.</p>
+
+      <h2>Camera, microphone, and controller checks</h2>
+      <p>The <a href="/microphone-test/">Microphone Test</a> requests microphone permission only after the visitor starts it. The page reads the live time-domain signal into a browser analyser and displays a relative level and peak meter. It does not upload or record the audio. Stopping the test stops the media tracks.</p>
+      <p>The <a href="/webcam-test/">Webcam Test</a> requests video permission after the start action, displays the local video stream, reports the resolution exposed by the browser, and can draw a still image into a local canvas. The <a href="/gamepad-tester/">Gamepad Tester</a> reads the browser Gamepad API and displays buttons and axes while the tester is running. Browser support, permissions, drivers, focus, and another application's use of the device can affect what appears.</p>
+
+      <h2>How to make a fair repeat comparison</h2>
+      <ol>
+        <li>Use the same device, browser, display, and input method.</li>
+        <li>Close obvious CPU-heavy or media applications and keep the test tab focused.</li>
+        <li>Run several attempts and compare the average or pattern, not only the fastest value.</li>
+        <li>Record the timer length and input method when sharing a result.</li>
+        <li>Treat a sudden change as a troubleshooting clue; check connections, permissions, browser load, and device settings before drawing a conclusion.</li>
+      </ol>
+
+      <h2>Privacy boundary</h2>
+      <p>Camera and microphone access is controlled by the browser permission prompt. The live streams are used by the page for the local preview or meter and are stopped when the test stops or the page is left. Do not paste confidential API schemas, passwords, private documents, or sensitive personal information into any browser tool, including QA generators.</p>
+      <p>Analytics may record anonymous tool-start and tool-complete events so the site owner can find broken flows. These events describe the tool and coarse result parameters; they are not intended to contain camera frames, microphone audio, typed passages, or raw device streams. See the <a href="/privacy/">Privacy Policy</a> and <a href="/cookies/">Cookie Policy</a> for the broader site controls.</p>
+
+      <h2>What these tools are not</h2>
+      <p>Quick Test Hub is not a medical, psychological, employment, school-placement, safety, hardware-certification, or laboratory measurement service. Use a qualified professional or calibrated diagnostic tool when a decision has safety, health, legal, or financial consequences.</p>
+
+      <div class="actions">
+        <a class="button primary" href="/speed-tests/">Run a speed test</a>
+        <a class="button secondary" href="/device-tests/">Check a device</a>
+        <a class="button secondary" href="/about/">About Quick Test Hub</a>
+      </div>
+    </main>
+    <footer class="site-footer"><div class="footer-inner"><span>Quick Test Hub provides browser-based device checks, speed tests, and practical QA tools.</span><span><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/cookies/">Cookies</a></span></div></footer>
+  </body>
+</html>
