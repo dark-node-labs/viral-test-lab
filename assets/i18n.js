@@ -38,6 +38,9 @@
     if (path.includes("/camera-test/")) return "camera-test";
     if (path.includes("/gamepad-tester/")) return "gamepad-tester";
     if (path.includes("/controller-test/")) return "controller-test";
+    if (path.includes("/webrtc-test/")) return "webrtc-test";
+    if (path.includes("/gpu-test/")) return "gpu-test";
+    if (path.includes("/browser-compatibility-test/")) return "browser-compatibility-test";
     if (path.includes("/click-test/")) return "click-test";
     if (path.includes("/mouse-click-test/")) return "mouse-click-test";
     if (path.includes("/iq-test")) return "iq-test";
@@ -80,6 +83,9 @@
         "camera-test": "/camera-test/",
         "gamepad-tester": "/gamepad-tester/",
         "controller-test": "/controller-test/",
+        "webrtc-test": "/webrtc-test/",
+        "gpu-test": "/gpu-test/",
+        "browser-compatibility-test": "/browser-compatibility-test/",
         "click-test": "/click-test/",
         "mouse-click-test": "/mouse-click-test/",
         "sbti-test": "/sbti-test/",
@@ -119,6 +125,9 @@
         "camera-test": "/camera-test/",
         "gamepad-tester": "/gamepad-tester/",
         "controller-test": "/controller-test/",
+        "webrtc-test": "/webrtc-test/",
+        "gpu-test": "/gpu-test/",
+        "browser-compatibility-test": "/browser-compatibility-test/",
         "click-test": "/click-test/",
         "mouse-click-test": "/mouse-click-test/",
         "sbti-test": "/zh/sbti-test/",
@@ -158,6 +167,9 @@
         "camera-test": "/camera-test/",
         "gamepad-tester": "/gamepad-tester/",
         "controller-test": "/controller-test/",
+        "webrtc-test": "/webrtc-test/",
+        "gpu-test": "/gpu-test/",
+        "browser-compatibility-test": "/browser-compatibility-test/",
         "click-test": "/click-test/",
         "mouse-click-test": "/mouse-click-test/",
         "sbti-test": "/fr/sbti-test/",
@@ -197,6 +209,9 @@
         "camera-test": "/camera-test/",
         "gamepad-tester": "/gamepad-tester/",
         "controller-test": "/controller-test/",
+        "webrtc-test": "/webrtc-test/",
+        "gpu-test": "/gpu-test/",
+        "browser-compatibility-test": "/browser-compatibility-test/",
         "click-test": "/click-test/",
         "mouse-click-test": "/mouse-click-test/",
         "sbti-test": "/vi/sbti-test/",
