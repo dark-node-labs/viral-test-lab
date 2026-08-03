@@ -266,11 +266,11 @@ export default {
       });
     }
 
-    const assetCacheBustPaths = new Set(["/about/", "/contact/", "/privacy/", "/terms/", "/test-data-generator/"]);
+    const assetCacheBustPaths = new Set(["/about/", "/contact/", "/privacy/", "/terms/", "/test-data-generator/", "/keyboard-test/", "/zh/keyboard-test/", "/keyboard-polling-rate-test/", "/zh/keyboard-polling-rate-test/"]);
     let assetRequest = request;
     if (assetCacheBustPaths.has(normalizedPath)) {
       const assetUrl = new URL(request.url);
-      assetUrl.searchParams.set("__qth_asset_v", "20260710-email2");
+      assetUrl.searchParams.set("__qth_asset_v", "20260803-seo-mobile");
       assetRequest = new Request(assetUrl.toString(), request);
     }
 
