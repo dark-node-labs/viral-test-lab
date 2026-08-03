@@ -270,7 +270,7 @@ export default {
     let assetRequest = request;
     if (assetCacheBustPaths.has(normalizedPath)) {
       const assetUrl = new URL(request.url);
-      assetUrl.searchParams.set("__qth_asset_v", "20260803-seo-mobile");
+      assetUrl.searchParams.set("__qth_asset_v", "20260803-route-fix");
       assetRequest = new Request(assetUrl.toString(), request);
     }
 
