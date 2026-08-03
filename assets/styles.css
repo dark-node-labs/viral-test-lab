@@ -2192,6 +2192,43 @@ button.button {
   }
 }
 
+@media (max-width: 540px) {
+  .quiz-shell {
+    width: min(100% - 24px, 860px);
+    padding-top: 12px;
+  }
+
+  .tool-card,
+  .quiz-panel {
+    padding: 18px;
+  }
+
+  .keyboard-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 5px;
+    margin-top: 16px;
+  }
+
+  .keyboard-grid span {
+    min-height: 38px;
+    padding: 4px 2px;
+    font-size: 0.72rem;
+  }
+
+  .polling-keys {
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .polling-keys span {
+    min-height: 72px;
+  }
+
+  .polling-meter div {
+    min-height: 112px;
+  }
+}
+
 @media (max-width: 360px) {
   .nav-links {
     grid-template-columns: repeat(2, minmax(0, 1fr));
