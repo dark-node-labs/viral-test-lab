@@ -1,0 +1,9 @@
+{
+  "name": "quicktesthub-static-site",
+  "private": true,
+  "scripts": {
+    "lint": "for file in assets/*.js; do node --check \"$file\"; done",
+    "test": "node scripts/site-check.mjs",
+    "build": "npm run lint && npm test"
+  }
+}
