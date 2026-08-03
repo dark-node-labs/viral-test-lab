@@ -1,0 +1,23 @@
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const example = { user: { id: 42, name: 'Ada Lovelace', roles: ['qa', 'developer'], active: true }, meta: { source: 'local-browser', version: 1 } };
+  const indent = () => { const value = $('indentSize').value; return value === 'tab' ? '\t' : Number(value); };
+  const escape = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[char]));
+  const lineColumn = (message) => { const match = message.match(/position (\d+)/i); if (!match) return ''; const position = Number(match[1]); const source = $('jsonInput').value.slice(0, position); return ` Approximate location: line ${source.split(/\r?\n/).length}, column ${position - source.lastIndexOf('\n')}.`; };
+  function renderTree(value, key = 'root') {
+    const type = value === null ? 'null' : Array.isArray(value) ? 'array' : typeof value;
+    if (type !== 'object' && type !== 'array') return `<div><span class="tree-key">${escape(key)}</span>: <span class="tree-${type === 'string' ? 'string' : type}">${escape(JSON.stringify(value))}</span></div>`;
+    const entries = type === 'array' ? value.map((item, index) => [index, item]) : Object.entries(value);
+    return `<details open><summary><span class="tree-key">${escape(key)}</span> <span class="json-help">${type} · ${entries.length} ${entries.length === 1 ? 'item' : 'items'}</span></summary>${entries.map(([childKey, child]) => renderTree(child, childKey)).join('')}</details>`;
+  }
+  function parse(action) {
+    const input = $('jsonInput').value;
+    if (!input.trim()) { $('jsonStatus').textContent = 'Nothing to process. Paste JSON or load the example.'; $('jsonMessage').innerHTML = '<p class="json-error">Empty input. A JSON object or array is required.</p>'; $('jsonTree').innerHTML = '<p class="empty-state">The parsed structure will appear here.</p>'; $('jsonOutput').value = ''; return; }
+    try { const value = JSON.parse(input); $('jsonOutput').value = action === 'minify' ? JSON.stringify(value) : JSON.stringify(value, null, indent()); $('jsonMessage').innerHTML = `<p class="json-success">Valid JSON. ${action === 'minify' ? 'Whitespace removed.' : 'Readable output generated.'}</p>`; $('jsonTree').innerHTML = renderTree(value); $('jsonStatus').textContent = `${action === 'minify' ? 'Minified' : 'Formatted'} successfully. ${input.length.toLocaleString()} input characters.`; } catch (error) { $('jsonOutput').value = ''; $('jsonMessage').innerHTML = `<p class="json-error"><strong>Invalid JSON:</strong> ${escape(error.message)}${escape(lineColumn(error.message))}</p>`; $('jsonTree').innerHTML = '<p class="empty-state">Fix the JSON syntax to build a tree view.</p>'; $('jsonStatus').textContent = 'Could not parse JSON. Your input was not changed.'; }
+  }
+  function copy(value, label) { if (!value) { $('jsonStatus').textContent = `Nothing to copy for ${label}.`; return; } const promise = navigator.clipboard?.writeText(value); if (!promise) { $('jsonStatus').textContent = 'Clipboard unavailable; select the text manually.'; return; } promise.then(() => { $('jsonStatus').textContent = `${label} copied.`; }).catch(() => { $('jsonStatus').textContent = 'Clipboard unavailable; select the text manually.'; }); }
+  function download(value, filename) { if (!value) { $('jsonStatus').textContent = `Nothing to download for ${filename}.`; return; } const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([value], { type: 'application/json;charset=utf-8' })); link.download = filename; link.click(); URL.revokeObjectURL(link.href); $('jsonStatus').textContent = `${filename} downloaded.`; }
+  $('loadJsonExample').onclick = () => { $('jsonInput').value = JSON.stringify(example, null, 2); parse('format'); };
+  $('formatJson').onclick = () => parse('format'); $('minifyJson').onclick = () => parse('minify'); $('clearJson').onclick = () => { $('jsonInput').value = ''; $('jsonOutput').value = ''; $('jsonMessage').innerHTML = '<p class="empty-state">No JSON has been parsed yet.</p>'; $('jsonTree').innerHTML = '<p class="empty-state">The parsed structure will appear here.</p>'; $('jsonStatus').textContent = 'Cleared.'; };
+  $('indentSize').onchange = () => { if ($('jsonOutput').value) parse('format'); }; $('copyInput').onclick = () => copy($('jsonInput').value, 'Input'); $('copyOutput').onclick = () => copy($('jsonOutput').value, 'Output'); $('downloadInput').onclick = () => download($('jsonInput').value, 'input.json'); $('downloadOutput').onclick = () => download($('jsonOutput').value, 'formatted.json');
+})();

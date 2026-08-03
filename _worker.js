@@ -75,8 +75,8 @@ const PUBLIC_PAGE_PATHS = new Set([
   "/cps-test/", "/device-tests/", "/double-click-test/", "/gamepad-tester/",
   "/jira-test-case-template/", "/keyboard-polling-rate-test/", "/keyboard-test/", "/methodology/",
   "/microphone-test/", "/mouse-test/", "/privacy/", "/reaction-time-test/",
-  "/spacebar-clicker/", "/speed-tests/", "/terms/", "/test-data-generator/", "/openapi-mock-server-generator/", "/acceptance-criteria-generator/",
-  "/test-plan-template/", "/typing-speed-test/", "/webcam-test/", "/api-integration-testing/", "/api-testing-tools/", "/api-contract-testing/",
+  "/spacebar-clicker/", "/speed-tests/", "/terms/", "/test-data-generator/", "/openapi-mock-server-generator/", "/acceptance-criteria-generator/", "/json-formatter/", "/yaml-validator/", "/cron-expression-generator/", "/json-diff-checker/",
+  "/test-plan-template/", "/typing-speed-test/", "/webcam-test/", "/webrtc-test/", "/gpu-test/", "/browser-compatibility-test/", "/api-integration-testing/", "/api-testing-tools/", "/api-contract-testing/",
   "/auth/callback/",
   "/zh/", "/zh/reaction-time-test/", "/zh/typing-speed-test/", "/zh/cps-test/",
   "/zh/keyboard-test/", "/zh/keyboard-polling-rate-test/", "/zh/mouse-test/",
@@ -266,7 +266,7 @@ export default {
       });
     }
 
-    const assetCacheBustPaths = new Set(["/about/", "/contact/", "/privacy/", "/terms/", "/test-data-generator/", "/keyboard-test/", "/zh/keyboard-test/", "/keyboard-polling-rate-test/", "/zh/keyboard-polling-rate-test/"]);
+    const assetCacheBustPaths = new Set(["/about/", "/contact/", "/privacy/", "/terms/", "/test-data-generator/", "/cron-expression-generator/", "/json-diff-checker/", "/keyboard-test/", "/zh/keyboard-test/", "/keyboard-polling-rate-test/", "/zh/keyboard-polling-rate-test/", "/webrtc-test/", "/gpu-test/", "/browser-compatibility-test/"]);
     let assetRequest = request;
     if (assetCacheBustPaths.has(normalizedPath)) {
       const assetUrl = new URL(request.url);
